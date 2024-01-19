@@ -26,7 +26,7 @@ type GetDealsResponse200RelatedObjectsUser struct {
 	// The email of the user
 	Email *string `json:"email,omitempty"`
 	// If the user has a picture or not
-	HasPic *bool `json:"has_pic,omitempty"`
+	HasPic *int32 `json:"has_pic,omitempty"`
 	// The user picture hash
 	PicHash NullableString `json:"pic_hash,omitempty"`
 	// Whether the user is active or not
@@ -147,9 +147,9 @@ func (o *GetDealsResponse200RelatedObjectsUser) SetEmail(v string) {
 }
 
 // GetHasPic returns the HasPic field value if set, zero value otherwise.
-func (o *GetDealsResponse200RelatedObjectsUser) GetHasPic() bool {
+func (o *GetDealsResponse200RelatedObjectsUser) GetHasPic() int32 {
 	if o == nil || IsNil(o.HasPic) {
-		var ret bool
+		var ret int32
 		return ret
 	}
 	return *o.HasPic
@@ -157,7 +157,7 @@ func (o *GetDealsResponse200RelatedObjectsUser) GetHasPic() bool {
 
 // GetHasPicOk returns a tuple with the HasPic field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *GetDealsResponse200RelatedObjectsUser) GetHasPicOk() (*bool, bool) {
+func (o *GetDealsResponse200RelatedObjectsUser) GetHasPicOk() (*int32, bool) {
 	if o == nil || IsNil(o.HasPic) {
 		return nil, false
 	}
@@ -174,7 +174,7 @@ func (o *GetDealsResponse200RelatedObjectsUser) HasHasPic() bool {
 }
 
 // SetHasPic gets a reference to the given bool and assigns it to the HasPic field.
-func (o *GetDealsResponse200RelatedObjectsUser) SetHasPic(v bool) {
+func (o *GetDealsResponse200RelatedObjectsUser) SetHasPic(v int32) {
 	o.HasPic = &v
 }
 

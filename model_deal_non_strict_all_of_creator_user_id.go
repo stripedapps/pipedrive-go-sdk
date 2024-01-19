@@ -26,7 +26,7 @@ type DealNonStrictAllOfCreatorUserId struct {
 	// The email of the deal creator
 	Email *string `json:"email,omitempty"`
 	// If the creator has a picture or not
-	HasPic *bool `json:"has_pic,omitempty"`
+	HasPic *int32 `json:"has_pic,omitempty"`
 	// The creator picture hash
 	PicHash NullableString `json:"pic_hash,omitempty"`
 	// Whether the creator is active or not
@@ -149,9 +149,9 @@ func (o *DealNonStrictAllOfCreatorUserId) SetEmail(v string) {
 }
 
 // GetHasPic returns the HasPic field value if set, zero value otherwise.
-func (o *DealNonStrictAllOfCreatorUserId) GetHasPic() bool {
+func (o *DealNonStrictAllOfCreatorUserId) GetHasPic() int32 {
 	if o == nil || IsNil(o.HasPic) {
-		var ret bool
+		var ret int32
 		return ret
 	}
 	return *o.HasPic
@@ -159,7 +159,7 @@ func (o *DealNonStrictAllOfCreatorUserId) GetHasPic() bool {
 
 // GetHasPicOk returns a tuple with the HasPic field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *DealNonStrictAllOfCreatorUserId) GetHasPicOk() (*bool, bool) {
+func (o *DealNonStrictAllOfCreatorUserId) GetHasPicOk() (*int32, bool) {
 	if o == nil || IsNil(o.HasPic) {
 		return nil, false
 	}
@@ -176,7 +176,7 @@ func (o *DealNonStrictAllOfCreatorUserId) HasHasPic() bool {
 }
 
 // SetHasPic gets a reference to the given bool and assigns it to the HasPic field.
-func (o *DealNonStrictAllOfCreatorUserId) SetHasPic(v bool) {
+func (o *DealNonStrictAllOfCreatorUserId) SetHasPic(v int32) {
 	o.HasPic = &v
 }
 
