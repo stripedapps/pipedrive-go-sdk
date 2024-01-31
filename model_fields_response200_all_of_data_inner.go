@@ -56,7 +56,7 @@ type FieldsResponse200AllOfDataInner struct {
 	// Whether or not items can be sorted by this field
 	SortableFlag *bool `json:"sortable_flag,omitempty"`
 	// Whether or not the field is mandatory
-	MandatoryFlag *bool `json:"mandatory_flag,omitempty"`
+	MandatoryFlag *int32 `json:"mandatory_flag,omitempty"`
 	// The options of the field. When there are no options, `null` is returned.
 	Options []map[string]interface{} `json:"options,omitempty"`
 	// The deleted options of the field. Only present when there is at least 1 deleted option.
@@ -661,9 +661,9 @@ func (o *FieldsResponse200AllOfDataInner) SetSortableFlag(v bool) {
 }
 
 // GetMandatoryFlag returns the MandatoryFlag field value if set, zero value otherwise.
-func (o *FieldsResponse200AllOfDataInner) GetMandatoryFlag() bool {
+func (o *FieldsResponse200AllOfDataInner) GetMandatoryFlag() int32 {
 	if o == nil || IsNil(o.MandatoryFlag) {
-		var ret bool
+		var ret int32
 		return ret
 	}
 	return *o.MandatoryFlag
@@ -671,7 +671,7 @@ func (o *FieldsResponse200AllOfDataInner) GetMandatoryFlag() bool {
 
 // GetMandatoryFlagOk returns a tuple with the MandatoryFlag field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *FieldsResponse200AllOfDataInner) GetMandatoryFlagOk() (*bool, bool) {
+func (o *FieldsResponse200AllOfDataInner) GetMandatoryFlagOk() (*int32, bool) {
 	if o == nil || IsNil(o.MandatoryFlag) {
 		return nil, false
 	}
@@ -688,7 +688,7 @@ func (o *FieldsResponse200AllOfDataInner) HasMandatoryFlag() bool {
 }
 
 // SetMandatoryFlag gets a reference to the given bool and assigns it to the MandatoryFlag field.
-func (o *FieldsResponse200AllOfDataInner) SetMandatoryFlag(v bool) {
+func (o *FieldsResponse200AllOfDataInner) SetMandatoryFlag(v int32) {
 	o.MandatoryFlag = &v
 }
 
