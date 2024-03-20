@@ -30,13 +30,13 @@ type ListProductsResponse200AllOfDataItemsInner struct {
 	// The ID of the product variation
 	ProductVariationId *int32 `json:"product_variation_id,omitempty"`
 	// The price value of the product
-	ItemPrice *int32 `json:"item_price,omitempty"`
+	ItemPrice *float32 `json:"item_price,omitempty"`
 	// The value of the discount. The `discount_type` field can be used to specify whether the value is an amount or a percentage.
 	Discount *float32 `json:"discount,omitempty"`
 	// The type of the discount's value.
 	DiscountType *string `json:"discount_type,omitempty"`
 	// The duration of the product
-	Duration *int32 `json:"duration,omitempty"`
+	Duration *float32 `json:"duration,omitempty"`
 	// The type of the duration. (For example hourly, daily, etc.)
 	DurationUnit *string `json:"duration_unit,omitempty"`
 	// The sum of all the products attached to the deal
@@ -64,7 +64,7 @@ type ListProductsResponse200AllOfDataItemsInner struct {
 	// The formatted quantity of the product
 	QuantityFormatted *string `json:"quantity_formatted,omitempty"`
 	// The quantity of the product
-	Quantity *int32 `json:"quantity,omitempty"`
+	Quantity *float32 `json:"quantity,omitempty"`
 	Product *ListProductsResponse200AllOfDataItemsInnerProduct `json:"product,omitempty"`
 }
 
@@ -254,9 +254,9 @@ func (o *ListProductsResponse200AllOfDataItemsInner) SetProductVariationId(v int
 }
 
 // GetItemPrice returns the ItemPrice field value if set, zero value otherwise.
-func (o *ListProductsResponse200AllOfDataItemsInner) GetItemPrice() int32 {
+func (o *ListProductsResponse200AllOfDataItemsInner) GetItemPrice() float32 {
 	if o == nil || IsNil(o.ItemPrice) {
-		var ret int32
+		var ret float32
 		return ret
 	}
 	return *o.ItemPrice
@@ -264,7 +264,7 @@ func (o *ListProductsResponse200AllOfDataItemsInner) GetItemPrice() int32 {
 
 // GetItemPriceOk returns a tuple with the ItemPrice field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *ListProductsResponse200AllOfDataItemsInner) GetItemPriceOk() (*int32, bool) {
+func (o *ListProductsResponse200AllOfDataItemsInner) GetItemPriceOk() (*float32, bool) {
 	if o == nil || IsNil(o.ItemPrice) {
 		return nil, false
 	}
@@ -281,7 +281,7 @@ func (o *ListProductsResponse200AllOfDataItemsInner) HasItemPrice() bool {
 }
 
 // SetItemPrice gets a reference to the given int32 and assigns it to the ItemPrice field.
-func (o *ListProductsResponse200AllOfDataItemsInner) SetItemPrice(v int32) {
+func (o *ListProductsResponse200AllOfDataItemsInner) SetItemPrice(v float32) {
 	o.ItemPrice = &v
 }
 
@@ -350,9 +350,9 @@ func (o *ListProductsResponse200AllOfDataItemsInner) SetDiscountType(v string) {
 }
 
 // GetDuration returns the Duration field value if set, zero value otherwise.
-func (o *ListProductsResponse200AllOfDataItemsInner) GetDuration() int32 {
+func (o *ListProductsResponse200AllOfDataItemsInner) GetDuration() float32 {
 	if o == nil || IsNil(o.Duration) {
-		var ret int32
+		var ret float32
 		return ret
 	}
 	return *o.Duration
@@ -360,7 +360,7 @@ func (o *ListProductsResponse200AllOfDataItemsInner) GetDuration() int32 {
 
 // GetDurationOk returns a tuple with the Duration field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *ListProductsResponse200AllOfDataItemsInner) GetDurationOk() (*int32, bool) {
+func (o *ListProductsResponse200AllOfDataItemsInner) GetDurationOk() (*float32, bool) {
 	if o == nil || IsNil(o.Duration) {
 		return nil, false
 	}
@@ -377,7 +377,7 @@ func (o *ListProductsResponse200AllOfDataItemsInner) HasDuration() bool {
 }
 
 // SetDuration gets a reference to the given int32 and assigns it to the Duration field.
-func (o *ListProductsResponse200AllOfDataItemsInner) SetDuration(v int32) {
+func (o *ListProductsResponse200AllOfDataItemsInner) SetDuration(v float32) {
 	o.Duration = &v
 }
 
@@ -798,9 +798,9 @@ func (o *ListProductsResponse200AllOfDataItemsInner) SetQuantityFormatted(v stri
 }
 
 // GetQuantity returns the Quantity field value if set, zero value otherwise.
-func (o *ListProductsResponse200AllOfDataItemsInner) GetQuantity() int32 {
+func (o *ListProductsResponse200AllOfDataItemsInner) GetQuantity() float32 {
 	if o == nil || IsNil(o.Quantity) {
-		var ret int32
+		var ret float32
 		return ret
 	}
 	return *o.Quantity
@@ -808,7 +808,7 @@ func (o *ListProductsResponse200AllOfDataItemsInner) GetQuantity() int32 {
 
 // GetQuantityOk returns a tuple with the Quantity field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *ListProductsResponse200AllOfDataItemsInner) GetQuantityOk() (*int32, bool) {
+func (o *ListProductsResponse200AllOfDataItemsInner) GetQuantityOk() (*float32, bool) {
 	if o == nil || IsNil(o.Quantity) {
 		return nil, false
 	}
@@ -825,7 +825,7 @@ func (o *ListProductsResponse200AllOfDataItemsInner) HasQuantity() bool {
 }
 
 // SetQuantity gets a reference to the given int32 and assigns it to the Quantity field.
-func (o *ListProductsResponse200AllOfDataItemsInner) SetQuantity(v int32) {
+func (o *ListProductsResponse200AllOfDataItemsInner) SetQuantity(v float32) {
 	o.Quantity = &v
 }
 
