@@ -358,9 +358,9 @@ func (o *ListProductsResponse200AllOfDataItemsInnerProduct) SetOwnerId(v map[str
 }
 
 // GetPrices returns the Prices field value if set, zero value otherwise.
-func (o *ListProductsResponse200AllOfDataItemsInnerProduct) GetPrices() map[string]interface{} {
+func (o *ListProductsResponse200AllOfDataItemsInnerProduct) GetPrices() []map[string]interface{} {
 	if o == nil || IsNil(o.Prices) {
-		var ret map[string]interface{}
+		var ret []map[string]interface{}
 		return ret
 	}
 	return o.Prices
@@ -368,9 +368,9 @@ func (o *ListProductsResponse200AllOfDataItemsInnerProduct) GetPrices() map[stri
 
 // GetPricesOk returns a tuple with the Prices field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *ListProductsResponse200AllOfDataItemsInnerProduct) GetPricesOk() (map[string]interface{}, bool) {
+func (o *ListProductsResponse200AllOfDataItemsInnerProduct) GetPricesOk() ([]map[string]interface{}, bool) {
 	if o == nil || IsNil(o.Prices) {
-		return map[string]interface{}{}, false
+		return []map[string]interface{}{}, false
 	}
 	return o.Prices, true
 }
@@ -385,7 +385,7 @@ func (o *ListProductsResponse200AllOfDataItemsInnerProduct) HasPrices() bool {
 }
 
 // SetPrices gets a reference to the given map[string]interface{} and assigns it to the Prices field.
-func (o *ListProductsResponse200AllOfDataItemsInnerProduct) SetPrices(v map[string]interface{}) {
+func (o *ListProductsResponse200AllOfDataItemsInnerProduct) SetPrices(v []map[string]interface{}) {
 	o.Prices = v
 }
 
