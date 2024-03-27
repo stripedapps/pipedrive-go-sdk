@@ -37,7 +37,7 @@ type ListProductsResponse200AllOfDataItemsInnerProduct struct {
 	// Information about the Pipedrive user who owns the product
 	OwnerId map[string]interface{} `json:"owner_id,omitempty"`
 	// Object of objects, each containing: currency (string), price (number), cost (number, optional), overhead_cost (number, optional)
-	Prices map[string]interface{} `json:"prices,omitempty"`
+	Prices []map[string]interface{} `json:"prices,omitempty"`
 }
 
 // NewListProductsResponse200AllOfDataItemsInnerProduct instantiates a new ListProductsResponse200AllOfDataItemsInnerProduct object
