@@ -162,7 +162,7 @@ func (o *CallLogResponse404) GetDataOk() (map[string]interface{}, bool) {
 
 // HasData returns a boolean if a field has been set.
 func (o *CallLogResponse404) HasData() bool {
-	if o != nil && IsNil(o.Data) {
+	if o != nil && !IsNil(o.Data) {
 		return true
 	}
 
@@ -195,7 +195,7 @@ func (o *CallLogResponse404) GetAdditionalDataOk() (map[string]interface{}, bool
 
 // HasAdditionalData returns a boolean if a field has been set.
 func (o *CallLogResponse404) HasAdditionalData() bool {
-	if o != nil && IsNil(o.AdditionalData) {
+	if o != nil && !IsNil(o.AdditionalData) {
 		return true
 	}
 

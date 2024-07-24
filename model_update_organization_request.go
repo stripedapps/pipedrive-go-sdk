@@ -23,6 +23,8 @@ type UpdateOrganizationRequest struct {
 	Name *string `json:"name,omitempty"`
 	// The ID of the user who will be marked as the owner of this organization. When omitted, the authorized user ID will be used.
 	OwnerId *int32 `json:"owner_id,omitempty"`
+	// The ID of the label.
+	Label *int32 `json:"label,omitempty"`
 	VisibleTo *string `json:"visible_to,omitempty"`
 }
 
@@ -107,6 +109,38 @@ func (o *UpdateOrganizationRequest) SetOwnerId(v int32) {
 	o.OwnerId = &v
 }
 
+// GetLabel returns the Label field value if set, zero value otherwise.
+func (o *UpdateOrganizationRequest) GetLabel() int32 {
+	if o == nil || IsNil(o.Label) {
+		var ret int32
+		return ret
+	}
+	return *o.Label
+}
+
+// GetLabelOk returns a tuple with the Label field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *UpdateOrganizationRequest) GetLabelOk() (*int32, bool) {
+	if o == nil || IsNil(o.Label) {
+		return nil, false
+	}
+	return o.Label, true
+}
+
+// HasLabel returns a boolean if a field has been set.
+func (o *UpdateOrganizationRequest) HasLabel() bool {
+	if o != nil && !IsNil(o.Label) {
+		return true
+	}
+
+	return false
+}
+
+// SetLabel gets a reference to the given int32 and assigns it to the Label field.
+func (o *UpdateOrganizationRequest) SetLabel(v int32) {
+	o.Label = &v
+}
+
 // GetVisibleTo returns the VisibleTo field value if set, zero value otherwise.
 func (o *UpdateOrganizationRequest) GetVisibleTo() string {
 	if o == nil || IsNil(o.VisibleTo) {
@@ -154,6 +188,9 @@ func (o UpdateOrganizationRequest) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.OwnerId) {
 		toSerialize["owner_id"] = o.OwnerId
+	}
+	if !IsNil(o.Label) {
+		toSerialize["label"] = o.Label
 	}
 	if !IsNil(o.VisibleTo) {
 		toSerialize["visible_to"] = o.VisibleTo

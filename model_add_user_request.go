@@ -12,6 +12,8 @@ package openapi
 
 import (
 	"encoding/json"
+	"bytes"
+	"fmt"
 )
 
 // checks if the AddUserRequest type satisfies the MappedNullable interface at compile time
@@ -26,6 +28,8 @@ type AddUserRequest struct {
 	// Whether the user is active or not. `false` = Not activated, `true` = Activated
 	ActiveFlag *bool `json:"active_flag,omitempty"`
 }
+
+type _AddUserRequest AddUserRequest
 
 // NewAddUserRequest instantiates a new AddUserRequest object
 // This constructor will assign default values to properties that have it defined,
@@ -155,6 +159,43 @@ func (o AddUserRequest) ToMap() (map[string]interface{}, error) {
 		toSerialize["active_flag"] = o.ActiveFlag
 	}
 	return toSerialize, nil
+}
+
+func (o *AddUserRequest) UnmarshalJSON(data []byte) (err error) {
+	// This validates that all required properties are included in the JSON object
+	// by unmarshalling the object into a generic map with string keys and checking
+	// that every required field exists as a key in the generic map.
+	requiredProperties := []string{
+		"email",
+	}
+
+	allProperties := make(map[string]interface{})
+
+	err = json.Unmarshal(data, &allProperties)
+
+	if err != nil {
+		return err;
+	}
+
+	for _, requiredProperty := range(requiredProperties) {
+		if _, exists := allProperties[requiredProperty]; !exists {
+			return fmt.Errorf("no value given for required property %v", requiredProperty)
+		}
+	}
+
+	varAddUserRequest := _AddUserRequest{}
+
+	decoder := json.NewDecoder(bytes.NewReader(data))
+	decoder.DisallowUnknownFields()
+	err = decoder.Decode(&varAddUserRequest)
+
+	if err != nil {
+		return err
+	}
+
+	*o = AddUserRequest(varAddUserRequest)
+
+	return err
 }
 
 type NullableAddUserRequest struct {

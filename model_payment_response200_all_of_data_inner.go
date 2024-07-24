@@ -12,6 +12,7 @@ package openapi
 
 import (
 	"encoding/json"
+	"time"
 )
 
 // checks if the PaymentResponse200AllOfDataInner type satisfies the MappedNullable interface at compile time
@@ -42,9 +43,9 @@ type PaymentResponse200AllOfDataInner struct {
 	// The description of the payment
 	Description *string `json:"description,omitempty"`
 	// The creation time of the payment
-	AddTime *string `json:"add_time,omitempty"`
+	AddTime *time.Time `json:"add_time,omitempty"`
 	// The update time of the payment
-	UpdateTime *string `json:"update_time,omitempty"`
+	UpdateTime *time.Time `json:"update_time,omitempty"`
 }
 
 // NewPaymentResponse200AllOfDataInner instantiates a new PaymentResponse200AllOfDataInner object
@@ -417,9 +418,9 @@ func (o *PaymentResponse200AllOfDataInner) SetDescription(v string) {
 }
 
 // GetAddTime returns the AddTime field value if set, zero value otherwise.
-func (o *PaymentResponse200AllOfDataInner) GetAddTime() string {
+func (o *PaymentResponse200AllOfDataInner) GetAddTime() time.Time {
 	if o == nil || IsNil(o.AddTime) {
-		var ret string
+		var ret time.Time
 		return ret
 	}
 	return *o.AddTime
@@ -427,7 +428,7 @@ func (o *PaymentResponse200AllOfDataInner) GetAddTime() string {
 
 // GetAddTimeOk returns a tuple with the AddTime field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *PaymentResponse200AllOfDataInner) GetAddTimeOk() (*string, bool) {
+func (o *PaymentResponse200AllOfDataInner) GetAddTimeOk() (*time.Time, bool) {
 	if o == nil || IsNil(o.AddTime) {
 		return nil, false
 	}
@@ -443,15 +444,15 @@ func (o *PaymentResponse200AllOfDataInner) HasAddTime() bool {
 	return false
 }
 
-// SetAddTime gets a reference to the given string and assigns it to the AddTime field.
-func (o *PaymentResponse200AllOfDataInner) SetAddTime(v string) {
+// SetAddTime gets a reference to the given time.Time and assigns it to the AddTime field.
+func (o *PaymentResponse200AllOfDataInner) SetAddTime(v time.Time) {
 	o.AddTime = &v
 }
 
 // GetUpdateTime returns the UpdateTime field value if set, zero value otherwise.
-func (o *PaymentResponse200AllOfDataInner) GetUpdateTime() string {
+func (o *PaymentResponse200AllOfDataInner) GetUpdateTime() time.Time {
 	if o == nil || IsNil(o.UpdateTime) {
-		var ret string
+		var ret time.Time
 		return ret
 	}
 	return *o.UpdateTime
@@ -459,7 +460,7 @@ func (o *PaymentResponse200AllOfDataInner) GetUpdateTime() string {
 
 // GetUpdateTimeOk returns a tuple with the UpdateTime field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *PaymentResponse200AllOfDataInner) GetUpdateTimeOk() (*string, bool) {
+func (o *PaymentResponse200AllOfDataInner) GetUpdateTimeOk() (*time.Time, bool) {
 	if o == nil || IsNil(o.UpdateTime) {
 		return nil, false
 	}
@@ -475,8 +476,8 @@ func (o *PaymentResponse200AllOfDataInner) HasUpdateTime() bool {
 	return false
 }
 
-// SetUpdateTime gets a reference to the given string and assigns it to the UpdateTime field.
-func (o *PaymentResponse200AllOfDataInner) SetUpdateTime(v string) {
+// SetUpdateTime gets a reference to the given time.Time and assigns it to the UpdateTime field.
+func (o *PaymentResponse200AllOfDataInner) SetUpdateTime(v time.Time) {
 	o.UpdateTime = &v
 }
 

@@ -19,7 +19,7 @@ var _ MappedNullable = &CancelRecurringSubscriptionRequest{}
 
 // CancelRecurringSubscriptionRequest struct for CancelRecurringSubscriptionRequest
 type CancelRecurringSubscriptionRequest struct {
-	// The subscription termination date. All payments after specified date will be deleted. Default value is the current date.
+	// The subscription termination date. All payments after the specified date will be deleted. The end_date of the subscription will be set to the due date of the payment to follow the specified date. Default value is the current date.
 	EndDate *string `json:"end_date,omitempty"`
 }
 

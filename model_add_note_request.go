@@ -12,6 +12,8 @@ package openapi
 
 import (
 	"encoding/json"
+	"bytes"
+	"fmt"
 )
 
 // checks if the AddNoteRequest type satisfies the MappedNullable interface at compile time
@@ -31,13 +33,15 @@ type AddNoteRequest struct {
 	OrgId *int32 `json:"org_id,omitempty"`
 	// The ID of the user who will be marked as the author of the note. Only an admin can change the author.
 	UserId *int32 `json:"user_id,omitempty"`
-	// The optional creation date & time of the note in UTC. Can be set in the past or in the future. Requires admin user API token. Format: YYYY-MM-DD HH:MM:SS
+	// The optional creation date & time of the note in UTC. Can be set in the past or in the future. Format: YYYY-MM-DD HH:MM:SS
 	AddTime *string `json:"add_time,omitempty"`
 	PinnedToLeadFlag *float32 `json:"pinned_to_lead_flag,omitempty"`
 	PinnedToDealFlag *float32 `json:"pinned_to_deal_flag,omitempty"`
 	PinnedToOrganizationFlag *float32 `json:"pinned_to_organization_flag,omitempty"`
 	PinnedToPersonFlag *float32 `json:"pinned_to_person_flag,omitempty"`
 }
+
+type _AddNoteRequest AddNoteRequest
 
 // NewAddNoteRequest instantiates a new AddNoteRequest object
 // This constructor will assign default values to properties that have it defined,
@@ -443,6 +447,43 @@ func (o AddNoteRequest) ToMap() (map[string]interface{}, error) {
 		toSerialize["pinned_to_person_flag"] = o.PinnedToPersonFlag
 	}
 	return toSerialize, nil
+}
+
+func (o *AddNoteRequest) UnmarshalJSON(data []byte) (err error) {
+	// This validates that all required properties are included in the JSON object
+	// by unmarshalling the object into a generic map with string keys and checking
+	// that every required field exists as a key in the generic map.
+	requiredProperties := []string{
+		"content",
+	}
+
+	allProperties := make(map[string]interface{})
+
+	err = json.Unmarshal(data, &allProperties)
+
+	if err != nil {
+		return err;
+	}
+
+	for _, requiredProperty := range(requiredProperties) {
+		if _, exists := allProperties[requiredProperty]; !exists {
+			return fmt.Errorf("no value given for required property %v", requiredProperty)
+		}
+	}
+
+	varAddNoteRequest := _AddNoteRequest{}
+
+	decoder := json.NewDecoder(bytes.NewReader(data))
+	decoder.DisallowUnknownFields()
+	err = decoder.Decode(&varAddNoteRequest)
+
+	if err != nil {
+		return err
+	}
+
+	*o = AddNoteRequest(varAddNoteRequest)
+
+	return err
 }
 
 type NullableAddNoteRequest struct {

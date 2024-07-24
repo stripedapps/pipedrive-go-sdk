@@ -12,6 +12,8 @@ package openapi
 
 import (
 	"encoding/json"
+	"bytes"
+	"fmt"
 )
 
 // checks if the AddStageRequest type satisfies the MappedNullable interface at compile time
@@ -30,6 +32,8 @@ type AddStageRequest struct {
 	// The number of days the deals not updated in this stage would become rotten. Applies only if the `rotten_flag` is set.
 	RottenDays *int32 `json:"rotten_days,omitempty"`
 }
+
+type _AddStageRequest AddStageRequest
 
 // NewAddStageRequest instantiates a new AddStageRequest object
 // This constructor will assign default values to properties that have it defined,
@@ -216,6 +220,44 @@ func (o AddStageRequest) ToMap() (map[string]interface{}, error) {
 		toSerialize["rotten_days"] = o.RottenDays
 	}
 	return toSerialize, nil
+}
+
+func (o *AddStageRequest) UnmarshalJSON(data []byte) (err error) {
+	// This validates that all required properties are included in the JSON object
+	// by unmarshalling the object into a generic map with string keys and checking
+	// that every required field exists as a key in the generic map.
+	requiredProperties := []string{
+		"name",
+		"pipeline_id",
+	}
+
+	allProperties := make(map[string]interface{})
+
+	err = json.Unmarshal(data, &allProperties)
+
+	if err != nil {
+		return err;
+	}
+
+	for _, requiredProperty := range(requiredProperties) {
+		if _, exists := allProperties[requiredProperty]; !exists {
+			return fmt.Errorf("no value given for required property %v", requiredProperty)
+		}
+	}
+
+	varAddStageRequest := _AddStageRequest{}
+
+	decoder := json.NewDecoder(bytes.NewReader(data))
+	decoder.DisallowUnknownFields()
+	err = decoder.Decode(&varAddStageRequest)
+
+	if err != nil {
+		return err
+	}
+
+	*o = AddStageRequest(varAddStageRequest)
+
+	return err
 }
 
 type NullableAddStageRequest struct {

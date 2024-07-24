@@ -12,6 +12,8 @@ package openapi
 
 import (
 	"encoding/json"
+	"bytes"
+	"fmt"
 )
 
 // checks if the AddProductRequest type satisfies the MappedNullable interface at compile time
@@ -32,11 +34,17 @@ type AddProductRequest struct {
 	// Whether this product can be selected in deals or not
 	Selectable *bool `json:"selectable,omitempty"`
 	VisibleTo *string `json:"visible_to,omitempty"`
-	// The ID of the user who will be marked as the owner of this product. When omitted, the authorized user ID will be used.
+	// The ID of the user who will be marked as the owner of this product. When omitted, the authorized user ID will be used
 	OwnerId *int32 `json:"owner_id,omitempty"`
 	// An array of objects, each containing: `currency` (string), `price` (number), `cost` (number, optional), `overhead_cost` (number, optional). Note that there can only be one price per product per currency. When `prices` is omitted altogether, a default price of 0 and a default currency based on the company's currency will be assigned.
 	Prices []map[string]interface{} `json:"prices,omitempty"`
+	// Only available in Advanced and above plans  How often a customer is billed for access to a service or product 
+	BillingFrequency *string `json:"billing_frequency,omitempty"`
+	// Only available in Advanced and above plans  The number of times the billing frequency repeats for a product in a deal  When `billing_frequency` is set to `one-time`, this field must be `null`  For all the other values of `billing_frequency`, `null` represents a product billed indefinitely  Must be a positive integer less or equal to 312 
+	BillingFrequencyCycles NullableInt32 `json:"billing_frequency_cycles,omitempty"`
 }
+
+type _AddProductRequest AddProductRequest
 
 // NewAddProductRequest instantiates a new AddProductRequest object
 // This constructor will assign default values to properties that have it defined,
@@ -51,6 +59,8 @@ func NewAddProductRequest(name string) *AddProductRequest {
 	this.ActiveFlag = &activeFlag
 	var selectable bool = true
 	this.Selectable = &selectable
+	var billingFrequency string = "one-time"
+	this.BillingFrequency = &billingFrequency
 	return &this
 }
 
@@ -65,6 +75,8 @@ func NewAddProductRequestWithDefaults() *AddProductRequest {
 	this.ActiveFlag = &activeFlag
 	var selectable bool = true
 	this.Selectable = &selectable
+	var billingFrequency string = "one-time"
+	this.BillingFrequency = &billingFrequency
 	return &this
 }
 
@@ -348,6 +360,80 @@ func (o *AddProductRequest) SetPrices(v []map[string]interface{}) {
 	o.Prices = v
 }
 
+// GetBillingFrequency returns the BillingFrequency field value if set, zero value otherwise.
+func (o *AddProductRequest) GetBillingFrequency() string {
+	if o == nil || IsNil(o.BillingFrequency) {
+		var ret string
+		return ret
+	}
+	return *o.BillingFrequency
+}
+
+// GetBillingFrequencyOk returns a tuple with the BillingFrequency field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *AddProductRequest) GetBillingFrequencyOk() (*string, bool) {
+	if o == nil || IsNil(o.BillingFrequency) {
+		return nil, false
+	}
+	return o.BillingFrequency, true
+}
+
+// HasBillingFrequency returns a boolean if a field has been set.
+func (o *AddProductRequest) HasBillingFrequency() bool {
+	if o != nil && !IsNil(o.BillingFrequency) {
+		return true
+	}
+
+	return false
+}
+
+// SetBillingFrequency gets a reference to the given string and assigns it to the BillingFrequency field.
+func (o *AddProductRequest) SetBillingFrequency(v string) {
+	o.BillingFrequency = &v
+}
+
+// GetBillingFrequencyCycles returns the BillingFrequencyCycles field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *AddProductRequest) GetBillingFrequencyCycles() int32 {
+	if o == nil || IsNil(o.BillingFrequencyCycles.Get()) {
+		var ret int32
+		return ret
+	}
+	return *o.BillingFrequencyCycles.Get()
+}
+
+// GetBillingFrequencyCyclesOk returns a tuple with the BillingFrequencyCycles field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *AddProductRequest) GetBillingFrequencyCyclesOk() (*int32, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.BillingFrequencyCycles.Get(), o.BillingFrequencyCycles.IsSet()
+}
+
+// HasBillingFrequencyCycles returns a boolean if a field has been set.
+func (o *AddProductRequest) HasBillingFrequencyCycles() bool {
+	if o != nil && o.BillingFrequencyCycles.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetBillingFrequencyCycles gets a reference to the given NullableInt32 and assigns it to the BillingFrequencyCycles field.
+func (o *AddProductRequest) SetBillingFrequencyCycles(v int32) {
+	o.BillingFrequencyCycles.Set(&v)
+}
+// SetBillingFrequencyCyclesNil sets the value for BillingFrequencyCycles to be an explicit nil
+func (o *AddProductRequest) SetBillingFrequencyCyclesNil() {
+	o.BillingFrequencyCycles.Set(nil)
+}
+
+// UnsetBillingFrequencyCycles ensures that no value is present for BillingFrequencyCycles, not even an explicit nil
+func (o *AddProductRequest) UnsetBillingFrequencyCycles() {
+	o.BillingFrequencyCycles.Unset()
+}
+
 func (o AddProductRequest) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -383,7 +469,50 @@ func (o AddProductRequest) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.Prices) {
 		toSerialize["prices"] = o.Prices
 	}
+	if !IsNil(o.BillingFrequency) {
+		toSerialize["billing_frequency"] = o.BillingFrequency
+	}
+	if o.BillingFrequencyCycles.IsSet() {
+		toSerialize["billing_frequency_cycles"] = o.BillingFrequencyCycles.Get()
+	}
 	return toSerialize, nil
+}
+
+func (o *AddProductRequest) UnmarshalJSON(data []byte) (err error) {
+	// This validates that all required properties are included in the JSON object
+	// by unmarshalling the object into a generic map with string keys and checking
+	// that every required field exists as a key in the generic map.
+	requiredProperties := []string{
+		"name",
+	}
+
+	allProperties := make(map[string]interface{})
+
+	err = json.Unmarshal(data, &allProperties)
+
+	if err != nil {
+		return err;
+	}
+
+	for _, requiredProperty := range(requiredProperties) {
+		if _, exists := allProperties[requiredProperty]; !exists {
+			return fmt.Errorf("no value given for required property %v", requiredProperty)
+		}
+	}
+
+	varAddProductRequest := _AddProductRequest{}
+
+	decoder := json.NewDecoder(bytes.NewReader(data))
+	decoder.DisallowUnknownFields()
+	err = decoder.Decode(&varAddProductRequest)
+
+	if err != nil {
+		return err
+	}
+
+	*o = AddProductRequest(varAddProductRequest)
+
+	return err
 }
 
 type NullableAddProductRequest struct {

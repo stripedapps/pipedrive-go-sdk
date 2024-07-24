@@ -23,7 +23,7 @@ type GetDealResponse200 struct {
 	Success *bool `json:"success,omitempty"`
 	Data *DealNonStrictWithDetails `json:"data,omitempty"`
 	AdditionalData *GetDealResponse200AdditionalData `json:"additional_data,omitempty"`
-	RelatedObjects *GetDealsResponse200RelatedObjects `json:"related_objects,omitempty"`
+	RelatedObjects *GetDealResponse200RelatedObjects `json:"related_objects,omitempty"`
 }
 
 // NewGetDealResponse200 instantiates a new GetDealResponse200 object
@@ -140,9 +140,9 @@ func (o *GetDealResponse200) SetAdditionalData(v GetDealResponse200AdditionalDat
 }
 
 // GetRelatedObjects returns the RelatedObjects field value if set, zero value otherwise.
-func (o *GetDealResponse200) GetRelatedObjects() GetDealsResponse200RelatedObjects {
+func (o *GetDealResponse200) GetRelatedObjects() GetDealResponse200RelatedObjects {
 	if o == nil || IsNil(o.RelatedObjects) {
-		var ret GetDealsResponse200RelatedObjects
+		var ret GetDealResponse200RelatedObjects
 		return ret
 	}
 	return *o.RelatedObjects
@@ -150,7 +150,7 @@ func (o *GetDealResponse200) GetRelatedObjects() GetDealsResponse200RelatedObjec
 
 // GetRelatedObjectsOk returns a tuple with the RelatedObjects field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *GetDealResponse200) GetRelatedObjectsOk() (*GetDealsResponse200RelatedObjects, bool) {
+func (o *GetDealResponse200) GetRelatedObjectsOk() (*GetDealResponse200RelatedObjects, bool) {
 	if o == nil || IsNil(o.RelatedObjects) {
 		return nil, false
 	}
@@ -166,8 +166,8 @@ func (o *GetDealResponse200) HasRelatedObjects() bool {
 	return false
 }
 
-// SetRelatedObjects gets a reference to the given GetDealsResponse200RelatedObjects and assigns it to the RelatedObjects field.
-func (o *GetDealResponse200) SetRelatedObjects(v GetDealsResponse200RelatedObjects) {
+// SetRelatedObjects gets a reference to the given GetDealResponse200RelatedObjects and assigns it to the RelatedObjects field.
+func (o *GetDealResponse200) SetRelatedObjects(v GetDealResponse200RelatedObjects) {
 	o.RelatedObjects = &v
 }
 

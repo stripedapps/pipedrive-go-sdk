@@ -12,6 +12,8 @@ package openapi
 
 import (
 	"encoding/json"
+	"bytes"
+	"fmt"
 )
 
 // checks if the AddOrganizationRequest type satisfies the MappedNullable interface at compile time
@@ -21,12 +23,16 @@ var _ MappedNullable = &AddOrganizationRequest{}
 type AddOrganizationRequest struct {
 	// The name of the organization
 	Name string `json:"name"`
-	// The optional creation date & time of the organization in UTC. Requires admin user API token. Format: YYYY-MM-DD HH:MM:SS
+	// The optional creation date & time of the organization in UTC. Format: YYYY-MM-DD HH:MM:SS
 	AddTime *string `json:"add_time,omitempty"`
 	// The ID of the user who will be marked as the owner of this organization. When omitted, the authorized user ID will be used.
 	OwnerId *int32 `json:"owner_id,omitempty"`
+	// The ID of the label.
+	Label *int32 `json:"label,omitempty"`
 	VisibleTo *string `json:"visible_to,omitempty"`
 }
+
+type _AddOrganizationRequest AddOrganizationRequest
 
 // NewAddOrganizationRequest instantiates a new AddOrganizationRequest object
 // This constructor will assign default values to properties that have it defined,
@@ -134,6 +140,38 @@ func (o *AddOrganizationRequest) SetOwnerId(v int32) {
 	o.OwnerId = &v
 }
 
+// GetLabel returns the Label field value if set, zero value otherwise.
+func (o *AddOrganizationRequest) GetLabel() int32 {
+	if o == nil || IsNil(o.Label) {
+		var ret int32
+		return ret
+	}
+	return *o.Label
+}
+
+// GetLabelOk returns a tuple with the Label field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *AddOrganizationRequest) GetLabelOk() (*int32, bool) {
+	if o == nil || IsNil(o.Label) {
+		return nil, false
+	}
+	return o.Label, true
+}
+
+// HasLabel returns a boolean if a field has been set.
+func (o *AddOrganizationRequest) HasLabel() bool {
+	if o != nil && !IsNil(o.Label) {
+		return true
+	}
+
+	return false
+}
+
+// SetLabel gets a reference to the given int32 and assigns it to the Label field.
+func (o *AddOrganizationRequest) SetLabel(v int32) {
+	o.Label = &v
+}
+
 // GetVisibleTo returns the VisibleTo field value if set, zero value otherwise.
 func (o *AddOrganizationRequest) GetVisibleTo() string {
 	if o == nil || IsNil(o.VisibleTo) {
@@ -183,10 +221,50 @@ func (o AddOrganizationRequest) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.OwnerId) {
 		toSerialize["owner_id"] = o.OwnerId
 	}
+	if !IsNil(o.Label) {
+		toSerialize["label"] = o.Label
+	}
 	if !IsNil(o.VisibleTo) {
 		toSerialize["visible_to"] = o.VisibleTo
 	}
 	return toSerialize, nil
+}
+
+func (o *AddOrganizationRequest) UnmarshalJSON(data []byte) (err error) {
+	// This validates that all required properties are included in the JSON object
+	// by unmarshalling the object into a generic map with string keys and checking
+	// that every required field exists as a key in the generic map.
+	requiredProperties := []string{
+		"name",
+	}
+
+	allProperties := make(map[string]interface{})
+
+	err = json.Unmarshal(data, &allProperties)
+
+	if err != nil {
+		return err;
+	}
+
+	for _, requiredProperty := range(requiredProperties) {
+		if _, exists := allProperties[requiredProperty]; !exists {
+			return fmt.Errorf("no value given for required property %v", requiredProperty)
+		}
+	}
+
+	varAddOrganizationRequest := _AddOrganizationRequest{}
+
+	decoder := json.NewDecoder(bytes.NewReader(data))
+	decoder.DisallowUnknownFields()
+	err = decoder.Decode(&varAddOrganizationRequest)
+
+	if err != nil {
+		return err
+	}
+
+	*o = AddOrganizationRequest(varAddOrganizationRequest)
+
+	return err
 }
 
 type NullableAddOrganizationRequest struct {

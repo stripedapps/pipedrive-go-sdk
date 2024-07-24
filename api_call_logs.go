@@ -269,8 +269,6 @@ func (a *CallLogsAPIService) AddCallLogAudioFileExecute(r ApiAddCallLogAudioFile
 	var fileLocalVarFileBytes    []byte
 
 	fileLocalVarFormFileName = "file"
-
-
 	fileLocalVarFile := r.file
 
 	if fileLocalVarFile != nil {
@@ -712,6 +710,9 @@ func (a *CallLogsAPIService) GetUserCallLogsExecute(r ApiGetUserCallLogsRequest)
 
 	if r.start != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "start", r.start, "")
+	} else {
+		var defaultValue int32 = 0
+		r.start = &defaultValue
 	}
 	if r.limit != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "limit", r.limit, "")

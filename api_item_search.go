@@ -53,7 +53,7 @@ func (r ApiSearchItemRequest) Fields(fields string) ApiSearchItemRequest {
 	return r
 }
 
-// When enabled, the response will include up to 100 newest related leads and 100 newest related deals for each found person and organization and up to 100 newest related persons for each found organization.
+// When enabled, the response will include up to 100 newest related leads and 100 newest related deals for each found person and organization and up to 100 newest related persons for each found organization
 func (r ApiSearchItemRequest) SearchForRelatedItems(searchForRelatedItems bool) ApiSearchItemRequest {
 	r.searchForRelatedItems = &searchForRelatedItems
 	return r
@@ -144,6 +144,9 @@ func (a *ItemSearchAPIService) SearchItemExecute(r ApiSearchItemRequest) (*Searc
 	}
 	if r.start != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "start", r.start, "")
+	} else {
+		var defaultValue int32 = 0
+		r.start = &defaultValue
 	}
 	if r.limit != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "limit", r.limit, "")
@@ -323,6 +326,9 @@ func (a *ItemSearchAPIService) SearchItemByFieldExecute(r ApiSearchItemByFieldRe
 	parameterAddToHeaderOrQuery(localVarQueryParams, "field_type", r.fieldType, "")
 	if r.exactMatch != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "exact_match", r.exactMatch, "")
+	} else {
+		var defaultValue bool = false
+		r.exactMatch = &defaultValue
 	}
 	parameterAddToHeaderOrQuery(localVarQueryParams, "field_key", r.fieldKey, "")
 	if r.returnItemIds != nil {

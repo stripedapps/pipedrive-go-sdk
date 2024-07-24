@@ -12,6 +12,7 @@ package openapi
 
 import (
 	"encoding/json"
+	"time"
 )
 
 // checks if the GetActivityTypesResponse200AllOfDataInner type satisfies the MappedNullable interface at compile time
@@ -36,9 +37,9 @@ type GetActivityTypesResponse200AllOfDataInner struct {
 	// Whether the activity type is a custom one or not
 	IsCustomFlag *bool `json:"is_custom_flag,omitempty"`
 	// The creation time of the activity type
-	AddTime *string `json:"add_time,omitempty"`
+	AddTime *time.Time `json:"add_time,omitempty"`
 	// The update time of the activity type
-	UpdateTime *string `json:"update_time,omitempty"`
+	UpdateTime *time.Time `json:"update_time,omitempty"`
 }
 
 // NewGetActivityTypesResponse200AllOfDataInner instantiates a new GetActivityTypesResponse200AllOfDataInner object
@@ -315,9 +316,9 @@ func (o *GetActivityTypesResponse200AllOfDataInner) SetIsCustomFlag(v bool) {
 }
 
 // GetAddTime returns the AddTime field value if set, zero value otherwise.
-func (o *GetActivityTypesResponse200AllOfDataInner) GetAddTime() string {
+func (o *GetActivityTypesResponse200AllOfDataInner) GetAddTime() time.Time {
 	if o == nil || IsNil(o.AddTime) {
-		var ret string
+		var ret time.Time
 		return ret
 	}
 	return *o.AddTime
@@ -325,7 +326,7 @@ func (o *GetActivityTypesResponse200AllOfDataInner) GetAddTime() string {
 
 // GetAddTimeOk returns a tuple with the AddTime field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *GetActivityTypesResponse200AllOfDataInner) GetAddTimeOk() (*string, bool) {
+func (o *GetActivityTypesResponse200AllOfDataInner) GetAddTimeOk() (*time.Time, bool) {
 	if o == nil || IsNil(o.AddTime) {
 		return nil, false
 	}
@@ -341,15 +342,15 @@ func (o *GetActivityTypesResponse200AllOfDataInner) HasAddTime() bool {
 	return false
 }
 
-// SetAddTime gets a reference to the given string and assigns it to the AddTime field.
-func (o *GetActivityTypesResponse200AllOfDataInner) SetAddTime(v string) {
+// SetAddTime gets a reference to the given time.Time and assigns it to the AddTime field.
+func (o *GetActivityTypesResponse200AllOfDataInner) SetAddTime(v time.Time) {
 	o.AddTime = &v
 }
 
 // GetUpdateTime returns the UpdateTime field value if set, zero value otherwise.
-func (o *GetActivityTypesResponse200AllOfDataInner) GetUpdateTime() string {
+func (o *GetActivityTypesResponse200AllOfDataInner) GetUpdateTime() time.Time {
 	if o == nil || IsNil(o.UpdateTime) {
-		var ret string
+		var ret time.Time
 		return ret
 	}
 	return *o.UpdateTime
@@ -357,7 +358,7 @@ func (o *GetActivityTypesResponse200AllOfDataInner) GetUpdateTime() string {
 
 // GetUpdateTimeOk returns a tuple with the UpdateTime field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *GetActivityTypesResponse200AllOfDataInner) GetUpdateTimeOk() (*string, bool) {
+func (o *GetActivityTypesResponse200AllOfDataInner) GetUpdateTimeOk() (*time.Time, bool) {
 	if o == nil || IsNil(o.UpdateTime) {
 		return nil, false
 	}
@@ -373,8 +374,8 @@ func (o *GetActivityTypesResponse200AllOfDataInner) HasUpdateTime() bool {
 	return false
 }
 
-// SetUpdateTime gets a reference to the given string and assigns it to the UpdateTime field.
-func (o *GetActivityTypesResponse200AllOfDataInner) SetUpdateTime(v string) {
+// SetUpdateTime gets a reference to the given time.Time and assigns it to the UpdateTime field.
+func (o *GetActivityTypesResponse200AllOfDataInner) SetUpdateTime(v time.Time) {
 	o.UpdateTime = &v
 }
 

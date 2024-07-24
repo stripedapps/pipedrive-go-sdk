@@ -12,6 +12,8 @@ package openapi
 
 import (
 	"encoding/json"
+	"bytes"
+	"fmt"
 )
 
 // checks if the AddOrUpdateRoleSettingRequest type satisfies the MappedNullable interface at compile time
@@ -23,6 +25,8 @@ type AddOrUpdateRoleSettingRequest struct {
 	// Possible values for the `default_visibility` setting depending on the subscription plan:<br> <table class='role-setting'> <caption><b>Essential / Advanced plan</b></caption> <tr><th><b>Value</b></th><th><b>Description</b></th></tr> <tr><td>`1`</td><td>Owner & Followers</td></tr> <tr><td>`3`</td><td>Entire company</td></tr> </table> <br> <table class='role-setting'> <caption><b>Professional / Enterprise plan</b></caption> <tr><th><b>Value</b></th><th><b>Description</b></th></tr> <tr><td>`1`</td><td>Owner only</td></tr> <tr><td>`3`</td><td>Owner&#39;s visibility group</td></tr> <tr><td>`5`</td><td>Owner&#39;s visibility group and sub-groups</td></tr> <tr><td>`7`</td><td>Entire company</td></tr> </table> <br> Read more about visibility groups <a href='https://support.pipedrive.com/en/article/visibility-groups'>here</a>.
 	Value int32 `json:"value"`
 }
+
+type _AddOrUpdateRoleSettingRequest AddOrUpdateRoleSettingRequest
 
 // NewAddOrUpdateRoleSettingRequest instantiates a new AddOrUpdateRoleSettingRequest object
 // This constructor will assign default values to properties that have it defined,
@@ -104,6 +108,44 @@ func (o AddOrUpdateRoleSettingRequest) ToMap() (map[string]interface{}, error) {
 	toSerialize["setting_key"] = o.SettingKey
 	toSerialize["value"] = o.Value
 	return toSerialize, nil
+}
+
+func (o *AddOrUpdateRoleSettingRequest) UnmarshalJSON(data []byte) (err error) {
+	// This validates that all required properties are included in the JSON object
+	// by unmarshalling the object into a generic map with string keys and checking
+	// that every required field exists as a key in the generic map.
+	requiredProperties := []string{
+		"setting_key",
+		"value",
+	}
+
+	allProperties := make(map[string]interface{})
+
+	err = json.Unmarshal(data, &allProperties)
+
+	if err != nil {
+		return err;
+	}
+
+	for _, requiredProperty := range(requiredProperties) {
+		if _, exists := allProperties[requiredProperty]; !exists {
+			return fmt.Errorf("no value given for required property %v", requiredProperty)
+		}
+	}
+
+	varAddOrUpdateRoleSettingRequest := _AddOrUpdateRoleSettingRequest{}
+
+	decoder := json.NewDecoder(bytes.NewReader(data))
+	decoder.DisallowUnknownFields()
+	err = decoder.Decode(&varAddOrUpdateRoleSettingRequest)
+
+	if err != nil {
+		return err
+	}
+
+	*o = AddOrUpdateRoleSettingRequest(varAddOrUpdateRoleSettingRequest)
+
+	return err
 }
 
 type NullableAddOrUpdateRoleSettingRequest struct {

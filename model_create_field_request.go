@@ -12,6 +12,8 @@ package openapi
 
 import (
 	"encoding/json"
+	"bytes"
+	"fmt"
 )
 
 // checks if the CreateFieldRequest type satisfies the MappedNullable interface at compile time
@@ -22,12 +24,14 @@ type CreateFieldRequest struct {
 	// The name of the field
 	Name string `json:"name"`
 	// When `field_type` is either set or enum, possible options must be supplied as a JSON-encoded sequential array of objects. Example: `[{\"label\":\"New Item\"}]`
-	Options *string `json:"options,omitempty"`
+	Options []map[string]interface{} `json:"options,omitempty"`
 	// Whether the field is available in the 'add new' modal or not (both in the web and mobile app)
 	AddVisibleFlag *bool `json:"add_visible_flag,omitempty"`
-	// The type of the field<table><tr><th>Value</th><th>Description</th></tr><tr><td>`address`</td><td>Address field (has multiple subfields, autocompleted by Google Maps)</td></tr><tr><td>`date`</td><td>Date (format YYYY-MM-DD)</td></tr><tr><td>`daterange`</td><td>Date-range field (has a start date and end date value, both YYYY-MM-DD)</td></tr><tr><td>`double`</td><td>Numeric value</td></tr><tr><td>`enum`</td><td>Options field with a single possible chosen option</td></tr><tr></tr><tr><td>`monetary`</td><td>Monetary field (has a numeric value and a currency value)</td></tr><tr><td>`org`</td><td>Organization field (contains an organization ID which is stored on the same account)</td></tr><tr><td>`people`</td><td>Person field (contains a person ID which is stored on the same account)</td></tr><tr><td>`phone`</td><td>Phone field (up to 255 numbers and/or characters)</td></tr><tr><td>`set`</td><td>Options field with a possibility of having multiple chosen options</td></tr><tr><td>`text`</td><td>Long text (up to 65k characters)</td></tr><tr><td>`time`</td><td>Time field (format HH:MM:SS)</td></tr><tr><td>`timerange`</td><td>Time-range field (has a start time and end time value, both HH:MM:SS)</td></tr><tr><td>`user`</td><td>User field (contains a user ID of another Pipedrive user)</td></tr><tr><td>`varchar`</td><td>Text (up to 255 characters)</td></tr><tr><td>`varchar_auto`</td><td>Autocomplete text (up to 255 characters)</td></tr><tr><td>`visible_to`</td><td>System field that keeps item's visibility setting</td></tr></table>
+	// The type of the field<table><tr><th>Value</th><th>Description</th></tr><tr><td>`address`</td><td>Address field</td></tr><tr><td>`date`</td><td>Date (format YYYY-MM-DD)</td></tr><tr><td>`daterange`</td><td>Date-range field (has a start date and end date value, both YYYY-MM-DD)</td></tr><tr><td>`double`</td><td>Numeric value</td></tr><tr><td>`enum`</td><td>Options field with a single possible chosen option</td></tr><tr></tr><tr><td>`monetary`</td><td>Monetary field (has a numeric value and a currency value)</td></tr><tr><td>`org`</td><td>Organization field (contains an organization ID which is stored on the same account)</td></tr><tr><td>`people`</td><td>Person field (contains a person ID which is stored on the same account)</td></tr><tr><td>`phone`</td><td>Phone field (up to 255 numbers and/or characters)</td></tr><tr><td>`set`</td><td>Options field with a possibility of having multiple chosen options</td></tr><tr><td>`text`</td><td>Long text (up to 65k characters)</td></tr><tr><td>`time`</td><td>Time field (format HH:MM:SS)</td></tr><tr><td>`timerange`</td><td>Time-range field (has a start time and end time value, both HH:MM:SS)</td></tr><tr><td>`user`</td><td>User field (contains a user ID of another Pipedrive user)</td></tr><tr><td>`varchar`</td><td>Text (up to 255 characters)</td></tr><tr><td>`varchar_auto`</td><td>Autocomplete text (up to 255 characters)</td></tr><tr><td>`visible_to`</td><td>System field that keeps item's visibility setting</td></tr></table>
 	FieldType string `json:"field_type"`
 }
+
+type _CreateFieldRequest CreateFieldRequest
 
 // NewCreateFieldRequest instantiates a new CreateFieldRequest object
 // This constructor will assign default values to properties that have it defined,
@@ -77,17 +81,17 @@ func (o *CreateFieldRequest) SetName(v string) {
 }
 
 // GetOptions returns the Options field value if set, zero value otherwise.
-func (o *CreateFieldRequest) GetOptions() string {
+func (o *CreateFieldRequest) GetOptions() []map[string]interface{} {
 	if o == nil || IsNil(o.Options) {
-		var ret string
+		var ret []map[string]interface{}
 		return ret
 	}
-	return *o.Options
+	return o.Options
 }
 
 // GetOptionsOk returns a tuple with the Options field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *CreateFieldRequest) GetOptionsOk() (*string, bool) {
+func (o *CreateFieldRequest) GetOptionsOk() ([]map[string]interface{}, bool) {
 	if o == nil || IsNil(o.Options) {
 		return nil, false
 	}
@@ -103,9 +107,9 @@ func (o *CreateFieldRequest) HasOptions() bool {
 	return false
 }
 
-// SetOptions gets a reference to the given string and assigns it to the Options field.
-func (o *CreateFieldRequest) SetOptions(v string) {
-	o.Options = &v
+// SetOptions gets a reference to the given []map[string]interface{} and assigns it to the Options field.
+func (o *CreateFieldRequest) SetOptions(v []map[string]interface{}) {
+	o.Options = v
 }
 
 // GetAddVisibleFlag returns the AddVisibleFlag field value if set, zero value otherwise.
@@ -183,6 +187,44 @@ func (o CreateFieldRequest) ToMap() (map[string]interface{}, error) {
 	}
 	toSerialize["field_type"] = o.FieldType
 	return toSerialize, nil
+}
+
+func (o *CreateFieldRequest) UnmarshalJSON(data []byte) (err error) {
+	// This validates that all required properties are included in the JSON object
+	// by unmarshalling the object into a generic map with string keys and checking
+	// that every required field exists as a key in the generic map.
+	requiredProperties := []string{
+		"name",
+		"field_type",
+	}
+
+	allProperties := make(map[string]interface{})
+
+	err = json.Unmarshal(data, &allProperties)
+
+	if err != nil {
+		return err;
+	}
+
+	for _, requiredProperty := range(requiredProperties) {
+		if _, exists := allProperties[requiredProperty]; !exists {
+			return fmt.Errorf("no value given for required property %v", requiredProperty)
+		}
+	}
+
+	varCreateFieldRequest := _CreateFieldRequest{}
+
+	decoder := json.NewDecoder(bytes.NewReader(data))
+	decoder.DisallowUnknownFields()
+	err = decoder.Decode(&varCreateFieldRequest)
+
+	if err != nil {
+		return err
+	}
+
+	*o = CreateFieldRequest(varCreateFieldRequest)
+
+	return err
 }
 
 type NullableCreateFieldRequest struct {

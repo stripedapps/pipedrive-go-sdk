@@ -20,9 +20,9 @@ var _ MappedNullable = &ListProductsResponse200AllOfAdditionalData{}
 // ListProductsResponse200AllOfAdditionalData struct for ListProductsResponse200AllOfAdditionalData
 type ListProductsResponse200AllOfAdditionalData struct {
 	// The total quantity of the products
-	ProductsQuantityTotal *float32 `json:"products_quantity_total,omitempty"`
+	ProductsQuantityTotal *int32 `json:"products_quantity_total,omitempty"`
 	// The total sum of the products
-	ProductsSumTotal *float32 `json:"products_sum_total,omitempty"`
+	ProductsSumTotal *int32 `json:"products_sum_total,omitempty"`
 	// The total formatted quantity of the products
 	ProductsQuantityTotalFormatted *string `json:"products_quantity_total_formatted,omitempty"`
 	// The total formatted sum of the products
@@ -48,9 +48,9 @@ func NewListProductsResponse200AllOfAdditionalDataWithDefaults() *ListProductsRe
 }
 
 // GetProductsQuantityTotal returns the ProductsQuantityTotal field value if set, zero value otherwise.
-func (o *ListProductsResponse200AllOfAdditionalData) GetProductsQuantityTotal() float32 {
+func (o *ListProductsResponse200AllOfAdditionalData) GetProductsQuantityTotal() int32 {
 	if o == nil || IsNil(o.ProductsQuantityTotal) {
-		var ret float32
+		var ret int32
 		return ret
 	}
 	return *o.ProductsQuantityTotal
@@ -58,7 +58,7 @@ func (o *ListProductsResponse200AllOfAdditionalData) GetProductsQuantityTotal() 
 
 // GetProductsQuantityTotalOk returns a tuple with the ProductsQuantityTotal field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *ListProductsResponse200AllOfAdditionalData) GetProductsQuantityTotalOk() (*float32, bool) {
+func (o *ListProductsResponse200AllOfAdditionalData) GetProductsQuantityTotalOk() (*int32, bool) {
 	if o == nil || IsNil(o.ProductsQuantityTotal) {
 		return nil, false
 	}
@@ -75,14 +75,14 @@ func (o *ListProductsResponse200AllOfAdditionalData) HasProductsQuantityTotal() 
 }
 
 // SetProductsQuantityTotal gets a reference to the given int32 and assigns it to the ProductsQuantityTotal field.
-func (o *ListProductsResponse200AllOfAdditionalData) SetProductsQuantityTotal(v float32) {
+func (o *ListProductsResponse200AllOfAdditionalData) SetProductsQuantityTotal(v int32) {
 	o.ProductsQuantityTotal = &v
 }
 
 // GetProductsSumTotal returns the ProductsSumTotal field value if set, zero value otherwise.
-func (o *ListProductsResponse200AllOfAdditionalData) GetProductsSumTotal() float32 {
+func (o *ListProductsResponse200AllOfAdditionalData) GetProductsSumTotal() int32 {
 	if o == nil || IsNil(o.ProductsSumTotal) {
-		var ret float32
+		var ret int32
 		return ret
 	}
 	return *o.ProductsSumTotal
@@ -90,7 +90,7 @@ func (o *ListProductsResponse200AllOfAdditionalData) GetProductsSumTotal() float
 
 // GetProductsSumTotalOk returns a tuple with the ProductsSumTotal field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *ListProductsResponse200AllOfAdditionalData) GetProductsSumTotalOk() (*float32, bool) {
+func (o *ListProductsResponse200AllOfAdditionalData) GetProductsSumTotalOk() (*int32, bool) {
 	if o == nil || IsNil(o.ProductsSumTotal) {
 		return nil, false
 	}
@@ -107,7 +107,7 @@ func (o *ListProductsResponse200AllOfAdditionalData) HasProductsSumTotal() bool 
 }
 
 // SetProductsSumTotal gets a reference to the given int32 and assigns it to the ProductsSumTotal field.
-func (o *ListProductsResponse200AllOfAdditionalData) SetProductsSumTotal(v float32) {
+func (o *ListProductsResponse200AllOfAdditionalData) SetProductsSumTotal(v int32) {
 	o.ProductsSumTotal = &v
 }
 

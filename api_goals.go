@@ -545,6 +545,9 @@ func (a *GoalsAPIService) GetGoalsExecute(r ApiGetGoalsRequest) (*GetGoalsRespon
 	}
 	if r.isActive != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "is_active", r.isActive, "")
+	} else {
+		var defaultValue bool = true
+		r.isActive = &defaultValue
 	}
 	if r.assigneeId != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "assignee.id", r.assigneeId, "")

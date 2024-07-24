@@ -133,6 +133,26 @@ type DealStrict struct {
 	OrgHidden *bool `json:"org_hidden,omitempty"`
 	// If the person that is associated with the deal is hidden or not
 	PersonHidden *bool `json:"person_hidden,omitempty"`
+	// The way this Deal was created. `origin` field is set by Pipedrive when Deal is created and cannot be changed.
+	Origin *string `json:"origin,omitempty"`
+	// The optional ID to further distinguish the origin of the deal - e.g. Which API integration created this Deal.
+	OriginId NullableString `json:"origin_id,omitempty"`
+	// The ID of your Marketing channel this Deal was created from. Recognized Marketing channels can be configured in your <a href=\"https://app.pipedrive.com/settings/fields\" target=\"_blank\" rel=\"noopener noreferrer\">Company settings</a>.
+	Channel NullableInt32 `json:"channel,omitempty"`
+	// The optional ID to further distinguish the Marketing channel.
+	ChannelId NullableString `json:"channel_id,omitempty"`
+	// Only available in Advanced and above plans  The Annual Recurring Revenue of the deal  Null if there are no products attached to the deal 
+	Arr NullableFloat32 `json:"arr,omitempty"`
+	// Only available in Advanced and above plans  The Monthly Recurring Revenue of the deal  Null if there are no products attached to the deal 
+	Mrr NullableFloat32 `json:"mrr,omitempty"`
+	// Only available in Advanced and above plans  The Annual Contract Value of the deal  Null if there are no products attached to the deal 
+	Acv NullableFloat32 `json:"acv,omitempty"`
+	// Only available in Advanced and above plans  The Currency for Annual Recurring Revenue of the deal  If the `arr` is null, this will also be null 
+	ArrCurrency NullableString `json:"arr_currency,omitempty"`
+	// Only available in Advanced and above plans  The Currency for Monthly Recurring Revenue of the deal  If the `mrr` is null, this will also be null 
+	MrrCurrency NullableString `json:"mrr_currency,omitempty"`
+	// Only available in Advanced and above plans  The Currency for Annual Contract Value of the deal  If the `acv` is null, this will also be null 
+	AcvCurrency NullableString `json:"acv_currency,omitempty"`
 }
 
 // NewDealStrict instantiates a new DealStrict object
@@ -2046,6 +2066,416 @@ func (o *DealStrict) SetPersonHidden(v bool) {
 	o.PersonHidden = &v
 }
 
+// GetOrigin returns the Origin field value if set, zero value otherwise.
+func (o *DealStrict) GetOrigin() string {
+	if o == nil || IsNil(o.Origin) {
+		var ret string
+		return ret
+	}
+	return *o.Origin
+}
+
+// GetOriginOk returns a tuple with the Origin field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *DealStrict) GetOriginOk() (*string, bool) {
+	if o == nil || IsNil(o.Origin) {
+		return nil, false
+	}
+	return o.Origin, true
+}
+
+// HasOrigin returns a boolean if a field has been set.
+func (o *DealStrict) HasOrigin() bool {
+	if o != nil && !IsNil(o.Origin) {
+		return true
+	}
+
+	return false
+}
+
+// SetOrigin gets a reference to the given string and assigns it to the Origin field.
+func (o *DealStrict) SetOrigin(v string) {
+	o.Origin = &v
+}
+
+// GetOriginId returns the OriginId field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *DealStrict) GetOriginId() string {
+	if o == nil || IsNil(o.OriginId.Get()) {
+		var ret string
+		return ret
+	}
+	return *o.OriginId.Get()
+}
+
+// GetOriginIdOk returns a tuple with the OriginId field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *DealStrict) GetOriginIdOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.OriginId.Get(), o.OriginId.IsSet()
+}
+
+// HasOriginId returns a boolean if a field has been set.
+func (o *DealStrict) HasOriginId() bool {
+	if o != nil && o.OriginId.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetOriginId gets a reference to the given NullableString and assigns it to the OriginId field.
+func (o *DealStrict) SetOriginId(v string) {
+	o.OriginId.Set(&v)
+}
+// SetOriginIdNil sets the value for OriginId to be an explicit nil
+func (o *DealStrict) SetOriginIdNil() {
+	o.OriginId.Set(nil)
+}
+
+// UnsetOriginId ensures that no value is present for OriginId, not even an explicit nil
+func (o *DealStrict) UnsetOriginId() {
+	o.OriginId.Unset()
+}
+
+// GetChannel returns the Channel field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *DealStrict) GetChannel() int32 {
+	if o == nil || IsNil(o.Channel.Get()) {
+		var ret int32
+		return ret
+	}
+	return *o.Channel.Get()
+}
+
+// GetChannelOk returns a tuple with the Channel field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *DealStrict) GetChannelOk() (*int32, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.Channel.Get(), o.Channel.IsSet()
+}
+
+// HasChannel returns a boolean if a field has been set.
+func (o *DealStrict) HasChannel() bool {
+	if o != nil && o.Channel.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetChannel gets a reference to the given NullableInt32 and assigns it to the Channel field.
+func (o *DealStrict) SetChannel(v int32) {
+	o.Channel.Set(&v)
+}
+// SetChannelNil sets the value for Channel to be an explicit nil
+func (o *DealStrict) SetChannelNil() {
+	o.Channel.Set(nil)
+}
+
+// UnsetChannel ensures that no value is present for Channel, not even an explicit nil
+func (o *DealStrict) UnsetChannel() {
+	o.Channel.Unset()
+}
+
+// GetChannelId returns the ChannelId field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *DealStrict) GetChannelId() string {
+	if o == nil || IsNil(o.ChannelId.Get()) {
+		var ret string
+		return ret
+	}
+	return *o.ChannelId.Get()
+}
+
+// GetChannelIdOk returns a tuple with the ChannelId field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *DealStrict) GetChannelIdOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.ChannelId.Get(), o.ChannelId.IsSet()
+}
+
+// HasChannelId returns a boolean if a field has been set.
+func (o *DealStrict) HasChannelId() bool {
+	if o != nil && o.ChannelId.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetChannelId gets a reference to the given NullableString and assigns it to the ChannelId field.
+func (o *DealStrict) SetChannelId(v string) {
+	o.ChannelId.Set(&v)
+}
+// SetChannelIdNil sets the value for ChannelId to be an explicit nil
+func (o *DealStrict) SetChannelIdNil() {
+	o.ChannelId.Set(nil)
+}
+
+// UnsetChannelId ensures that no value is present for ChannelId, not even an explicit nil
+func (o *DealStrict) UnsetChannelId() {
+	o.ChannelId.Unset()
+}
+
+// GetArr returns the Arr field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *DealStrict) GetArr() float32 {
+	if o == nil || IsNil(o.Arr.Get()) {
+		var ret float32
+		return ret
+	}
+	return *o.Arr.Get()
+}
+
+// GetArrOk returns a tuple with the Arr field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *DealStrict) GetArrOk() (*float32, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.Arr.Get(), o.Arr.IsSet()
+}
+
+// HasArr returns a boolean if a field has been set.
+func (o *DealStrict) HasArr() bool {
+	if o != nil && o.Arr.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetArr gets a reference to the given NullableFloat32 and assigns it to the Arr field.
+func (o *DealStrict) SetArr(v float32) {
+	o.Arr.Set(&v)
+}
+// SetArrNil sets the value for Arr to be an explicit nil
+func (o *DealStrict) SetArrNil() {
+	o.Arr.Set(nil)
+}
+
+// UnsetArr ensures that no value is present for Arr, not even an explicit nil
+func (o *DealStrict) UnsetArr() {
+	o.Arr.Unset()
+}
+
+// GetMrr returns the Mrr field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *DealStrict) GetMrr() float32 {
+	if o == nil || IsNil(o.Mrr.Get()) {
+		var ret float32
+		return ret
+	}
+	return *o.Mrr.Get()
+}
+
+// GetMrrOk returns a tuple with the Mrr field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *DealStrict) GetMrrOk() (*float32, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.Mrr.Get(), o.Mrr.IsSet()
+}
+
+// HasMrr returns a boolean if a field has been set.
+func (o *DealStrict) HasMrr() bool {
+	if o != nil && o.Mrr.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetMrr gets a reference to the given NullableFloat32 and assigns it to the Mrr field.
+func (o *DealStrict) SetMrr(v float32) {
+	o.Mrr.Set(&v)
+}
+// SetMrrNil sets the value for Mrr to be an explicit nil
+func (o *DealStrict) SetMrrNil() {
+	o.Mrr.Set(nil)
+}
+
+// UnsetMrr ensures that no value is present for Mrr, not even an explicit nil
+func (o *DealStrict) UnsetMrr() {
+	o.Mrr.Unset()
+}
+
+// GetAcv returns the Acv field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *DealStrict) GetAcv() float32 {
+	if o == nil || IsNil(o.Acv.Get()) {
+		var ret float32
+		return ret
+	}
+	return *o.Acv.Get()
+}
+
+// GetAcvOk returns a tuple with the Acv field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *DealStrict) GetAcvOk() (*float32, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.Acv.Get(), o.Acv.IsSet()
+}
+
+// HasAcv returns a boolean if a field has been set.
+func (o *DealStrict) HasAcv() bool {
+	if o != nil && o.Acv.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetAcv gets a reference to the given NullableFloat32 and assigns it to the Acv field.
+func (o *DealStrict) SetAcv(v float32) {
+	o.Acv.Set(&v)
+}
+// SetAcvNil sets the value for Acv to be an explicit nil
+func (o *DealStrict) SetAcvNil() {
+	o.Acv.Set(nil)
+}
+
+// UnsetAcv ensures that no value is present for Acv, not even an explicit nil
+func (o *DealStrict) UnsetAcv() {
+	o.Acv.Unset()
+}
+
+// GetArrCurrency returns the ArrCurrency field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *DealStrict) GetArrCurrency() string {
+	if o == nil || IsNil(o.ArrCurrency.Get()) {
+		var ret string
+		return ret
+	}
+	return *o.ArrCurrency.Get()
+}
+
+// GetArrCurrencyOk returns a tuple with the ArrCurrency field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *DealStrict) GetArrCurrencyOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.ArrCurrency.Get(), o.ArrCurrency.IsSet()
+}
+
+// HasArrCurrency returns a boolean if a field has been set.
+func (o *DealStrict) HasArrCurrency() bool {
+	if o != nil && o.ArrCurrency.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetArrCurrency gets a reference to the given NullableString and assigns it to the ArrCurrency field.
+func (o *DealStrict) SetArrCurrency(v string) {
+	o.ArrCurrency.Set(&v)
+}
+// SetArrCurrencyNil sets the value for ArrCurrency to be an explicit nil
+func (o *DealStrict) SetArrCurrencyNil() {
+	o.ArrCurrency.Set(nil)
+}
+
+// UnsetArrCurrency ensures that no value is present for ArrCurrency, not even an explicit nil
+func (o *DealStrict) UnsetArrCurrency() {
+	o.ArrCurrency.Unset()
+}
+
+// GetMrrCurrency returns the MrrCurrency field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *DealStrict) GetMrrCurrency() string {
+	if o == nil || IsNil(o.MrrCurrency.Get()) {
+		var ret string
+		return ret
+	}
+	return *o.MrrCurrency.Get()
+}
+
+// GetMrrCurrencyOk returns a tuple with the MrrCurrency field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *DealStrict) GetMrrCurrencyOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.MrrCurrency.Get(), o.MrrCurrency.IsSet()
+}
+
+// HasMrrCurrency returns a boolean if a field has been set.
+func (o *DealStrict) HasMrrCurrency() bool {
+	if o != nil && o.MrrCurrency.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetMrrCurrency gets a reference to the given NullableString and assigns it to the MrrCurrency field.
+func (o *DealStrict) SetMrrCurrency(v string) {
+	o.MrrCurrency.Set(&v)
+}
+// SetMrrCurrencyNil sets the value for MrrCurrency to be an explicit nil
+func (o *DealStrict) SetMrrCurrencyNil() {
+	o.MrrCurrency.Set(nil)
+}
+
+// UnsetMrrCurrency ensures that no value is present for MrrCurrency, not even an explicit nil
+func (o *DealStrict) UnsetMrrCurrency() {
+	o.MrrCurrency.Unset()
+}
+
+// GetAcvCurrency returns the AcvCurrency field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *DealStrict) GetAcvCurrency() string {
+	if o == nil || IsNil(o.AcvCurrency.Get()) {
+		var ret string
+		return ret
+	}
+	return *o.AcvCurrency.Get()
+}
+
+// GetAcvCurrencyOk returns a tuple with the AcvCurrency field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *DealStrict) GetAcvCurrencyOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.AcvCurrency.Get(), o.AcvCurrency.IsSet()
+}
+
+// HasAcvCurrency returns a boolean if a field has been set.
+func (o *DealStrict) HasAcvCurrency() bool {
+	if o != nil && o.AcvCurrency.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetAcvCurrency gets a reference to the given NullableString and assigns it to the AcvCurrency field.
+func (o *DealStrict) SetAcvCurrency(v string) {
+	o.AcvCurrency.Set(&v)
+}
+// SetAcvCurrencyNil sets the value for AcvCurrency to be an explicit nil
+func (o *DealStrict) SetAcvCurrencyNil() {
+	o.AcvCurrency.Set(nil)
+}
+
+// UnsetAcvCurrency ensures that no value is present for AcvCurrency, not even an explicit nil
+func (o *DealStrict) UnsetAcvCurrency() {
+	o.AcvCurrency.Unset()
+}
+
 func (o DealStrict) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -2226,6 +2656,36 @@ func (o DealStrict) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.PersonHidden) {
 		toSerialize["person_hidden"] = o.PersonHidden
+	}
+	if !IsNil(o.Origin) {
+		toSerialize["origin"] = o.Origin
+	}
+	if o.OriginId.IsSet() {
+		toSerialize["origin_id"] = o.OriginId.Get()
+	}
+	if o.Channel.IsSet() {
+		toSerialize["channel"] = o.Channel.Get()
+	}
+	if o.ChannelId.IsSet() {
+		toSerialize["channel_id"] = o.ChannelId.Get()
+	}
+	if o.Arr.IsSet() {
+		toSerialize["arr"] = o.Arr.Get()
+	}
+	if o.Mrr.IsSet() {
+		toSerialize["mrr"] = o.Mrr.Get()
+	}
+	if o.Acv.IsSet() {
+		toSerialize["acv"] = o.Acv.Get()
+	}
+	if o.ArrCurrency.IsSet() {
+		toSerialize["arr_currency"] = o.ArrCurrency.Get()
+	}
+	if o.MrrCurrency.IsSet() {
+		toSerialize["mrr_currency"] = o.MrrCurrency.Get()
+	}
+	if o.AcvCurrency.IsSet() {
+		toSerialize["acv_currency"] = o.AcvCurrency.Get()
 	}
 	return toSerialize, nil
 }

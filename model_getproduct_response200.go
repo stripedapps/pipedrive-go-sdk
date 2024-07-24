@@ -21,7 +21,7 @@ var _ MappedNullable = &GetproductResponse200{}
 type GetproductResponse200 struct {
 	// If the response is successful or not
 	Success *bool `json:"success,omitempty"`
-	Data *GetproductResponse200Data `json:"data,omitempty"`
+	Data *ListProductsResponse200AllOfDataInnerProduct `json:"data,omitempty"`
 	RelatedObjects *GetActivitiesResponse200RelatedObjects `json:"related_objects,omitempty"`
 }
 
@@ -75,9 +75,9 @@ func (o *GetproductResponse200) SetSuccess(v bool) {
 }
 
 // GetData returns the Data field value if set, zero value otherwise.
-func (o *GetproductResponse200) GetData() GetproductResponse200Data {
+func (o *GetproductResponse200) GetData() ListProductsResponse200AllOfDataInnerProduct {
 	if o == nil || IsNil(o.Data) {
-		var ret GetproductResponse200Data
+		var ret ListProductsResponse200AllOfDataInnerProduct
 		return ret
 	}
 	return *o.Data
@@ -85,7 +85,7 @@ func (o *GetproductResponse200) GetData() GetproductResponse200Data {
 
 // GetDataOk returns a tuple with the Data field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *GetproductResponse200) GetDataOk() (*GetproductResponse200Data, bool) {
+func (o *GetproductResponse200) GetDataOk() (*ListProductsResponse200AllOfDataInnerProduct, bool) {
 	if o == nil || IsNil(o.Data) {
 		return nil, false
 	}
@@ -101,8 +101,8 @@ func (o *GetproductResponse200) HasData() bool {
 	return false
 }
 
-// SetData gets a reference to the given GetproductResponse200Data and assigns it to the Data field.
-func (o *GetproductResponse200) SetData(v GetproductResponse200Data) {
+// SetData gets a reference to the given ListProductsResponse200AllOfDataInnerProduct and assigns it to the Data field.
+func (o *GetproductResponse200) SetData(v ListProductsResponse200AllOfDataInnerProduct) {
 	o.Data = &v
 }
 

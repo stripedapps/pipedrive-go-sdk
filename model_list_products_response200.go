@@ -21,7 +21,8 @@ var _ MappedNullable = &ListProductsResponse200{}
 type ListProductsResponse200 struct {
 	// If the response is successful or not
 	Success *bool `json:"success,omitempty"`
-	Data *[]ListProductsResponse200AllOfDataItemsInner `json:"data,omitempty"`
+	// The array of products
+	Data []ListProductsResponse200AllOfDataInner `json:"data,omitempty"`
 	AdditionalData *ListProductsResponse200AllOfAdditionalData `json:"additional_data,omitempty"`
 	RelatedObjects *ListProductsResponse200AllOfRelatedObjects `json:"related_objects,omitempty"`
 }
@@ -76,17 +77,17 @@ func (o *ListProductsResponse200) SetSuccess(v bool) {
 }
 
 // GetData returns the Data field value if set, zero value otherwise.
-func (o *ListProductsResponse200) GetData() []ListProductsResponse200AllOfDataItemsInner {
+func (o *ListProductsResponse200) GetData() []ListProductsResponse200AllOfDataInner {
 	if o == nil || IsNil(o.Data) {
-		var ret []ListProductsResponse200AllOfDataItemsInner
+		var ret []ListProductsResponse200AllOfDataInner
 		return ret
 	}
-	return *o.Data
+	return o.Data
 }
 
 // GetDataOk returns a tuple with the Data field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *ListProductsResponse200) GetDataOk() (*[]ListProductsResponse200AllOfDataItemsInner, bool) {
+func (o *ListProductsResponse200) GetDataOk() ([]ListProductsResponse200AllOfDataInner, bool) {
 	if o == nil || IsNil(o.Data) {
 		return nil, false
 	}
@@ -102,9 +103,9 @@ func (o *ListProductsResponse200) HasData() bool {
 	return false
 }
 
-// SetData gets a reference to the given ListProductsResponse200AllOfData and assigns it to the Data field.
-func (o *ListProductsResponse200) SetData(v []ListProductsResponse200AllOfDataItemsInner) {
-	o.Data = &v
+// SetData gets a reference to the given []ListProductsResponse200AllOfDataInner and assigns it to the Data field.
+func (o *ListProductsResponse200) SetData(v []ListProductsResponse200AllOfDataInner) {
+	o.Data = v
 }
 
 // GetAdditionalData returns the AdditionalData field value if set, zero value otherwise.

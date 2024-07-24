@@ -12,6 +12,8 @@ package openapi
 
 import (
 	"encoding/json"
+	"bytes"
+	"fmt"
 )
 
 // checks if the ReceiveMessageRequestAttachmentsInner type satisfies the MappedNullable interface at compile time
@@ -34,6 +36,8 @@ type ReceiveMessageRequestAttachmentsInner struct {
 	// If true, it will use the getMessageById endpoint for fetching updated attachment's urls. Find out more [here](https://pipedrive.readme.io/docs/implementing-messaging-app-extension)
 	LinkExpires *bool `json:"link_expires,omitempty"`
 }
+
+type _ReceiveMessageRequestAttachmentsInner ReceiveMessageRequestAttachmentsInner
 
 // NewReceiveMessageRequestAttachmentsInner instantiates a new ReceiveMessageRequestAttachmentsInner object
 // This constructor will assign default values to properties that have it defined,
@@ -285,6 +289,45 @@ func (o ReceiveMessageRequestAttachmentsInner) ToMap() (map[string]interface{}, 
 		toSerialize["link_expires"] = o.LinkExpires
 	}
 	return toSerialize, nil
+}
+
+func (o *ReceiveMessageRequestAttachmentsInner) UnmarshalJSON(data []byte) (err error) {
+	// This validates that all required properties are included in the JSON object
+	// by unmarshalling the object into a generic map with string keys and checking
+	// that every required field exists as a key in the generic map.
+	requiredProperties := []string{
+		"id",
+		"type",
+		"url",
+	}
+
+	allProperties := make(map[string]interface{})
+
+	err = json.Unmarshal(data, &allProperties)
+
+	if err != nil {
+		return err;
+	}
+
+	for _, requiredProperty := range(requiredProperties) {
+		if _, exists := allProperties[requiredProperty]; !exists {
+			return fmt.Errorf("no value given for required property %v", requiredProperty)
+		}
+	}
+
+	varReceiveMessageRequestAttachmentsInner := _ReceiveMessageRequestAttachmentsInner{}
+
+	decoder := json.NewDecoder(bytes.NewReader(data))
+	decoder.DisallowUnknownFields()
+	err = decoder.Decode(&varReceiveMessageRequestAttachmentsInner)
+
+	if err != nil {
+		return err
+	}
+
+	*o = ReceiveMessageRequestAttachmentsInner(varReceiveMessageRequestAttachmentsInner)
+
+	return err
 }
 
 type NullableReceiveMessageRequestAttachmentsInner struct {

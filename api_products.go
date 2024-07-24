@@ -697,12 +697,18 @@ func (a *ProductsAPIService) GetProductDealsExecute(r ApiGetProductDealsRequest)
 
 	if r.start != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "start", r.start, "")
+	} else {
+		var defaultValue int32 = 0
+		r.start = &defaultValue
 	}
 	if r.limit != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "limit", r.limit, "")
 	}
 	if r.status != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "status", r.status, "")
+	} else {
+		var defaultValue string = "all_not_deleted"
+		r.status = &defaultValue
 	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
@@ -793,7 +799,7 @@ func (r ApiGetProductFilesRequest) Limit(limit int32) ApiGetProductFilesRequest 
 	return r
 }
 
-// The field name and sorting mode (&#x60;field_name_1 ASC&#x60; or &#x60;field_name_1 DESC&#x60;). Supported fields: &#x60;update_time&#x60;, &#x60;id&#x60;
+// The field name and sorting mode (&#x60;field_name_1 ASC&#x60; or &#x60;field_name_1 DESC&#x60;). Supported fields: &#x60;update_time&#x60;, &#x60;id&#x60;.
 func (r ApiGetProductFilesRequest) Sort(sort string) ApiGetProductFilesRequest {
 	r.sort = &sort
 	return r
@@ -844,6 +850,9 @@ func (a *ProductsAPIService) GetProductFilesExecute(r ApiGetProductFilesRequest)
 
 	if r.start != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "start", r.start, "")
+	} else {
+		var defaultValue int32 = 0
+		r.start = &defaultValue
 	}
 	if r.limit != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "limit", r.limit, "")
@@ -984,6 +993,9 @@ func (a *ProductsAPIService) GetProductFollowersExecute(r ApiGetProductFollowers
 
 	if r.start != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "start", r.start, "")
+	} else {
+		var defaultValue int32 = 0
+		r.start = &defaultValue
 	}
 	if r.limit != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "limit", r.limit, "")
@@ -1292,6 +1304,9 @@ func (a *ProductsAPIService) GetProductsExecute(r ApiGetProductsRequest) (*GetPr
 	}
 	if r.start != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "start", r.start, "")
+	} else {
+		var defaultValue int32 = 0
+		r.start = &defaultValue
 	}
 	if r.limit != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "limit", r.limit, "")
@@ -1466,6 +1481,9 @@ func (a *ProductsAPIService) SearchProductsExecute(r ApiSearchProductsRequest) (
 	}
 	if r.start != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "start", r.start, "")
+	} else {
+		var defaultValue int32 = 0
+		r.start = &defaultValue
 	}
 	if r.limit != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "limit", r.limit, "")
@@ -1542,11 +1560,11 @@ type ApiUpdateProductRequest struct {
 	ctx context.Context
 	ApiService *ProductsAPIService
 	id int32
-	addProductRequest1 *AddProductRequest1
+	updateProductRequest *UpdateProductRequest
 }
 
-func (r ApiUpdateProductRequest) AddProductRequest1(addProductRequest1 AddProductRequest1) ApiUpdateProductRequest {
-	r.addProductRequest1 = &addProductRequest1
+func (r ApiUpdateProductRequest) UpdateProductRequest(updateProductRequest UpdateProductRequest) ApiUpdateProductRequest {
+	r.updateProductRequest = &updateProductRequest
 	return r
 }
 
@@ -1611,7 +1629,7 @@ func (a *ProductsAPIService) UpdateProductExecute(r ApiUpdateProductRequest) (*U
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
 	// body params
-	localVarPostBody = r.addProductRequest1
+	localVarPostBody = r.updateProductRequest
 	if r.ctx != nil {
 		// API Key Authentication
 		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {

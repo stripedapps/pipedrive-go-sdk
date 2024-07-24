@@ -12,6 +12,8 @@ package openapi
 
 import (
 	"encoding/json"
+	"bytes"
+	"fmt"
 )
 
 // checks if the ProductField type satisfies the MappedNullable interface at compile time
@@ -23,7 +25,7 @@ type ProductField struct {
 	Name string `json:"name"`
 	// When `field_type` is either `set` or `enum`, possible options must be supplied as a JSON-encoded sequential array, for example:</br>`[{\"label\":\"red\"}, {\"label\":\"blue\"}, {\"label\":\"lilac\"}]`
 	Options []map[string]interface{} `json:"options,omitempty"`
-	// The type of the field<table><tr><th>Value</th><th>Description</th></tr><tr><td>`varchar`</td><td>Text (up to 255 characters)</td><tr><td>`varchar_auto`</td><td>Autocomplete text (up to 255 characters)</td><tr><td>`text`</td><td>Long text (up to 65k characters)</td><tr><td>`double`</td><td>Numeric value</td><tr><td>`monetary`</td><td>Monetary field (has a numeric value and a currency value)</td><tr><td>`date`</td><td>Date (format YYYY-MM-DD)</td><tr><td>`set`</td><td>Options field with a possibility of having multiple chosen options</td><tr><td>`enum`</td><td>Options field with a single possible chosen option</td><tr><td>`user`</td><td>User field (contains a user ID of another Pipedrive user)</td><tr><td>`org`</td><td>Organization field (contains an organization ID which is stored on the same account)</td><tr><td>`people`</td><td>Person field (contains a product ID which is stored on the same account)</td><tr><td>`phone`</td><td>Phone field (up to 255 numbers and/or characters)</td><tr><td>`time`</td><td>Time field (format HH:MM:SS)</td><tr><td>`timerange`</td><td>Time-range field (has a start time and end time value, both HH:MM:SS)</td><tr><td>`daterange`</td><td>Date-range field (has a start date and end date value, both YYYY-MM-DD)</td><tr><td>`address`</td><td>Address field (autocompleted by Google Maps)</dd></table>
+	// The type of the field<table><tr><th>Value</th><th>Description</th></tr><tr><td>`varchar`</td><td>Text (up to 255 characters)</td><tr><td>`varchar_auto`</td><td>Autocomplete text (up to 255 characters)</td><tr><td>`text`</td><td>Long text (up to 65k characters)</td><tr><td>`double`</td><td>Numeric value</td><tr><td>`monetary`</td><td>Monetary field (has a numeric value and a currency value)</td><tr><td>`date`</td><td>Date (format YYYY-MM-DD)</td><tr><td>`set`</td><td>Options field with a possibility of having multiple chosen options</td><tr><td>`enum`</td><td>Options field with a single possible chosen option</td><tr><td>`user`</td><td>User field (contains a user ID of another Pipedrive user)</td><tr><td>`org`</td><td>Organization field (contains an organization ID which is stored on the same account)</td><tr><td>`people`</td><td>Person field (contains a product ID which is stored on the same account)</td><tr><td>`phone`</td><td>Phone field (up to 255 numbers and/or characters)</td><tr><td>`time`</td><td>Time field (format HH:MM:SS)</td><tr><td>`timerange`</td><td>Time-range field (has a start time and end time value, both HH:MM:SS)</td><tr><td>`daterange`</td><td>Date-range field (has a start date and end date value, both YYYY-MM-DD)</td><tr><td>`address`</td><td>Address field</dd></table>
 	FieldType string `json:"field_type"`
 	// The ID of the product field
 	Id *int32 `json:"id,omitempty"`
@@ -37,6 +39,8 @@ type ProductField struct {
 	UpdateTime *string `json:"update_time,omitempty"`
 	// The ID of the last user to update the product field
 	LastUpdatedByUserId *int32 `json:"last_updated_by_user_id,omitempty"`
+	// The ID of the user who created the product field
+	CreatedByUserId *int32 `json:"created_by_user_id,omitempty"`
 	// Whether or not the product field is currently active
 	ActiveFlag *bool `json:"active_flag,omitempty"`
 	// Whether or not the product field name and metadata is editable
@@ -56,6 +60,8 @@ type ProductField struct {
 	// Whether or not the product field is mandatory when creating products
 	MandatoryFlag *bool `json:"mandatory_flag,omitempty"`
 }
+
+type _ProductField ProductField
 
 // NewProductField instantiates a new ProductField object
 // This constructor will assign default values to properties that have it defined,
@@ -346,6 +352,38 @@ func (o *ProductField) HasLastUpdatedByUserId() bool {
 // SetLastUpdatedByUserId gets a reference to the given int32 and assigns it to the LastUpdatedByUserId field.
 func (o *ProductField) SetLastUpdatedByUserId(v int32) {
 	o.LastUpdatedByUserId = &v
+}
+
+// GetCreatedByUserId returns the CreatedByUserId field value if set, zero value otherwise.
+func (o *ProductField) GetCreatedByUserId() int32 {
+	if o == nil || IsNil(o.CreatedByUserId) {
+		var ret int32
+		return ret
+	}
+	return *o.CreatedByUserId
+}
+
+// GetCreatedByUserIdOk returns a tuple with the CreatedByUserId field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *ProductField) GetCreatedByUserIdOk() (*int32, bool) {
+	if o == nil || IsNil(o.CreatedByUserId) {
+		return nil, false
+	}
+	return o.CreatedByUserId, true
+}
+
+// HasCreatedByUserId returns a boolean if a field has been set.
+func (o *ProductField) HasCreatedByUserId() bool {
+	if o != nil && !IsNil(o.CreatedByUserId) {
+		return true
+	}
+
+	return false
+}
+
+// SetCreatedByUserId gets a reference to the given int32 and assigns it to the CreatedByUserId field.
+func (o *ProductField) SetCreatedByUserId(v int32) {
+	o.CreatedByUserId = &v
 }
 
 // GetActiveFlag returns the ActiveFlag field value if set, zero value otherwise.
@@ -669,6 +707,9 @@ func (o ProductField) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.LastUpdatedByUserId) {
 		toSerialize["last_updated_by_user_id"] = o.LastUpdatedByUserId
 	}
+	if !IsNil(o.CreatedByUserId) {
+		toSerialize["created_by_user_id"] = o.CreatedByUserId
+	}
 	if !IsNil(o.ActiveFlag) {
 		toSerialize["active_flag"] = o.ActiveFlag
 	}
@@ -697,6 +738,44 @@ func (o ProductField) ToMap() (map[string]interface{}, error) {
 		toSerialize["mandatory_flag"] = o.MandatoryFlag
 	}
 	return toSerialize, nil
+}
+
+func (o *ProductField) UnmarshalJSON(data []byte) (err error) {
+	// This validates that all required properties are included in the JSON object
+	// by unmarshalling the object into a generic map with string keys and checking
+	// that every required field exists as a key in the generic map.
+	requiredProperties := []string{
+		"name",
+		"field_type",
+	}
+
+	allProperties := make(map[string]interface{})
+
+	err = json.Unmarshal(data, &allProperties)
+
+	if err != nil {
+		return err;
+	}
+
+	for _, requiredProperty := range(requiredProperties) {
+		if _, exists := allProperties[requiredProperty]; !exists {
+			return fmt.Errorf("no value given for required property %v", requiredProperty)
+		}
+	}
+
+	varProductField := _ProductField{}
+
+	decoder := json.NewDecoder(bytes.NewReader(data))
+	decoder.DisallowUnknownFields()
+	err = decoder.Decode(&varProductField)
+
+	if err != nil {
+		return err
+	}
+
+	*o = ProductField(varProductField)
+
+	return err
 }
 
 type NullableProductField struct {

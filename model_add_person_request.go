@@ -12,6 +12,8 @@ package openapi
 
 import (
 	"encoding/json"
+	"bytes"
+	"fmt"
 )
 
 // checks if the AddPersonRequest type satisfies the MappedNullable interface at compile time
@@ -29,11 +31,15 @@ type AddPersonRequest struct {
 	Email []BasicPersonRequestEmailInner `json:"email,omitempty"`
 	// A phone number supplied as a string or an array of phone objects related to the person. The structure of the array is as follows: `[{ \"value\": \"12345\", \"primary\": \"true\", \"label\": \"mobile\" }]`. Please note that only `value` is required.
 	Phone []PersonItemAllOfPhoneInner `json:"phone,omitempty"`
+	// The ID of the label.
+	Label *int32 `json:"label,omitempty"`
 	VisibleTo *string `json:"visible_to,omitempty"`
 	MarketingStatus *string `json:"marketing_status,omitempty"`
-	// The optional creation date & time of the person in UTC. Requires admin user API token. Format: YYYY-MM-DD HH:MM:SS
+	// The optional creation date & time of the person in UTC. Format: YYYY-MM-DD HH:MM:SS
 	AddTime *string `json:"add_time,omitempty"`
 }
+
+type _AddPersonRequest AddPersonRequest
 
 // NewAddPersonRequest instantiates a new AddPersonRequest object
 // This constructor will assign default values to properties that have it defined,
@@ -205,6 +211,38 @@ func (o *AddPersonRequest) SetPhone(v []PersonItemAllOfPhoneInner) {
 	o.Phone = v
 }
 
+// GetLabel returns the Label field value if set, zero value otherwise.
+func (o *AddPersonRequest) GetLabel() int32 {
+	if o == nil || IsNil(o.Label) {
+		var ret int32
+		return ret
+	}
+	return *o.Label
+}
+
+// GetLabelOk returns a tuple with the Label field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *AddPersonRequest) GetLabelOk() (*int32, bool) {
+	if o == nil || IsNil(o.Label) {
+		return nil, false
+	}
+	return o.Label, true
+}
+
+// HasLabel returns a boolean if a field has been set.
+func (o *AddPersonRequest) HasLabel() bool {
+	if o != nil && !IsNil(o.Label) {
+		return true
+	}
+
+	return false
+}
+
+// SetLabel gets a reference to the given int32 and assigns it to the Label field.
+func (o *AddPersonRequest) SetLabel(v int32) {
+	o.Label = &v
+}
+
 // GetVisibleTo returns the VisibleTo field value if set, zero value otherwise.
 func (o *AddPersonRequest) GetVisibleTo() string {
 	if o == nil || IsNil(o.VisibleTo) {
@@ -324,6 +362,9 @@ func (o AddPersonRequest) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.Phone) {
 		toSerialize["phone"] = o.Phone
 	}
+	if !IsNil(o.Label) {
+		toSerialize["label"] = o.Label
+	}
 	if !IsNil(o.VisibleTo) {
 		toSerialize["visible_to"] = o.VisibleTo
 	}
@@ -334,6 +375,43 @@ func (o AddPersonRequest) ToMap() (map[string]interface{}, error) {
 		toSerialize["add_time"] = o.AddTime
 	}
 	return toSerialize, nil
+}
+
+func (o *AddPersonRequest) UnmarshalJSON(data []byte) (err error) {
+	// This validates that all required properties are included in the JSON object
+	// by unmarshalling the object into a generic map with string keys and checking
+	// that every required field exists as a key in the generic map.
+	requiredProperties := []string{
+		"name",
+	}
+
+	allProperties := make(map[string]interface{})
+
+	err = json.Unmarshal(data, &allProperties)
+
+	if err != nil {
+		return err;
+	}
+
+	for _, requiredProperty := range(requiredProperties) {
+		if _, exists := allProperties[requiredProperty]; !exists {
+			return fmt.Errorf("no value given for required property %v", requiredProperty)
+		}
+	}
+
+	varAddPersonRequest := _AddPersonRequest{}
+
+	decoder := json.NewDecoder(bytes.NewReader(data))
+	decoder.DisallowUnknownFields()
+	err = decoder.Decode(&varAddPersonRequest)
+
+	if err != nil {
+		return err
+	}
+
+	*o = AddPersonRequest(varAddPersonRequest)
+
+	return err
 }
 
 type NullableAddPersonRequest struct {

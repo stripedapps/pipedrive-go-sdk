@@ -20,29 +20,31 @@ var _ MappedNullable = &GetAddProductAttachementResponse200Data{}
 // GetAddProductAttachementResponse200Data The added product object attached to the deal
 type GetAddProductAttachementResponse200Data struct {
 	// The ID of the product
-	ProductId int32 `json:"product_id"`
+	ProductId *int32 `json:"product_id,omitempty"`
 	// The price at which this product will be added to the deal
-	ItemPrice float32 `json:"item_price"`
+	ItemPrice *float32 `json:"item_price,omitempty"`
 	// Quantity – e.g. how many items of this product will be added to the deal
-	Quantity int32 `json:"quantity"`
-	// The value of the discount. The `discount_type` field can be used to specify whether the value is an amount or a percentage.
+	Quantity *int32 `json:"quantity,omitempty"`
+	// The value of the discount. The `discount_type` field can be used to specify whether the value is an amount or a percentage
 	Discount *float32 `json:"discount,omitempty"`
-	// The type of the discount's value.
+	// The type of the discount's value
 	DiscountType *string `json:"discount_type,omitempty"`
-	// The duration of the product. If omitted, will be set to 1.
-	Duration *float32 `json:"duration,omitempty"`
-	// The type of the duration. (For example hourly, daily, etc.)
-	DurationUnit *string `json:"duration_unit,omitempty"`
-	// The ID of the product variation to use. When omitted, no variation will be used.
+	// The ID of the product variation to use. When omitted, no variation will be used
 	ProductVariationId NullableInt32 `json:"product_variation_id,omitempty"`
 	// A textual comment associated with this product-deal attachment
 	Comments *string `json:"comments,omitempty"`
 	// The product tax
 	Tax *float32 `json:"tax,omitempty"`
-	// The tax option to be applied to the products. When using `inclusive`, the tax percentage will already be included in the price. When using `exclusive`, the tax will not be included in the price. When using `none`, no tax will be added. Use the `tax` field for defining the tax percentage amount. By default, the user setting value for tax options will be used. Changing this in one product affects the rest of the products attached to the deal.
+	// The tax option to be applied to the products. When using `inclusive`, the tax percentage will already be included in the price. When using `exclusive`, the tax will not be included in the price. When using `none`, no tax will be added. Use the `tax` field for defining the tax percentage amount. By default, the user setting value for tax options will be used. Changing this in one product affects the rest of the products attached to the deal
 	TaxMethod *string `json:"tax_method,omitempty"`
-	// Whether the product is enabled for a deal or not. This makes it possible to add products to a deal with a specific price and discount criteria, but keep them disabled, which refrains them from being included in the deal value calculation. When omitted, the product will be marked as enabled by default.
+	// Whether the product is enabled for a deal or not. This makes it possible to add products to a deal with a specific price and discount criteria, but keep them disabled, which refrains them from being included in the deal value calculation. When omitted, the product will be marked as enabled by default
 	EnabledFlag *bool `json:"enabled_flag,omitempty"`
+	// Only available in Advanced and above plans  How often a customer is billed for access to a service or product  A deal can have up to 20 products attached with `billing_frequency` different than `one-time` 
+	BillingFrequency *string `json:"billing_frequency,omitempty"`
+	// Only available in Advanced and above plans  The number of times the billing frequency repeats for a product in a deal  When `billing_frequency` is set to `one-time`, this field must be `null`  For all the other values of `billing_frequency`, `null` represents a product billed indefinitely  Must be a positive integer less or equal to 312 
+	BillingFrequencyCycles NullableInt32 `json:"billing_frequency_cycles,omitempty"`
+	// Only available in Advanced and above plans  The billing start date. Must be between 15 years in the past and 15 years in the future 
+	BillingStartDate NullableString `json:"billing_start_date,omitempty"`
 	// The ID of the deal-product (the ID of the product attached to the deal)
 	Id *int32 `json:"id,omitempty"`
 	// The ID of the company
@@ -69,19 +71,18 @@ type GetAddProductAttachementResponse200Data struct {
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewGetAddProductAttachementResponse200Data(productId int32, itemPrice float32, quantity int32) *GetAddProductAttachementResponse200Data {
+func NewGetAddProductAttachementResponse200Data() *GetAddProductAttachementResponse200Data {
 	this := GetAddProductAttachementResponse200Data{}
-	this.ProductId = productId
-	this.ItemPrice = itemPrice
-	this.Quantity = quantity
 	var discount float32 = 0
 	this.Discount = &discount
 	var discountType string = "percentage"
 	this.DiscountType = &discountType
-	var duration float32 = 1
-	this.Duration = &duration
 	var enabledFlag bool = true
 	this.EnabledFlag = &enabledFlag
+	var billingFrequency string = "one-time"
+	this.BillingFrequency = &billingFrequency
+	var billingStartDate string = "null"
+	this.BillingStartDate = *NewNullableString(&billingStartDate)
 	return &this
 }
 
@@ -94,83 +95,109 @@ func NewGetAddProductAttachementResponse200DataWithDefaults() *GetAddProductAtta
 	this.Discount = &discount
 	var discountType string = "percentage"
 	this.DiscountType = &discountType
-	var duration float32 = 1
-	this.Duration = &duration
 	var enabledFlag bool = true
 	this.EnabledFlag = &enabledFlag
+	var billingFrequency string = "one-time"
+	this.BillingFrequency = &billingFrequency
+	var billingStartDate string = "null"
+	this.BillingStartDate = *NewNullableString(&billingStartDate)
 	return &this
 }
 
-// GetProductId returns the ProductId field value
+// GetProductId returns the ProductId field value if set, zero value otherwise.
 func (o *GetAddProductAttachementResponse200Data) GetProductId() int32 {
-	if o == nil {
+	if o == nil || IsNil(o.ProductId) {
 		var ret int32
 		return ret
 	}
-
-	return o.ProductId
+	return *o.ProductId
 }
 
-// GetProductIdOk returns a tuple with the ProductId field value
+// GetProductIdOk returns a tuple with the ProductId field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *GetAddProductAttachementResponse200Data) GetProductIdOk() (*int32, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.ProductId) {
 		return nil, false
 	}
-	return &o.ProductId, true
+	return o.ProductId, true
 }
 
-// SetProductId sets field value
+// HasProductId returns a boolean if a field has been set.
+func (o *GetAddProductAttachementResponse200Data) HasProductId() bool {
+	if o != nil && !IsNil(o.ProductId) {
+		return true
+	}
+
+	return false
+}
+
+// SetProductId gets a reference to the given int32 and assigns it to the ProductId field.
 func (o *GetAddProductAttachementResponse200Data) SetProductId(v int32) {
-	o.ProductId = v
+	o.ProductId = &v
 }
 
-// GetItemPrice returns the ItemPrice field value
+// GetItemPrice returns the ItemPrice field value if set, zero value otherwise.
 func (o *GetAddProductAttachementResponse200Data) GetItemPrice() float32 {
-	if o == nil {
+	if o == nil || IsNil(o.ItemPrice) {
 		var ret float32
 		return ret
 	}
-
-	return o.ItemPrice
+	return *o.ItemPrice
 }
 
-// GetItemPriceOk returns a tuple with the ItemPrice field value
+// GetItemPriceOk returns a tuple with the ItemPrice field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *GetAddProductAttachementResponse200Data) GetItemPriceOk() (*float32, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.ItemPrice) {
 		return nil, false
 	}
-	return &o.ItemPrice, true
+	return o.ItemPrice, true
 }
 
-// SetItemPrice sets field value
+// HasItemPrice returns a boolean if a field has been set.
+func (o *GetAddProductAttachementResponse200Data) HasItemPrice() bool {
+	if o != nil && !IsNil(o.ItemPrice) {
+		return true
+	}
+
+	return false
+}
+
+// SetItemPrice gets a reference to the given float32 and assigns it to the ItemPrice field.
 func (o *GetAddProductAttachementResponse200Data) SetItemPrice(v float32) {
-	o.ItemPrice = v
+	o.ItemPrice = &v
 }
 
-// GetQuantity returns the Quantity field value
+// GetQuantity returns the Quantity field value if set, zero value otherwise.
 func (o *GetAddProductAttachementResponse200Data) GetQuantity() int32 {
-	if o == nil {
+	if o == nil || IsNil(o.Quantity) {
 		var ret int32
 		return ret
 	}
-
-	return o.Quantity
+	return *o.Quantity
 }
 
-// GetQuantityOk returns a tuple with the Quantity field value
+// GetQuantityOk returns a tuple with the Quantity field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *GetAddProductAttachementResponse200Data) GetQuantityOk() (*int32, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.Quantity) {
 		return nil, false
 	}
-	return &o.Quantity, true
+	return o.Quantity, true
 }
 
-// SetQuantity sets field value
+// HasQuantity returns a boolean if a field has been set.
+func (o *GetAddProductAttachementResponse200Data) HasQuantity() bool {
+	if o != nil && !IsNil(o.Quantity) {
+		return true
+	}
+
+	return false
+}
+
+// SetQuantity gets a reference to the given int32 and assigns it to the Quantity field.
 func (o *GetAddProductAttachementResponse200Data) SetQuantity(v int32) {
-	o.Quantity = v
+	o.Quantity = &v
 }
 
 // GetDiscount returns the Discount field value if set, zero value otherwise.
@@ -235,70 +262,6 @@ func (o *GetAddProductAttachementResponse200Data) HasDiscountType() bool {
 // SetDiscountType gets a reference to the given string and assigns it to the DiscountType field.
 func (o *GetAddProductAttachementResponse200Data) SetDiscountType(v string) {
 	o.DiscountType = &v
-}
-
-// GetDuration returns the Duration field value if set, zero value otherwise.
-func (o *GetAddProductAttachementResponse200Data) GetDuration() float32 {
-	if o == nil || IsNil(o.Duration) {
-		var ret float32
-		return ret
-	}
-	return *o.Duration
-}
-
-// GetDurationOk returns a tuple with the Duration field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *GetAddProductAttachementResponse200Data) GetDurationOk() (*float32, bool) {
-	if o == nil || IsNil(o.Duration) {
-		return nil, false
-	}
-	return o.Duration, true
-}
-
-// HasDuration returns a boolean if a field has been set.
-func (o *GetAddProductAttachementResponse200Data) HasDuration() bool {
-	if o != nil && !IsNil(o.Duration) {
-		return true
-	}
-
-	return false
-}
-
-// SetDuration gets a reference to the given float32 and assigns it to the Duration field.
-func (o *GetAddProductAttachementResponse200Data) SetDuration(v float32) {
-	o.Duration = &v
-}
-
-// GetDurationUnit returns the DurationUnit field value if set, zero value otherwise.
-func (o *GetAddProductAttachementResponse200Data) GetDurationUnit() string {
-	if o == nil || IsNil(o.DurationUnit) {
-		var ret string
-		return ret
-	}
-	return *o.DurationUnit
-}
-
-// GetDurationUnitOk returns a tuple with the DurationUnit field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *GetAddProductAttachementResponse200Data) GetDurationUnitOk() (*string, bool) {
-	if o == nil || IsNil(o.DurationUnit) {
-		return nil, false
-	}
-	return o.DurationUnit, true
-}
-
-// HasDurationUnit returns a boolean if a field has been set.
-func (o *GetAddProductAttachementResponse200Data) HasDurationUnit() bool {
-	if o != nil && !IsNil(o.DurationUnit) {
-		return true
-	}
-
-	return false
-}
-
-// SetDurationUnit gets a reference to the given string and assigns it to the DurationUnit field.
-func (o *GetAddProductAttachementResponse200Data) SetDurationUnit(v string) {
-	o.DurationUnit = &v
 }
 
 // GetProductVariationId returns the ProductVariationId field value if set, zero value otherwise (both if not set or set to explicit null).
@@ -469,6 +432,122 @@ func (o *GetAddProductAttachementResponse200Data) HasEnabledFlag() bool {
 // SetEnabledFlag gets a reference to the given bool and assigns it to the EnabledFlag field.
 func (o *GetAddProductAttachementResponse200Data) SetEnabledFlag(v bool) {
 	o.EnabledFlag = &v
+}
+
+// GetBillingFrequency returns the BillingFrequency field value if set, zero value otherwise.
+func (o *GetAddProductAttachementResponse200Data) GetBillingFrequency() string {
+	if o == nil || IsNil(o.BillingFrequency) {
+		var ret string
+		return ret
+	}
+	return *o.BillingFrequency
+}
+
+// GetBillingFrequencyOk returns a tuple with the BillingFrequency field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *GetAddProductAttachementResponse200Data) GetBillingFrequencyOk() (*string, bool) {
+	if o == nil || IsNil(o.BillingFrequency) {
+		return nil, false
+	}
+	return o.BillingFrequency, true
+}
+
+// HasBillingFrequency returns a boolean if a field has been set.
+func (o *GetAddProductAttachementResponse200Data) HasBillingFrequency() bool {
+	if o != nil && !IsNil(o.BillingFrequency) {
+		return true
+	}
+
+	return false
+}
+
+// SetBillingFrequency gets a reference to the given string and assigns it to the BillingFrequency field.
+func (o *GetAddProductAttachementResponse200Data) SetBillingFrequency(v string) {
+	o.BillingFrequency = &v
+}
+
+// GetBillingFrequencyCycles returns the BillingFrequencyCycles field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *GetAddProductAttachementResponse200Data) GetBillingFrequencyCycles() int32 {
+	if o == nil || IsNil(o.BillingFrequencyCycles.Get()) {
+		var ret int32
+		return ret
+	}
+	return *o.BillingFrequencyCycles.Get()
+}
+
+// GetBillingFrequencyCyclesOk returns a tuple with the BillingFrequencyCycles field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *GetAddProductAttachementResponse200Data) GetBillingFrequencyCyclesOk() (*int32, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.BillingFrequencyCycles.Get(), o.BillingFrequencyCycles.IsSet()
+}
+
+// HasBillingFrequencyCycles returns a boolean if a field has been set.
+func (o *GetAddProductAttachementResponse200Data) HasBillingFrequencyCycles() bool {
+	if o != nil && o.BillingFrequencyCycles.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetBillingFrequencyCycles gets a reference to the given NullableInt32 and assigns it to the BillingFrequencyCycles field.
+func (o *GetAddProductAttachementResponse200Data) SetBillingFrequencyCycles(v int32) {
+	o.BillingFrequencyCycles.Set(&v)
+}
+// SetBillingFrequencyCyclesNil sets the value for BillingFrequencyCycles to be an explicit nil
+func (o *GetAddProductAttachementResponse200Data) SetBillingFrequencyCyclesNil() {
+	o.BillingFrequencyCycles.Set(nil)
+}
+
+// UnsetBillingFrequencyCycles ensures that no value is present for BillingFrequencyCycles, not even an explicit nil
+func (o *GetAddProductAttachementResponse200Data) UnsetBillingFrequencyCycles() {
+	o.BillingFrequencyCycles.Unset()
+}
+
+// GetBillingStartDate returns the BillingStartDate field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *GetAddProductAttachementResponse200Data) GetBillingStartDate() string {
+	if o == nil || IsNil(o.BillingStartDate.Get()) {
+		var ret string
+		return ret
+	}
+	return *o.BillingStartDate.Get()
+}
+
+// GetBillingStartDateOk returns a tuple with the BillingStartDate field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *GetAddProductAttachementResponse200Data) GetBillingStartDateOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.BillingStartDate.Get(), o.BillingStartDate.IsSet()
+}
+
+// HasBillingStartDate returns a boolean if a field has been set.
+func (o *GetAddProductAttachementResponse200Data) HasBillingStartDate() bool {
+	if o != nil && o.BillingStartDate.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetBillingStartDate gets a reference to the given NullableString and assigns it to the BillingStartDate field.
+func (o *GetAddProductAttachementResponse200Data) SetBillingStartDate(v string) {
+	o.BillingStartDate.Set(&v)
+}
+// SetBillingStartDateNil sets the value for BillingStartDate to be an explicit nil
+func (o *GetAddProductAttachementResponse200Data) SetBillingStartDateNil() {
+	o.BillingStartDate.Set(nil)
+}
+
+// UnsetBillingStartDate ensures that no value is present for BillingStartDate, not even an explicit nil
+func (o *GetAddProductAttachementResponse200Data) UnsetBillingStartDate() {
+	o.BillingStartDate.Unset()
 }
 
 // GetId returns the Id field value if set, zero value otherwise.
@@ -801,20 +880,20 @@ func (o GetAddProductAttachementResponse200Data) MarshalJSON() ([]byte, error) {
 
 func (o GetAddProductAttachementResponse200Data) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	toSerialize["product_id"] = o.ProductId
-	toSerialize["item_price"] = o.ItemPrice
-	toSerialize["quantity"] = o.Quantity
+	if !IsNil(o.ProductId) {
+		toSerialize["product_id"] = o.ProductId
+	}
+	if !IsNil(o.ItemPrice) {
+		toSerialize["item_price"] = o.ItemPrice
+	}
+	if !IsNil(o.Quantity) {
+		toSerialize["quantity"] = o.Quantity
+	}
 	if !IsNil(o.Discount) {
 		toSerialize["discount"] = o.Discount
 	}
 	if !IsNil(o.DiscountType) {
 		toSerialize["discount_type"] = o.DiscountType
-	}
-	if !IsNil(o.Duration) {
-		toSerialize["duration"] = o.Duration
-	}
-	if !IsNil(o.DurationUnit) {
-		toSerialize["duration_unit"] = o.DurationUnit
 	}
 	if o.ProductVariationId.IsSet() {
 		toSerialize["product_variation_id"] = o.ProductVariationId.Get()
@@ -830,6 +909,15 @@ func (o GetAddProductAttachementResponse200Data) ToMap() (map[string]interface{}
 	}
 	if !IsNil(o.EnabledFlag) {
 		toSerialize["enabled_flag"] = o.EnabledFlag
+	}
+	if !IsNil(o.BillingFrequency) {
+		toSerialize["billing_frequency"] = o.BillingFrequency
+	}
+	if o.BillingFrequencyCycles.IsSet() {
+		toSerialize["billing_frequency_cycles"] = o.BillingFrequencyCycles.Get()
+	}
+	if o.BillingStartDate.IsSet() {
+		toSerialize["billing_start_date"] = o.BillingStartDate.Get()
 	}
 	if !IsNil(o.Id) {
 		toSerialize["id"] = o.Id
