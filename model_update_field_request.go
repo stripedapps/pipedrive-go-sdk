@@ -22,7 +22,7 @@ type UpdateFieldRequest struct {
 	// The name of the field
 	Name *string `json:"name,omitempty"`
 	// When `field_type` is either set or enum, possible options must be supplied as a JSON-encoded sequential array of objects. All active items must be supplied and already existing items must have their ID supplied. New items only require a label. Example: `[{\"id\":123,\"label\":\"Existing Item\"},{\"label\":\"New Item\"}]`
-	Options *string `json:"options,omitempty"`
+	Options []map[string]interface{} `json:"options,omitempty"`
 	// Whether the field is available in 'add new' modal or not (both in web and mobile app)
 	AddVisibleFlag *bool `json:"add_visible_flag,omitempty"`
 }
@@ -81,17 +81,17 @@ func (o *UpdateFieldRequest) SetName(v string) {
 }
 
 // GetOptions returns the Options field value if set, zero value otherwise.
-func (o *UpdateFieldRequest) GetOptions() string {
+func (o *UpdateFieldRequest) GetOptions() []map[string]interface{} {
 	if o == nil || IsNil(o.Options) {
-		var ret string
+		var ret []map[string]interface{}
 		return ret
 	}
-	return *o.Options
+	return o.Options
 }
 
 // GetOptionsOk returns a tuple with the Options field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *UpdateFieldRequest) GetOptionsOk() (*string, bool) {
+func (o *UpdateFieldRequest) GetOptionsOk() ([]map[string]interface{}, bool) {
 	if o == nil || IsNil(o.Options) {
 		return nil, false
 	}
@@ -107,9 +107,9 @@ func (o *UpdateFieldRequest) HasOptions() bool {
 	return false
 }
 
-// SetOptions gets a reference to the given string and assigns it to the Options field.
-func (o *UpdateFieldRequest) SetOptions(v string) {
-	o.Options = &v
+// SetOptions gets a reference to the given []map[string]interface{} and assigns it to the Options field.
+func (o *UpdateFieldRequest) SetOptions(v []map[string]interface{}) {
+	o.Options = v
 }
 
 // GetAddVisibleFlag returns the AddVisibleFlag field value if set, zero value otherwise.

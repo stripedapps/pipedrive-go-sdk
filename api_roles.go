@@ -818,6 +818,9 @@ func (a *RolesAPIService) GetRoleAssignmentsExecute(r ApiGetRoleAssignmentsReque
 
 	if r.start != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "start", r.start, "")
+	} else {
+		var defaultValue int32 = 0
+		r.start = &defaultValue
 	}
 	if r.limit != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "limit", r.limit, "")
@@ -948,6 +951,9 @@ func (a *RolesAPIService) GetRolePipelinesExecute(r ApiGetRolePipelinesRequest) 
 
 	if r.visible != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "visible", r.visible, "")
+	} else {
+		var defaultValue bool = true
+		r.visible = &defaultValue
 	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
@@ -1195,6 +1201,9 @@ func (a *RolesAPIService) GetRolesExecute(r ApiGetRolesRequest) (*GetRolesRespon
 
 	if r.start != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "start", r.start, "")
+	} else {
+		var defaultValue int32 = 0
+		r.start = &defaultValue
 	}
 	if r.limit != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "limit", r.limit, "")

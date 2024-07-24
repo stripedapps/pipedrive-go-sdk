@@ -35,7 +35,7 @@ type AddActivityRequest struct {
 	ProjectId NullableInt32 `json:"project_id,omitempty"`
 	// The ID of the organization this activity is associated with
 	OrgId *int32 `json:"org_id,omitempty"`
-	// The address of the activity. Pipedrive will automatically check if the location matches a geo-location on Google maps.
+	// The address of the activity.
 	Location *string `json:"location,omitempty"`
 	// Additional details about the activity that is synced to your external calendar. Unlike the note added to the activity, the description is publicly visible to any guests added to the activity.
 	PublicDescription *string `json:"public_description,omitempty"`

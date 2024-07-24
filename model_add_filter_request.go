@@ -12,6 +12,8 @@ package openapi
 
 import (
 	"encoding/json"
+	"bytes"
+	"fmt"
 )
 
 // checks if the AddFilterRequest type satisfies the MappedNullable interface at compile time
@@ -25,6 +27,8 @@ type AddFilterRequest struct {
 	Conditions map[string]interface{} `json:"conditions"`
 	Type string `json:"type"`
 }
+
+type _AddFilterRequest AddFilterRequest
 
 // NewAddFilterRequest instantiates a new AddFilterRequest object
 // This constructor will assign default values to properties that have it defined,
@@ -132,6 +136,45 @@ func (o AddFilterRequest) ToMap() (map[string]interface{}, error) {
 	toSerialize["conditions"] = o.Conditions
 	toSerialize["type"] = o.Type
 	return toSerialize, nil
+}
+
+func (o *AddFilterRequest) UnmarshalJSON(data []byte) (err error) {
+	// This validates that all required properties are included in the JSON object
+	// by unmarshalling the object into a generic map with string keys and checking
+	// that every required field exists as a key in the generic map.
+	requiredProperties := []string{
+		"name",
+		"conditions",
+		"type",
+	}
+
+	allProperties := make(map[string]interface{})
+
+	err = json.Unmarshal(data, &allProperties)
+
+	if err != nil {
+		return err;
+	}
+
+	for _, requiredProperty := range(requiredProperties) {
+		if _, exists := allProperties[requiredProperty]; !exists {
+			return fmt.Errorf("no value given for required property %v", requiredProperty)
+		}
+	}
+
+	varAddFilterRequest := _AddFilterRequest{}
+
+	decoder := json.NewDecoder(bytes.NewReader(data))
+	decoder.DisallowUnknownFields()
+	err = decoder.Decode(&varAddFilterRequest)
+
+	if err != nil {
+		return err
+	}
+
+	*o = AddFilterRequest(varAddFilterRequest)
+
+	return err
 }
 
 type NullableAddFilterRequest struct {

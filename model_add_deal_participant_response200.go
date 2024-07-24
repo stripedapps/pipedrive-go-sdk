@@ -22,7 +22,7 @@ type AddDealParticipantResponse200 struct {
 	// If the request was successful or not
 	Success *bool `json:"success,omitempty"`
 	Data *AddDealParticipantResponse200Data `json:"data,omitempty"`
-	RelatedObjects *GetDealsResponse200RelatedObjects `json:"related_objects,omitempty"`
+	RelatedObjects *AddDealParticipantResponse200RelatedObjects `json:"related_objects,omitempty"`
 }
 
 // NewAddDealParticipantResponse200 instantiates a new AddDealParticipantResponse200 object
@@ -107,9 +107,9 @@ func (o *AddDealParticipantResponse200) SetData(v AddDealParticipantResponse200D
 }
 
 // GetRelatedObjects returns the RelatedObjects field value if set, zero value otherwise.
-func (o *AddDealParticipantResponse200) GetRelatedObjects() GetDealsResponse200RelatedObjects {
+func (o *AddDealParticipantResponse200) GetRelatedObjects() AddDealParticipantResponse200RelatedObjects {
 	if o == nil || IsNil(o.RelatedObjects) {
-		var ret GetDealsResponse200RelatedObjects
+		var ret AddDealParticipantResponse200RelatedObjects
 		return ret
 	}
 	return *o.RelatedObjects
@@ -117,7 +117,7 @@ func (o *AddDealParticipantResponse200) GetRelatedObjects() GetDealsResponse200R
 
 // GetRelatedObjectsOk returns a tuple with the RelatedObjects field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *AddDealParticipantResponse200) GetRelatedObjectsOk() (*GetDealsResponse200RelatedObjects, bool) {
+func (o *AddDealParticipantResponse200) GetRelatedObjectsOk() (*AddDealParticipantResponse200RelatedObjects, bool) {
 	if o == nil || IsNil(o.RelatedObjects) {
 		return nil, false
 	}
@@ -133,8 +133,8 @@ func (o *AddDealParticipantResponse200) HasRelatedObjects() bool {
 	return false
 }
 
-// SetRelatedObjects gets a reference to the given GetDealsResponse200RelatedObjects and assigns it to the RelatedObjects field.
-func (o *AddDealParticipantResponse200) SetRelatedObjects(v GetDealsResponse200RelatedObjects) {
+// SetRelatedObjects gets a reference to the given AddDealParticipantResponse200RelatedObjects and assigns it to the RelatedObjects field.
+func (o *AddDealParticipantResponse200) SetRelatedObjects(v AddDealParticipantResponse200RelatedObjects) {
 	o.RelatedObjects = &v
 }
 

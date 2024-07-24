@@ -810,6 +810,9 @@ func (a *NotesAPIService) GetNoteCommentsExecute(r ApiGetNoteCommentsRequest) (*
 
 	if r.start != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "start", r.start, "")
+	} else {
+		var defaultValue int32 = 0
+		r.start = &defaultValue
 	}
 	if r.limit != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "limit", r.limit, "")
@@ -1042,6 +1045,9 @@ func (a *NotesAPIService) GetNotesExecute(r ApiGetNotesRequest) (*GetNotesRespon
 	}
 	if r.start != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "start", r.start, "")
+	} else {
+		var defaultValue int32 = 0
+		r.start = &defaultValue
 	}
 	if r.limit != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "limit", r.limit, "")

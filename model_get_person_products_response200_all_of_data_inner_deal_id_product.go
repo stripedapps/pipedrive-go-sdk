@@ -42,7 +42,7 @@ type GetPersonProductsResponse200AllOfDataInnerDEALIDProduct struct {
 	// The first letter of the product name
 	FirstChar *string `json:"first_char,omitempty"`
 	VisibleTo *string `json:"visible_to,omitempty"`
-	// The ID of the user who will be marked as the owner of this product. When omitted, the authorized user ID will be used.
+	// The ID of the user who will be marked as the owner of this product. When omitted, the authorized user ID will be used
 	OwnerId *int32 `json:"owner_id,omitempty"`
 	// The count of files
 	FilesCount *int32 `json:"files_count,omitempty"`

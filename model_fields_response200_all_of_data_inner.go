@@ -12,6 +12,7 @@ package openapi
 
 import (
 	"encoding/json"
+	"time"
 )
 
 // checks if the FieldsResponse200AllOfDataInner type satisfies the MappedNullable interface at compile time
@@ -27,14 +28,16 @@ type FieldsResponse200AllOfDataInner struct {
 	Name *string `json:"name,omitempty"`
 	// The order number of the field
 	OrderNr *int32 `json:"order_nr,omitempty"`
-	// The type of the field<table><tr><th>Value</th><th>Description</th></tr><tr><td>`address`</td><td>Address field (has multiple subfields, autocompleted by Google Maps)</td></tr><tr><td>`date`</td><td>Date (format YYYY-MM-DD)</td></tr><tr><td>`daterange`</td><td>Date-range field (has a start date and end date value, both YYYY-MM-DD)</td></tr><tr><td>`double`</td><td>Numeric value</td></tr><tr><td>`enum`</td><td>Options field with a single possible chosen option</td></tr><tr></tr><tr><td>`monetary`</td><td>Monetary field (has a numeric value and a currency value)</td></tr><tr><td>`org`</td><td>Organization field (contains an organization ID which is stored on the same account)</td></tr><tr><td>`people`</td><td>Person field (contains a person ID which is stored on the same account)</td></tr><tr><td>`phone`</td><td>Phone field (up to 255 numbers and/or characters)</td></tr><tr><td>`set`</td><td>Options field with a possibility of having multiple chosen options</td></tr><tr><td>`text`</td><td>Long text (up to 65k characters)</td></tr><tr><td>`time`</td><td>Time field (format HH:MM:SS)</td></tr><tr><td>`timerange`</td><td>Time-range field (has a start time and end time value, both HH:MM:SS)</td></tr><tr><td>`user`</td><td>User field (contains a user ID of another Pipedrive user)</td></tr><tr><td>`varchar`</td><td>Text (up to 255 characters)</td></tr><tr><td>`varchar_auto`</td><td>Autocomplete text (up to 255 characters)</td></tr><tr><td>`visible_to`</td><td>System field that keeps item's visibility setting</td></tr></table>
+	// The type of the field<table><tr><th>Value</th><th>Description</th></tr><tr><td>`address`</td><td>Address field</td></tr><tr><td>`date`</td><td>Date (format YYYY-MM-DD)</td></tr><tr><td>`daterange`</td><td>Date-range field (has a start date and end date value, both YYYY-MM-DD)</td></tr><tr><td>`double`</td><td>Numeric value</td></tr><tr><td>`enum`</td><td>Options field with a single possible chosen option</td></tr><tr></tr><tr><td>`monetary`</td><td>Monetary field (has a numeric value and a currency value)</td></tr><tr><td>`org`</td><td>Organization field (contains an organization ID which is stored on the same account)</td></tr><tr><td>`people`</td><td>Person field (contains a person ID which is stored on the same account)</td></tr><tr><td>`phone`</td><td>Phone field (up to 255 numbers and/or characters)</td></tr><tr><td>`set`</td><td>Options field with a possibility of having multiple chosen options</td></tr><tr><td>`text`</td><td>Long text (up to 65k characters)</td></tr><tr><td>`time`</td><td>Time field (format HH:MM:SS)</td></tr><tr><td>`timerange`</td><td>Time-range field (has a start time and end time value, both HH:MM:SS)</td></tr><tr><td>`user`</td><td>User field (contains a user ID of another Pipedrive user)</td></tr><tr><td>`varchar`</td><td>Text (up to 255 characters)</td></tr><tr><td>`varchar_auto`</td><td>Autocomplete text (up to 255 characters)</td></tr><tr><td>`visible_to`</td><td>System field that keeps item's visibility setting</td></tr></table>
 	FieldType *string `json:"field_type,omitempty"`
 	// The creation time of the field
-	AddTime *string `json:"add_time,omitempty"`
+	AddTime *time.Time `json:"add_time,omitempty"`
 	// The update time of the field
-	UpdateTime *string `json:"update_time,omitempty"`
+	UpdateTime *time.Time `json:"update_time,omitempty"`
 	// The ID of the user who created or most recently updated the field, only applicable for custom fields
 	LastUpdatedByUserId *int32 `json:"last_updated_by_user_id,omitempty"`
+	// The ID of the user who created the field
+	CreatedByUserId *int32 `json:"created_by_user_id,omitempty"`
 	// The active flag of the field
 	ActiveFlag *bool `json:"active_flag,omitempty"`
 	// The edit flag of the field
@@ -56,7 +59,7 @@ type FieldsResponse200AllOfDataInner struct {
 	// Whether or not items can be sorted by this field
 	SortableFlag *bool `json:"sortable_flag,omitempty"`
 	// Whether or not the field is mandatory
-	MandatoryFlag *interface{} `json:"mandatory_flag,omitempty"`
+	MandatoryFlag *bool `json:"mandatory_flag,omitempty"`
 	// The options of the field. When there are no options, `null` is returned.
 	Options []map[string]interface{} `json:"options,omitempty"`
 	// The deleted options of the field. Only present when there is at least 1 deleted option.
@@ -245,9 +248,9 @@ func (o *FieldsResponse200AllOfDataInner) SetFieldType(v string) {
 }
 
 // GetAddTime returns the AddTime field value if set, zero value otherwise.
-func (o *FieldsResponse200AllOfDataInner) GetAddTime() string {
+func (o *FieldsResponse200AllOfDataInner) GetAddTime() time.Time {
 	if o == nil || IsNil(o.AddTime) {
-		var ret string
+		var ret time.Time
 		return ret
 	}
 	return *o.AddTime
@@ -255,7 +258,7 @@ func (o *FieldsResponse200AllOfDataInner) GetAddTime() string {
 
 // GetAddTimeOk returns a tuple with the AddTime field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *FieldsResponse200AllOfDataInner) GetAddTimeOk() (*string, bool) {
+func (o *FieldsResponse200AllOfDataInner) GetAddTimeOk() (*time.Time, bool) {
 	if o == nil || IsNil(o.AddTime) {
 		return nil, false
 	}
@@ -271,15 +274,15 @@ func (o *FieldsResponse200AllOfDataInner) HasAddTime() bool {
 	return false
 }
 
-// SetAddTime gets a reference to the given string and assigns it to the AddTime field.
-func (o *FieldsResponse200AllOfDataInner) SetAddTime(v string) {
+// SetAddTime gets a reference to the given time.Time and assigns it to the AddTime field.
+func (o *FieldsResponse200AllOfDataInner) SetAddTime(v time.Time) {
 	o.AddTime = &v
 }
 
 // GetUpdateTime returns the UpdateTime field value if set, zero value otherwise.
-func (o *FieldsResponse200AllOfDataInner) GetUpdateTime() string {
+func (o *FieldsResponse200AllOfDataInner) GetUpdateTime() time.Time {
 	if o == nil || IsNil(o.UpdateTime) {
-		var ret string
+		var ret time.Time
 		return ret
 	}
 	return *o.UpdateTime
@@ -287,7 +290,7 @@ func (o *FieldsResponse200AllOfDataInner) GetUpdateTime() string {
 
 // GetUpdateTimeOk returns a tuple with the UpdateTime field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *FieldsResponse200AllOfDataInner) GetUpdateTimeOk() (*string, bool) {
+func (o *FieldsResponse200AllOfDataInner) GetUpdateTimeOk() (*time.Time, bool) {
 	if o == nil || IsNil(o.UpdateTime) {
 		return nil, false
 	}
@@ -303,8 +306,8 @@ func (o *FieldsResponse200AllOfDataInner) HasUpdateTime() bool {
 	return false
 }
 
-// SetUpdateTime gets a reference to the given string and assigns it to the UpdateTime field.
-func (o *FieldsResponse200AllOfDataInner) SetUpdateTime(v string) {
+// SetUpdateTime gets a reference to the given time.Time and assigns it to the UpdateTime field.
+func (o *FieldsResponse200AllOfDataInner) SetUpdateTime(v time.Time) {
 	o.UpdateTime = &v
 }
 
@@ -338,6 +341,38 @@ func (o *FieldsResponse200AllOfDataInner) HasLastUpdatedByUserId() bool {
 // SetLastUpdatedByUserId gets a reference to the given int32 and assigns it to the LastUpdatedByUserId field.
 func (o *FieldsResponse200AllOfDataInner) SetLastUpdatedByUserId(v int32) {
 	o.LastUpdatedByUserId = &v
+}
+
+// GetCreatedByUserId returns the CreatedByUserId field value if set, zero value otherwise.
+func (o *FieldsResponse200AllOfDataInner) GetCreatedByUserId() int32 {
+	if o == nil || IsNil(o.CreatedByUserId) {
+		var ret int32
+		return ret
+	}
+	return *o.CreatedByUserId
+}
+
+// GetCreatedByUserIdOk returns a tuple with the CreatedByUserId field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *FieldsResponse200AllOfDataInner) GetCreatedByUserIdOk() (*int32, bool) {
+	if o == nil || IsNil(o.CreatedByUserId) {
+		return nil, false
+	}
+	return o.CreatedByUserId, true
+}
+
+// HasCreatedByUserId returns a boolean if a field has been set.
+func (o *FieldsResponse200AllOfDataInner) HasCreatedByUserId() bool {
+	if o != nil && !IsNil(o.CreatedByUserId) {
+		return true
+	}
+
+	return false
+}
+
+// SetCreatedByUserId gets a reference to the given int32 and assigns it to the CreatedByUserId field.
+func (o *FieldsResponse200AllOfDataInner) SetCreatedByUserId(v int32) {
+	o.CreatedByUserId = &v
 }
 
 // GetActiveFlag returns the ActiveFlag field value if set, zero value otherwise.
@@ -661,9 +696,9 @@ func (o *FieldsResponse200AllOfDataInner) SetSortableFlag(v bool) {
 }
 
 // GetMandatoryFlag returns the MandatoryFlag field value if set, zero value otherwise.
-func (o *FieldsResponse200AllOfDataInner) GetMandatoryFlag() interface{} {
+func (o *FieldsResponse200AllOfDataInner) GetMandatoryFlag() bool {
 	if o == nil || IsNil(o.MandatoryFlag) {
-		var ret int32
+		var ret bool
 		return ret
 	}
 	return *o.MandatoryFlag
@@ -671,7 +706,7 @@ func (o *FieldsResponse200AllOfDataInner) GetMandatoryFlag() interface{} {
 
 // GetMandatoryFlagOk returns a tuple with the MandatoryFlag field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *FieldsResponse200AllOfDataInner) GetMandatoryFlagOk() (*interface{}, bool) {
+func (o *FieldsResponse200AllOfDataInner) GetMandatoryFlagOk() (*bool, bool) {
 	if o == nil || IsNil(o.MandatoryFlag) {
 		return nil, false
 	}
@@ -688,7 +723,7 @@ func (o *FieldsResponse200AllOfDataInner) HasMandatoryFlag() bool {
 }
 
 // SetMandatoryFlag gets a reference to the given bool and assigns it to the MandatoryFlag field.
-func (o *FieldsResponse200AllOfDataInner) SetMandatoryFlag(v interface{}) {
+func (o *FieldsResponse200AllOfDataInner) SetMandatoryFlag(v bool) {
 	o.MandatoryFlag = &v
 }
 
@@ -713,7 +748,7 @@ func (o *FieldsResponse200AllOfDataInner) GetOptionsOk() ([]map[string]interface
 
 // HasOptions returns a boolean if a field has been set.
 func (o *FieldsResponse200AllOfDataInner) HasOptions() bool {
-	if o != nil && IsNil(o.Options) {
+	if o != nil && !IsNil(o.Options) {
 		return true
 	}
 
@@ -854,6 +889,9 @@ func (o FieldsResponse200AllOfDataInner) ToMap() (map[string]interface{}, error)
 	}
 	if !IsNil(o.LastUpdatedByUserId) {
 		toSerialize["last_updated_by_user_id"] = o.LastUpdatedByUserId
+	}
+	if !IsNil(o.CreatedByUserId) {
+		toSerialize["created_by_user_id"] = o.CreatedByUserId
 	}
 	if !IsNil(o.ActiveFlag) {
 		toSerialize["active_flag"] = o.ActiveFlag

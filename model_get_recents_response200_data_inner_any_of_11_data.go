@@ -56,6 +56,8 @@ type GetRecentsResponse200DataInnerAnyOf11Data struct {
 	IconUrl NullableString `json:"icon_url,omitempty"`
 	// Boolean that indicates if the requested user is the same which is logged in (in this case, always true)
 	IsYou *bool `json:"is_you,omitempty"`
+	// Boolean that indicates whether the user is deleted from the company
+	IsDeleted *bool `json:"is_deleted,omitempty"`
 }
 
 // NewGetRecentsResponse200DataInnerAnyOf11Data instantiates a new GetRecentsResponse200DataInnerAnyOf11Data object
@@ -713,6 +715,38 @@ func (o *GetRecentsResponse200DataInnerAnyOf11Data) SetIsYou(v bool) {
 	o.IsYou = &v
 }
 
+// GetIsDeleted returns the IsDeleted field value if set, zero value otherwise.
+func (o *GetRecentsResponse200DataInnerAnyOf11Data) GetIsDeleted() bool {
+	if o == nil || IsNil(o.IsDeleted) {
+		var ret bool
+		return ret
+	}
+	return *o.IsDeleted
+}
+
+// GetIsDeletedOk returns a tuple with the IsDeleted field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *GetRecentsResponse200DataInnerAnyOf11Data) GetIsDeletedOk() (*bool, bool) {
+	if o == nil || IsNil(o.IsDeleted) {
+		return nil, false
+	}
+	return o.IsDeleted, true
+}
+
+// HasIsDeleted returns a boolean if a field has been set.
+func (o *GetRecentsResponse200DataInnerAnyOf11Data) HasIsDeleted() bool {
+	if o != nil && !IsNil(o.IsDeleted) {
+		return true
+	}
+
+	return false
+}
+
+// SetIsDeleted gets a reference to the given bool and assigns it to the IsDeleted field.
+func (o *GetRecentsResponse200DataInnerAnyOf11Data) SetIsDeleted(v bool) {
+	o.IsDeleted = &v
+}
+
 func (o GetRecentsResponse200DataInnerAnyOf11Data) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -779,6 +813,9 @@ func (o GetRecentsResponse200DataInnerAnyOf11Data) ToMap() (map[string]interface
 	}
 	if !IsNil(o.IsYou) {
 		toSerialize["is_you"] = o.IsYou
+	}
+	if !IsNil(o.IsDeleted) {
+		toSerialize["is_deleted"] = o.IsDeleted
 	}
 	return toSerialize, nil
 }

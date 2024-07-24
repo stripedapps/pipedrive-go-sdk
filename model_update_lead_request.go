@@ -31,12 +31,16 @@ type UpdateLeadRequest struct {
 	OrganizationId NullableInt32 `json:"organization_id,omitempty"`
 	// A flag indicating whether the lead is archived or not
 	IsArchived *bool `json:"is_archived,omitempty"`
-	Value NullableUpdateLeadRequestValue `json:"value,omitempty"`
+	Value NullableGetLeadsResponse200DataInnerValue `json:"value,omitempty"`
 	// The date of when the deal which will be created from the lead is expected to be closed. In ISO 8601 format: YYYY-MM-DD.
 	ExpectedCloseDate NullableString `json:"expected_close_date,omitempty"`
 	VisibleTo *string `json:"visible_to,omitempty"`
 	// A flag indicating whether the lead was seen by someone in the Pipedrive UI
 	WasSeen *bool `json:"was_seen,omitempty"`
+	// The ID of Marketing channel this lead was created from. Provided value must be one of the channels configured for your company which you can fetch with <a href=\"https://developers.pipedrive.com/docs/api/v1/DealFields#getDealField\" target=\"_blank\" rel=\"noopener noreferrer\">GET /v1/dealFields</a>.
+	Channel NullableInt32 `json:"channel,omitempty"`
+	// The optional ID to further distinguish the Marketing channel.
+	ChannelId NullableString `json:"channel_id,omitempty"`
 }
 
 // NewUpdateLeadRequest instantiates a new UpdateLeadRequest object
@@ -279,9 +283,9 @@ func (o *UpdateLeadRequest) SetIsArchived(v bool) {
 }
 
 // GetValue returns the Value field value if set, zero value otherwise (both if not set or set to explicit null).
-func (o *UpdateLeadRequest) GetValue() UpdateLeadRequestValue {
+func (o *UpdateLeadRequest) GetValue() GetLeadsResponse200DataInnerValue {
 	if o == nil || IsNil(o.Value.Get()) {
-		var ret UpdateLeadRequestValue
+		var ret GetLeadsResponse200DataInnerValue
 		return ret
 	}
 	return *o.Value.Get()
@@ -290,7 +294,7 @@ func (o *UpdateLeadRequest) GetValue() UpdateLeadRequestValue {
 // GetValueOk returns a tuple with the Value field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 // NOTE: If the value is an explicit nil, `nil, true` will be returned
-func (o *UpdateLeadRequest) GetValueOk() (*UpdateLeadRequestValue, bool) {
+func (o *UpdateLeadRequest) GetValueOk() (*GetLeadsResponse200DataInnerValue, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -306,8 +310,8 @@ func (o *UpdateLeadRequest) HasValue() bool {
 	return false
 }
 
-// SetValue gets a reference to the given NullableUpdateLeadRequestValue and assigns it to the Value field.
-func (o *UpdateLeadRequest) SetValue(v UpdateLeadRequestValue) {
+// SetValue gets a reference to the given NullableGetLeadsResponse200DataInnerValue and assigns it to the Value field.
+func (o *UpdateLeadRequest) SetValue(v GetLeadsResponse200DataInnerValue) {
 	o.Value.Set(&v)
 }
 // SetValueNil sets the value for Value to be an explicit nil
@@ -426,6 +430,90 @@ func (o *UpdateLeadRequest) SetWasSeen(v bool) {
 	o.WasSeen = &v
 }
 
+// GetChannel returns the Channel field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *UpdateLeadRequest) GetChannel() int32 {
+	if o == nil || IsNil(o.Channel.Get()) {
+		var ret int32
+		return ret
+	}
+	return *o.Channel.Get()
+}
+
+// GetChannelOk returns a tuple with the Channel field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *UpdateLeadRequest) GetChannelOk() (*int32, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.Channel.Get(), o.Channel.IsSet()
+}
+
+// HasChannel returns a boolean if a field has been set.
+func (o *UpdateLeadRequest) HasChannel() bool {
+	if o != nil && o.Channel.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetChannel gets a reference to the given NullableInt32 and assigns it to the Channel field.
+func (o *UpdateLeadRequest) SetChannel(v int32) {
+	o.Channel.Set(&v)
+}
+// SetChannelNil sets the value for Channel to be an explicit nil
+func (o *UpdateLeadRequest) SetChannelNil() {
+	o.Channel.Set(nil)
+}
+
+// UnsetChannel ensures that no value is present for Channel, not even an explicit nil
+func (o *UpdateLeadRequest) UnsetChannel() {
+	o.Channel.Unset()
+}
+
+// GetChannelId returns the ChannelId field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *UpdateLeadRequest) GetChannelId() string {
+	if o == nil || IsNil(o.ChannelId.Get()) {
+		var ret string
+		return ret
+	}
+	return *o.ChannelId.Get()
+}
+
+// GetChannelIdOk returns a tuple with the ChannelId field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *UpdateLeadRequest) GetChannelIdOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.ChannelId.Get(), o.ChannelId.IsSet()
+}
+
+// HasChannelId returns a boolean if a field has been set.
+func (o *UpdateLeadRequest) HasChannelId() bool {
+	if o != nil && o.ChannelId.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetChannelId gets a reference to the given NullableString and assigns it to the ChannelId field.
+func (o *UpdateLeadRequest) SetChannelId(v string) {
+	o.ChannelId.Set(&v)
+}
+// SetChannelIdNil sets the value for ChannelId to be an explicit nil
+func (o *UpdateLeadRequest) SetChannelIdNil() {
+	o.ChannelId.Set(nil)
+}
+
+// UnsetChannelId ensures that no value is present for ChannelId, not even an explicit nil
+func (o *UpdateLeadRequest) UnsetChannelId() {
+	o.ChannelId.Unset()
+}
+
 func (o UpdateLeadRequest) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -465,6 +553,12 @@ func (o UpdateLeadRequest) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.WasSeen) {
 		toSerialize["was_seen"] = o.WasSeen
+	}
+	if o.Channel.IsSet() {
+		toSerialize["channel"] = o.Channel.Get()
+	}
+	if o.ChannelId.IsSet() {
+		toSerialize["channel_id"] = o.ChannelId.Get()
 	}
 	return toSerialize, nil
 }

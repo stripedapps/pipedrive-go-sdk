@@ -167,7 +167,7 @@ func (r ApiFindUsersByNameRequest) Term(term string) ApiFindUsersByNameRequest {
 	return r
 }
 
-// When enabled, the term will only be matched against email addresses of users. Default: &#x60;false&#x60;
+// When enabled, the term will only be matched against email addresses of users. Default: &#x60;false&#x60;.
 func (r ApiFindUsersByNameRequest) SearchByEmail(searchByEmail float32) ApiFindUsersByNameRequest {
 	r.searchByEmail = &searchByEmail
 	return r
@@ -219,6 +219,9 @@ func (a *UsersAPIService) FindUsersByNameExecute(r ApiFindUsersByNameRequest) (*
 	parameterAddToHeaderOrQuery(localVarQueryParams, "term", r.term, "")
 	if r.searchByEmail != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "search_by_email", r.searchByEmail, "")
+	} else {
+		var defaultValue float32 = 0
+		r.searchByEmail = &defaultValue
 	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
@@ -847,6 +850,9 @@ func (a *UsersAPIService) GetUserRoleAssignmentsExecute(r ApiGetUserRoleAssignme
 
 	if r.start != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "start", r.start, "")
+	} else {
+		var defaultValue int32 = 0
+		r.start = &defaultValue
 	}
 	if r.limit != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "limit", r.limit, "")

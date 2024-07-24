@@ -31,7 +31,7 @@ type NoteRequest struct {
 	OrgId *int32 `json:"org_id,omitempty"`
 	// The ID of the user who will be marked as the author of the note. Only an admin can change the author.
 	UserId *int32 `json:"user_id,omitempty"`
-	// The optional creation date & time of the note in UTC. Can be set in the past or in the future. Requires admin user API token. Format: YYYY-MM-DD HH:MM:SS
+	// The optional creation date & time of the note in UTC. Can be set in the past or in the future. Format: YYYY-MM-DD HH:MM:SS
 	AddTime *string `json:"add_time,omitempty"`
 	PinnedToLeadFlag *float32 `json:"pinned_to_lead_flag,omitempty"`
 	PinnedToDealFlag *float32 `json:"pinned_to_deal_flag,omitempty"`

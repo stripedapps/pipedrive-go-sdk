@@ -827,6 +827,9 @@ func (a *OrganizationsAPIService) GetOrganizationActivitiesExecute(r ApiGetOrgan
 
 	if r.start != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "start", r.start, "")
+	} else {
+		var defaultValue int32 = 0
+		r.start = &defaultValue
 	}
 	if r.limit != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "limit", r.limit, "")
@@ -836,6 +839,143 @@ func (a *OrganizationsAPIService) GetOrganizationActivitiesExecute(r ApiGetOrgan
 	}
 	if r.exclude != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "exclude", r.exclude, "")
+	}
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.ctx != nil {
+		// API Key Authentication
+		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
+			if apiKey, ok := auth["api_key"]; ok {
+				var key string
+				if apiKey.Prefix != "" {
+					key = apiKey.Prefix + " " + apiKey.Key
+				} else {
+					key = apiKey.Key
+				}
+				localVarQueryParams.Add("api_token", key)
+			}
+		}
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type ApiGetOrganizationChangelogRequest struct {
+	ctx context.Context
+	ApiService *OrganizationsAPIService
+	id int32
+	cursor *string
+	limit *int32
+}
+
+// For pagination, the marker (an opaque string value) representing the first item on the next page
+func (r ApiGetOrganizationChangelogRequest) Cursor(cursor string) ApiGetOrganizationChangelogRequest {
+	r.cursor = &cursor
+	return r
+}
+
+// Items shown per page
+func (r ApiGetOrganizationChangelogRequest) Limit(limit int32) ApiGetOrganizationChangelogRequest {
+	r.limit = &limit
+	return r
+}
+
+func (r ApiGetOrganizationChangelogRequest) Execute() (*GetChangelogResponse200, *http.Response, error) {
+	return r.ApiService.GetOrganizationChangelogExecute(r)
+}
+
+/*
+GetOrganizationChangelog List updates about organization field values
+
+Lists updates about field values of an organization.
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param id The ID of the organization
+ @return ApiGetOrganizationChangelogRequest
+*/
+func (a *OrganizationsAPIService) GetOrganizationChangelog(ctx context.Context, id int32) ApiGetOrganizationChangelogRequest {
+	return ApiGetOrganizationChangelogRequest{
+		ApiService: a,
+		ctx: ctx,
+		id: id,
+	}
+}
+
+// Execute executes the request
+//  @return GetChangelogResponse200
+func (a *OrganizationsAPIService) GetOrganizationChangelogExecute(r ApiGetOrganizationChangelogRequest) (*GetChangelogResponse200, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodGet
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *GetChangelogResponse200
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "OrganizationsAPIService.GetOrganizationChangelog")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/organizations/{id}/changelog"
+	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", url.PathEscape(parameterValueToString(r.id, "id")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	if r.cursor != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "cursor", r.cursor, "")
+	}
+	if r.limit != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "limit", r.limit, "")
 	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
@@ -991,12 +1131,18 @@ func (a *OrganizationsAPIService) GetOrganizationDealsExecute(r ApiGetOrganizati
 
 	if r.start != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "start", r.start, "")
+	} else {
+		var defaultValue int32 = 0
+		r.start = &defaultValue
 	}
 	if r.limit != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "limit", r.limit, "")
 	}
 	if r.status != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "status", r.status, "")
+	} else {
+		var defaultValue string = "all_not_deleted"
+		r.status = &defaultValue
 	}
 	if r.sort != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "sort", r.sort, "")
@@ -1144,6 +1290,9 @@ func (a *OrganizationsAPIService) GetOrganizationFilesExecute(r ApiGetOrganizati
 
 	if r.start != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "start", r.start, "")
+	} else {
+		var defaultValue int32 = 0
+		r.start = &defaultValue
 	}
 	if r.limit != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "limit", r.limit, "")
@@ -1401,6 +1550,9 @@ func (a *OrganizationsAPIService) GetOrganizationMailMessagesExecute(r ApiGetOrg
 
 	if r.start != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "start", r.start, "")
+	} else {
+		var defaultValue int32 = 0
+		r.start = &defaultValue
 	}
 	if r.limit != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "limit", r.limit, "")
@@ -1538,6 +1690,9 @@ func (a *OrganizationsAPIService) GetOrganizationPersonsExecute(r ApiGetOrganiza
 
 	if r.start != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "start", r.start, "")
+	} else {
+		var defaultValue int32 = 0
+		r.start = &defaultValue
 	}
 	if r.limit != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "limit", r.limit, "")
@@ -1638,7 +1793,7 @@ func (r ApiGetOrganizationUpdatesRequest) AllChanges(allChanges string) ApiGetOr
 	return r
 }
 
-// A comma-separated string for filtering out item specific updates. (Possible values - activity, plannedActivity, note, file, change, deal, follower, participant, mailMessage, mailMessageWithAttachment, invoice, activityFile, document)
+// A comma-separated string for filtering out item specific updates. (Possible values - activity, plannedActivity, note, file, change, deal, follower, participant, mailMessage, mailMessageWithAttachment, invoice, activityFile, document).
 func (r ApiGetOrganizationUpdatesRequest) Items(items string) ApiGetOrganizationUpdatesRequest {
 	r.items = &items
 	return r
@@ -1689,6 +1844,9 @@ func (a *OrganizationsAPIService) GetOrganizationUpdatesExecute(r ApiGetOrganiza
 
 	if r.start != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "start", r.start, "")
+	} else {
+		var defaultValue int32 = 0
+		r.start = &defaultValue
 	}
 	if r.limit != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "limit", r.limit, "")
@@ -1982,6 +2140,9 @@ func (a *OrganizationsAPIService) GetOrganizationsExecute(r ApiGetOrganizationsR
 	}
 	if r.start != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "start", r.start, "")
+	} else {
+		var defaultValue int32 = 0
+		r.start = &defaultValue
 	}
 	if r.limit != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "limit", r.limit, "")
@@ -2457,6 +2618,9 @@ func (a *OrganizationsAPIService) SearchOrganizationExecute(r ApiSearchOrganizat
 	}
 	if r.start != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "start", r.start, "")
+	} else {
+		var defaultValue int32 = 0
+		r.start = &defaultValue
 	}
 	if r.limit != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "limit", r.limit, "")

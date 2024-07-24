@@ -143,8 +143,6 @@ func (a *FilesAPIService) AddFileExecute(r ApiAddFileRequest) (*AddFileResponse2
 	var fileLocalVarFileBytes    []byte
 
 	fileLocalVarFormFileName = "file"
-
-
 	fileLocalVarFile := r.file
 
 	if fileLocalVarFile != nil {
@@ -811,6 +809,9 @@ func (a *FilesAPIService) GetFilesExecute(r ApiGetFilesRequest) (*GetFilesRespon
 
 	if r.start != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "start", r.start, "")
+	} else {
+		var defaultValue int32 = 0
+		r.start = &defaultValue
 	}
 	if r.limit != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "limit", r.limit, "")

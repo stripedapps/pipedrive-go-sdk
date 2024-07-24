@@ -23,6 +23,8 @@ type UpdateDealRequest struct {
 	Title *string `json:"title,omitempty"`
 	// The value of the deal.
 	Value *string `json:"value,omitempty"`
+	// Array of the deal labels IDs.
+	Label []int32 `json:"label,omitempty"`
 	// The currency of the deal. Accepts a 3-character currency code.
 	Currency *string `json:"currency,omitempty"`
 	// The ID of the user which will be the new owner of the deal.
@@ -37,6 +39,16 @@ type UpdateDealRequest struct {
 	StageId *int32 `json:"stage_id,omitempty"`
 	// open = Open, won = Won, lost = Lost, deleted = Deleted.
 	Status *string `json:"status,omitempty"`
+	// The ID of Marketing channel this deal was created from. Provided value must be one of the channels configured for your company which you can fetch with <a href=\"https://developers.pipedrive.com/docs/api/v1/DealFields#getDealField\" target=\"_blank\" rel=\"noopener noreferrer\">GET /v1/dealFields</a>.
+	Channel NullableInt32 `json:"channel,omitempty"`
+	// The optional ID to further distinguish the Marketing channel.
+	ChannelId NullableString `json:"channel_id,omitempty"`
+	// The optional date and time of changing the deal status as won in UTC. Format: YYYY-MM-DD HH:MM:SS. Can be set only when deal `status` is already Won. Can not be used together with `lost_time`.
+	WonTime *string `json:"won_time,omitempty"`
+	// The optional date and time of changing the deal status as lost in UTC. Format: YYYY-MM-DD HH:MM:SS. Can be set only when deal `status` is already Lost. Can not be used together with `won_time`.
+	LostTime *string `json:"lost_time,omitempty"`
+	// The optional date and time of closing the deal in UTC. Format: YYYY-MM-DD HH:MM:SS.
+	CloseTime NullableString `json:"close_time,omitempty"`
 	// The expected close date of the deal. In ISO 8601 format: YYYY-MM-DD.
 	ExpectedCloseDate *string `json:"expected_close_date,omitempty"`
 	// The success probability percentage of the deal. Used/shown only when `deal_probability` for the pipeline of the deal is enabled.
@@ -125,6 +137,38 @@ func (o *UpdateDealRequest) HasValue() bool {
 // SetValue gets a reference to the given string and assigns it to the Value field.
 func (o *UpdateDealRequest) SetValue(v string) {
 	o.Value = &v
+}
+
+// GetLabel returns the Label field value if set, zero value otherwise.
+func (o *UpdateDealRequest) GetLabel() []int32 {
+	if o == nil || IsNil(o.Label) {
+		var ret []int32
+		return ret
+	}
+	return o.Label
+}
+
+// GetLabelOk returns a tuple with the Label field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *UpdateDealRequest) GetLabelOk() ([]int32, bool) {
+	if o == nil || IsNil(o.Label) {
+		return nil, false
+	}
+	return o.Label, true
+}
+
+// HasLabel returns a boolean if a field has been set.
+func (o *UpdateDealRequest) HasLabel() bool {
+	if o != nil && !IsNil(o.Label) {
+		return true
+	}
+
+	return false
+}
+
+// SetLabel gets a reference to the given []int32 and assigns it to the Label field.
+func (o *UpdateDealRequest) SetLabel(v []int32) {
+	o.Label = v
 }
 
 // GetCurrency returns the Currency field value if set, zero value otherwise.
@@ -351,6 +395,196 @@ func (o *UpdateDealRequest) SetStatus(v string) {
 	o.Status = &v
 }
 
+// GetChannel returns the Channel field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *UpdateDealRequest) GetChannel() int32 {
+	if o == nil || IsNil(o.Channel.Get()) {
+		var ret int32
+		return ret
+	}
+	return *o.Channel.Get()
+}
+
+// GetChannelOk returns a tuple with the Channel field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *UpdateDealRequest) GetChannelOk() (*int32, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.Channel.Get(), o.Channel.IsSet()
+}
+
+// HasChannel returns a boolean if a field has been set.
+func (o *UpdateDealRequest) HasChannel() bool {
+	if o != nil && o.Channel.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetChannel gets a reference to the given NullableInt32 and assigns it to the Channel field.
+func (o *UpdateDealRequest) SetChannel(v int32) {
+	o.Channel.Set(&v)
+}
+// SetChannelNil sets the value for Channel to be an explicit nil
+func (o *UpdateDealRequest) SetChannelNil() {
+	o.Channel.Set(nil)
+}
+
+// UnsetChannel ensures that no value is present for Channel, not even an explicit nil
+func (o *UpdateDealRequest) UnsetChannel() {
+	o.Channel.Unset()
+}
+
+// GetChannelId returns the ChannelId field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *UpdateDealRequest) GetChannelId() string {
+	if o == nil || IsNil(o.ChannelId.Get()) {
+		var ret string
+		return ret
+	}
+	return *o.ChannelId.Get()
+}
+
+// GetChannelIdOk returns a tuple with the ChannelId field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *UpdateDealRequest) GetChannelIdOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.ChannelId.Get(), o.ChannelId.IsSet()
+}
+
+// HasChannelId returns a boolean if a field has been set.
+func (o *UpdateDealRequest) HasChannelId() bool {
+	if o != nil && o.ChannelId.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetChannelId gets a reference to the given NullableString and assigns it to the ChannelId field.
+func (o *UpdateDealRequest) SetChannelId(v string) {
+	o.ChannelId.Set(&v)
+}
+// SetChannelIdNil sets the value for ChannelId to be an explicit nil
+func (o *UpdateDealRequest) SetChannelIdNil() {
+	o.ChannelId.Set(nil)
+}
+
+// UnsetChannelId ensures that no value is present for ChannelId, not even an explicit nil
+func (o *UpdateDealRequest) UnsetChannelId() {
+	o.ChannelId.Unset()
+}
+
+// GetWonTime returns the WonTime field value if set, zero value otherwise.
+func (o *UpdateDealRequest) GetWonTime() string {
+	if o == nil || IsNil(o.WonTime) {
+		var ret string
+		return ret
+	}
+	return *o.WonTime
+}
+
+// GetWonTimeOk returns a tuple with the WonTime field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *UpdateDealRequest) GetWonTimeOk() (*string, bool) {
+	if o == nil || IsNil(o.WonTime) {
+		return nil, false
+	}
+	return o.WonTime, true
+}
+
+// HasWonTime returns a boolean if a field has been set.
+func (o *UpdateDealRequest) HasWonTime() bool {
+	if o != nil && !IsNil(o.WonTime) {
+		return true
+	}
+
+	return false
+}
+
+// SetWonTime gets a reference to the given string and assigns it to the WonTime field.
+func (o *UpdateDealRequest) SetWonTime(v string) {
+	o.WonTime = &v
+}
+
+// GetLostTime returns the LostTime field value if set, zero value otherwise.
+func (o *UpdateDealRequest) GetLostTime() string {
+	if o == nil || IsNil(o.LostTime) {
+		var ret string
+		return ret
+	}
+	return *o.LostTime
+}
+
+// GetLostTimeOk returns a tuple with the LostTime field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *UpdateDealRequest) GetLostTimeOk() (*string, bool) {
+	if o == nil || IsNil(o.LostTime) {
+		return nil, false
+	}
+	return o.LostTime, true
+}
+
+// HasLostTime returns a boolean if a field has been set.
+func (o *UpdateDealRequest) HasLostTime() bool {
+	if o != nil && !IsNil(o.LostTime) {
+		return true
+	}
+
+	return false
+}
+
+// SetLostTime gets a reference to the given string and assigns it to the LostTime field.
+func (o *UpdateDealRequest) SetLostTime(v string) {
+	o.LostTime = &v
+}
+
+// GetCloseTime returns the CloseTime field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *UpdateDealRequest) GetCloseTime() string {
+	if o == nil || IsNil(o.CloseTime.Get()) {
+		var ret string
+		return ret
+	}
+	return *o.CloseTime.Get()
+}
+
+// GetCloseTimeOk returns a tuple with the CloseTime field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *UpdateDealRequest) GetCloseTimeOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.CloseTime.Get(), o.CloseTime.IsSet()
+}
+
+// HasCloseTime returns a boolean if a field has been set.
+func (o *UpdateDealRequest) HasCloseTime() bool {
+	if o != nil && o.CloseTime.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetCloseTime gets a reference to the given NullableString and assigns it to the CloseTime field.
+func (o *UpdateDealRequest) SetCloseTime(v string) {
+	o.CloseTime.Set(&v)
+}
+// SetCloseTimeNil sets the value for CloseTime to be an explicit nil
+func (o *UpdateDealRequest) SetCloseTimeNil() {
+	o.CloseTime.Set(nil)
+}
+
+// UnsetCloseTime ensures that no value is present for CloseTime, not even an explicit nil
+func (o *UpdateDealRequest) UnsetCloseTime() {
+	o.CloseTime.Unset()
+}
+
 // GetExpectedCloseDate returns the ExpectedCloseDate field value if set, zero value otherwise.
 func (o *UpdateDealRequest) GetExpectedCloseDate() string {
 	if o == nil || IsNil(o.ExpectedCloseDate) {
@@ -495,6 +729,9 @@ func (o UpdateDealRequest) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.Value) {
 		toSerialize["value"] = o.Value
 	}
+	if !IsNil(o.Label) {
+		toSerialize["label"] = o.Label
+	}
 	if !IsNil(o.Currency) {
 		toSerialize["currency"] = o.Currency
 	}
@@ -515,6 +752,21 @@ func (o UpdateDealRequest) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.Status) {
 		toSerialize["status"] = o.Status
+	}
+	if o.Channel.IsSet() {
+		toSerialize["channel"] = o.Channel.Get()
+	}
+	if o.ChannelId.IsSet() {
+		toSerialize["channel_id"] = o.ChannelId.Get()
+	}
+	if !IsNil(o.WonTime) {
+		toSerialize["won_time"] = o.WonTime
+	}
+	if !IsNil(o.LostTime) {
+		toSerialize["lost_time"] = o.LostTime
+	}
+	if o.CloseTime.IsSet() {
+		toSerialize["close_time"] = o.CloseTime.Get()
 	}
 	if !IsNil(o.ExpectedCloseDate) {
 		toSerialize["expected_close_date"] = o.ExpectedCloseDate

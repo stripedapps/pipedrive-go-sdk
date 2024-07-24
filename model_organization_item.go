@@ -30,7 +30,7 @@ type OrganizationItem struct {
 	ActiveFlag *bool `json:"active_flag,omitempty"`
 	PictureId *BaseOrganizationItemAllOfPictureId `json:"picture_id,omitempty"`
 	// The country code of the organization
-	CountryCode *string `json:"country_code,omitempty"`
+	CountryCode NullableString `json:"country_code,omitempty"`
 	// The first character of the organization name
 	FirstChar *string `json:"first_char,omitempty"`
 	// The creation date and time of the organization
@@ -326,36 +326,46 @@ func (o *OrganizationItem) SetPictureId(v BaseOrganizationItemAllOfPictureId) {
 	o.PictureId = &v
 }
 
-// GetCountryCode returns the CountryCode field value if set, zero value otherwise.
+// GetCountryCode returns the CountryCode field value if set, zero value otherwise (both if not set or set to explicit null).
 func (o *OrganizationItem) GetCountryCode() string {
-	if o == nil || IsNil(o.CountryCode) {
+	if o == nil || IsNil(o.CountryCode.Get()) {
 		var ret string
 		return ret
 	}
-	return *o.CountryCode
+	return *o.CountryCode.Get()
 }
 
 // GetCountryCodeOk returns a tuple with the CountryCode field value if set, nil otherwise
 // and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
 func (o *OrganizationItem) GetCountryCodeOk() (*string, bool) {
-	if o == nil || IsNil(o.CountryCode) {
+	if o == nil {
 		return nil, false
 	}
-	return o.CountryCode, true
+	return o.CountryCode.Get(), o.CountryCode.IsSet()
 }
 
 // HasCountryCode returns a boolean if a field has been set.
 func (o *OrganizationItem) HasCountryCode() bool {
-	if o != nil && !IsNil(o.CountryCode) {
+	if o != nil && o.CountryCode.IsSet() {
 		return true
 	}
 
 	return false
 }
 
-// SetCountryCode gets a reference to the given string and assigns it to the CountryCode field.
+// SetCountryCode gets a reference to the given NullableString and assigns it to the CountryCode field.
 func (o *OrganizationItem) SetCountryCode(v string) {
-	o.CountryCode = &v
+	o.CountryCode.Set(&v)
+}
+// SetCountryCodeNil sets the value for CountryCode to be an explicit nil
+func (o *OrganizationItem) SetCountryCodeNil() {
+	o.CountryCode.Set(nil)
+}
+
+// UnsetCountryCode ensures that no value is present for CountryCode, not even an explicit nil
+func (o *OrganizationItem) UnsetCountryCode() {
+	o.CountryCode.Unset()
 }
 
 // GetFirstChar returns the FirstChar field value if set, zero value otherwise.
@@ -1709,7 +1719,7 @@ func (o *OrganizationItem) GetLastActivityOk() (map[string]interface{}, bool) {
 
 // HasLastActivity returns a boolean if a field has been set.
 func (o *OrganizationItem) HasLastActivity() bool {
-	if o != nil && IsNil(o.LastActivity) {
+	if o != nil && !IsNil(o.LastActivity) {
 		return true
 	}
 
@@ -1742,7 +1752,7 @@ func (o *OrganizationItem) GetNextActivityOk() (map[string]interface{}, bool) {
 
 // HasNextActivity returns a boolean if a field has been set.
 func (o *OrganizationItem) HasNextActivity() bool {
-	if o != nil && IsNil(o.NextActivity) {
+	if o != nil && !IsNil(o.NextActivity) {
 		return true
 	}
 
@@ -1782,8 +1792,8 @@ func (o OrganizationItem) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.PictureId) {
 		toSerialize["picture_id"] = o.PictureId
 	}
-	if !IsNil(o.CountryCode) {
-		toSerialize["country_code"] = o.CountryCode
+	if o.CountryCode.IsSet() {
+		toSerialize["country_code"] = o.CountryCode.Get()
 	}
 	if !IsNil(o.FirstChar) {
 		toSerialize["first_char"] = o.FirstChar

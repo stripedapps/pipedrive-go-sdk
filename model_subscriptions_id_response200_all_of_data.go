@@ -12,6 +12,7 @@ package openapi
 
 import (
 	"encoding/json"
+	"time"
 )
 
 // checks if the SubscriptionsIdResponse200AllOfData type satisfies the MappedNullable interface at compile time
@@ -48,9 +49,9 @@ type SubscriptionsIdResponse200AllOfData struct {
 	// The final status of the subscription
 	FinalStatus NullableString `json:"final_status,omitempty"`
 	// The creation time of the subscription
-	AddTime *string `json:"add_time,omitempty"`
+	AddTime *time.Time `json:"add_time,omitempty"`
 	// The update time of the subscription
-	UpdateTime *string `json:"update_time,omitempty"`
+	UpdateTime *time.Time `json:"update_time,omitempty"`
 }
 
 // NewSubscriptionsIdResponse200AllOfData instantiates a new SubscriptionsIdResponse200AllOfData object
@@ -529,9 +530,9 @@ func (o *SubscriptionsIdResponse200AllOfData) UnsetFinalStatus() {
 }
 
 // GetAddTime returns the AddTime field value if set, zero value otherwise.
-func (o *SubscriptionsIdResponse200AllOfData) GetAddTime() string {
+func (o *SubscriptionsIdResponse200AllOfData) GetAddTime() time.Time {
 	if o == nil || IsNil(o.AddTime) {
-		var ret string
+		var ret time.Time
 		return ret
 	}
 	return *o.AddTime
@@ -539,7 +540,7 @@ func (o *SubscriptionsIdResponse200AllOfData) GetAddTime() string {
 
 // GetAddTimeOk returns a tuple with the AddTime field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *SubscriptionsIdResponse200AllOfData) GetAddTimeOk() (*string, bool) {
+func (o *SubscriptionsIdResponse200AllOfData) GetAddTimeOk() (*time.Time, bool) {
 	if o == nil || IsNil(o.AddTime) {
 		return nil, false
 	}
@@ -555,15 +556,15 @@ func (o *SubscriptionsIdResponse200AllOfData) HasAddTime() bool {
 	return false
 }
 
-// SetAddTime gets a reference to the given string and assigns it to the AddTime field.
-func (o *SubscriptionsIdResponse200AllOfData) SetAddTime(v string) {
+// SetAddTime gets a reference to the given time.Time and assigns it to the AddTime field.
+func (o *SubscriptionsIdResponse200AllOfData) SetAddTime(v time.Time) {
 	o.AddTime = &v
 }
 
 // GetUpdateTime returns the UpdateTime field value if set, zero value otherwise.
-func (o *SubscriptionsIdResponse200AllOfData) GetUpdateTime() string {
+func (o *SubscriptionsIdResponse200AllOfData) GetUpdateTime() time.Time {
 	if o == nil || IsNil(o.UpdateTime) {
-		var ret string
+		var ret time.Time
 		return ret
 	}
 	return *o.UpdateTime
@@ -571,7 +572,7 @@ func (o *SubscriptionsIdResponse200AllOfData) GetUpdateTime() string {
 
 // GetUpdateTimeOk returns a tuple with the UpdateTime field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *SubscriptionsIdResponse200AllOfData) GetUpdateTimeOk() (*string, bool) {
+func (o *SubscriptionsIdResponse200AllOfData) GetUpdateTimeOk() (*time.Time, bool) {
 	if o == nil || IsNil(o.UpdateTime) {
 		return nil, false
 	}
@@ -587,8 +588,8 @@ func (o *SubscriptionsIdResponse200AllOfData) HasUpdateTime() bool {
 	return false
 }
 
-// SetUpdateTime gets a reference to the given string and assigns it to the UpdateTime field.
-func (o *SubscriptionsIdResponse200AllOfData) SetUpdateTime(v string) {
+// SetUpdateTime gets a reference to the given time.Time and assigns it to the UpdateTime field.
+func (o *SubscriptionsIdResponse200AllOfData) SetUpdateTime(v time.Time) {
 	o.UpdateTime = &v
 }
 

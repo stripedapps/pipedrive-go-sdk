@@ -12,6 +12,8 @@ package openapi
 
 import (
 	"encoding/json"
+	"bytes"
+	"fmt"
 )
 
 // checks if the AddLeadRequest type satisfies the MappedNullable interface at compile time
@@ -29,13 +31,21 @@ type AddLeadRequest struct {
 	PersonId *int32 `json:"person_id,omitempty"`
 	// The ID of an organization which this lead will be linked to. If the organization does not exist yet, it needs to be created first. This property is required unless `person_id` is specified.
 	OrganizationId *int32 `json:"organization_id,omitempty"`
-	Value *GetLeadsResponse200DataInnerValue `json:"value,omitempty"`
+	Value NullableGetLeadsResponse200DataInnerValue `json:"value,omitempty"`
 	// The date of when the deal which will be created from the lead is expected to be closed. In ISO 8601 format: YYYY-MM-DD.
 	ExpectedCloseDate *string `json:"expected_close_date,omitempty"`
 	VisibleTo *string `json:"visible_to,omitempty"`
 	// A flag indicating whether the lead was seen by someone in the Pipedrive UI
 	WasSeen *bool `json:"was_seen,omitempty"`
+	// The optional ID to further distinguish the origin of the lead - e.g. Which API integration created this lead. If omitted, `origin_id` will be set to null.
+	OriginId NullableString `json:"origin_id,omitempty"`
+	// The ID of Marketing channel this lead was created from. Provided value must be one of the channels configured for your company. You can fetch allowed values with <a href=\"https://developers.pipedrive.com/docs/api/v1/DealFields#getDealField\" target=\"_blank\" rel=\"noopener noreferrer\">GET /v1/dealFields</a>. If omitted, channel will be set to null.
+	Channel NullableInt32 `json:"channel,omitempty"`
+	// The optional ID to further distinguish the Marketing channel. If omitted, `channel_id` will be set to null.
+	ChannelId NullableString `json:"channel_id,omitempty"`
 }
+
+type _AddLeadRequest AddLeadRequest
 
 // NewAddLeadRequest instantiates a new AddLeadRequest object
 // This constructor will assign default values to properties that have it defined,
@@ -207,36 +217,46 @@ func (o *AddLeadRequest) SetOrganizationId(v int32) {
 	o.OrganizationId = &v
 }
 
-// GetValue returns the Value field value if set, zero value otherwise.
+// GetValue returns the Value field value if set, zero value otherwise (both if not set or set to explicit null).
 func (o *AddLeadRequest) GetValue() GetLeadsResponse200DataInnerValue {
-	if o == nil || IsNil(o.Value) {
+	if o == nil || IsNil(o.Value.Get()) {
 		var ret GetLeadsResponse200DataInnerValue
 		return ret
 	}
-	return *o.Value
+	return *o.Value.Get()
 }
 
 // GetValueOk returns a tuple with the Value field value if set, nil otherwise
 // and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
 func (o *AddLeadRequest) GetValueOk() (*GetLeadsResponse200DataInnerValue, bool) {
-	if o == nil || IsNil(o.Value) {
+	if o == nil {
 		return nil, false
 	}
-	return o.Value, true
+	return o.Value.Get(), o.Value.IsSet()
 }
 
 // HasValue returns a boolean if a field has been set.
 func (o *AddLeadRequest) HasValue() bool {
-	if o != nil && !IsNil(o.Value) {
+	if o != nil && o.Value.IsSet() {
 		return true
 	}
 
 	return false
 }
 
-// SetValue gets a reference to the given GetLeadsResponse200DataInnerValue and assigns it to the Value field.
+// SetValue gets a reference to the given NullableGetLeadsResponse200DataInnerValue and assigns it to the Value field.
 func (o *AddLeadRequest) SetValue(v GetLeadsResponse200DataInnerValue) {
-	o.Value = &v
+	o.Value.Set(&v)
+}
+// SetValueNil sets the value for Value to be an explicit nil
+func (o *AddLeadRequest) SetValueNil() {
+	o.Value.Set(nil)
+}
+
+// UnsetValue ensures that no value is present for Value, not even an explicit nil
+func (o *AddLeadRequest) UnsetValue() {
+	o.Value.Unset()
 }
 
 // GetExpectedCloseDate returns the ExpectedCloseDate field value if set, zero value otherwise.
@@ -335,6 +355,132 @@ func (o *AddLeadRequest) SetWasSeen(v bool) {
 	o.WasSeen = &v
 }
 
+// GetOriginId returns the OriginId field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *AddLeadRequest) GetOriginId() string {
+	if o == nil || IsNil(o.OriginId.Get()) {
+		var ret string
+		return ret
+	}
+	return *o.OriginId.Get()
+}
+
+// GetOriginIdOk returns a tuple with the OriginId field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *AddLeadRequest) GetOriginIdOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.OriginId.Get(), o.OriginId.IsSet()
+}
+
+// HasOriginId returns a boolean if a field has been set.
+func (o *AddLeadRequest) HasOriginId() bool {
+	if o != nil && o.OriginId.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetOriginId gets a reference to the given NullableString and assigns it to the OriginId field.
+func (o *AddLeadRequest) SetOriginId(v string) {
+	o.OriginId.Set(&v)
+}
+// SetOriginIdNil sets the value for OriginId to be an explicit nil
+func (o *AddLeadRequest) SetOriginIdNil() {
+	o.OriginId.Set(nil)
+}
+
+// UnsetOriginId ensures that no value is present for OriginId, not even an explicit nil
+func (o *AddLeadRequest) UnsetOriginId() {
+	o.OriginId.Unset()
+}
+
+// GetChannel returns the Channel field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *AddLeadRequest) GetChannel() int32 {
+	if o == nil || IsNil(o.Channel.Get()) {
+		var ret int32
+		return ret
+	}
+	return *o.Channel.Get()
+}
+
+// GetChannelOk returns a tuple with the Channel field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *AddLeadRequest) GetChannelOk() (*int32, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.Channel.Get(), o.Channel.IsSet()
+}
+
+// HasChannel returns a boolean if a field has been set.
+func (o *AddLeadRequest) HasChannel() bool {
+	if o != nil && o.Channel.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetChannel gets a reference to the given NullableInt32 and assigns it to the Channel field.
+func (o *AddLeadRequest) SetChannel(v int32) {
+	o.Channel.Set(&v)
+}
+// SetChannelNil sets the value for Channel to be an explicit nil
+func (o *AddLeadRequest) SetChannelNil() {
+	o.Channel.Set(nil)
+}
+
+// UnsetChannel ensures that no value is present for Channel, not even an explicit nil
+func (o *AddLeadRequest) UnsetChannel() {
+	o.Channel.Unset()
+}
+
+// GetChannelId returns the ChannelId field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *AddLeadRequest) GetChannelId() string {
+	if o == nil || IsNil(o.ChannelId.Get()) {
+		var ret string
+		return ret
+	}
+	return *o.ChannelId.Get()
+}
+
+// GetChannelIdOk returns a tuple with the ChannelId field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *AddLeadRequest) GetChannelIdOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.ChannelId.Get(), o.ChannelId.IsSet()
+}
+
+// HasChannelId returns a boolean if a field has been set.
+func (o *AddLeadRequest) HasChannelId() bool {
+	if o != nil && o.ChannelId.IsSet() {
+		return true
+	}
+
+	return false
+}
+
+// SetChannelId gets a reference to the given NullableString and assigns it to the ChannelId field.
+func (o *AddLeadRequest) SetChannelId(v string) {
+	o.ChannelId.Set(&v)
+}
+// SetChannelIdNil sets the value for ChannelId to be an explicit nil
+func (o *AddLeadRequest) SetChannelIdNil() {
+	o.ChannelId.Set(nil)
+}
+
+// UnsetChannelId ensures that no value is present for ChannelId, not even an explicit nil
+func (o *AddLeadRequest) UnsetChannelId() {
+	o.ChannelId.Unset()
+}
+
 func (o AddLeadRequest) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -358,8 +504,8 @@ func (o AddLeadRequest) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.OrganizationId) {
 		toSerialize["organization_id"] = o.OrganizationId
 	}
-	if !IsNil(o.Value) {
-		toSerialize["value"] = o.Value
+	if o.Value.IsSet() {
+		toSerialize["value"] = o.Value.Get()
 	}
 	if !IsNil(o.ExpectedCloseDate) {
 		toSerialize["expected_close_date"] = o.ExpectedCloseDate
@@ -370,7 +516,53 @@ func (o AddLeadRequest) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.WasSeen) {
 		toSerialize["was_seen"] = o.WasSeen
 	}
+	if o.OriginId.IsSet() {
+		toSerialize["origin_id"] = o.OriginId.Get()
+	}
+	if o.Channel.IsSet() {
+		toSerialize["channel"] = o.Channel.Get()
+	}
+	if o.ChannelId.IsSet() {
+		toSerialize["channel_id"] = o.ChannelId.Get()
+	}
 	return toSerialize, nil
+}
+
+func (o *AddLeadRequest) UnmarshalJSON(data []byte) (err error) {
+	// This validates that all required properties are included in the JSON object
+	// by unmarshalling the object into a generic map with string keys and checking
+	// that every required field exists as a key in the generic map.
+	requiredProperties := []string{
+		"title",
+	}
+
+	allProperties := make(map[string]interface{})
+
+	err = json.Unmarshal(data, &allProperties)
+
+	if err != nil {
+		return err;
+	}
+
+	for _, requiredProperty := range(requiredProperties) {
+		if _, exists := allProperties[requiredProperty]; !exists {
+			return fmt.Errorf("no value given for required property %v", requiredProperty)
+		}
+	}
+
+	varAddLeadRequest := _AddLeadRequest{}
+
+	decoder := json.NewDecoder(bytes.NewReader(data))
+	decoder.DisallowUnknownFields()
+	err = decoder.Decode(&varAddLeadRequest)
+
+	if err != nil {
+		return err
+	}
+
+	*o = AddLeadRequest(varAddLeadRequest)
+
+	return err
 }
 
 type NullableAddLeadRequest struct {

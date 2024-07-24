@@ -41,7 +41,7 @@ func (r ApiAddDealRequest) Execute() (*DealResponse200, *http.Response, error) {
 /*
 AddDeal Add a deal
 
-Adds a new deal. Note that you can supply additional custom fields along with the request that are not described here. These custom fields are different for each Pipedrive account and can be recognized by long hashes as keys. To determine which custom fields exists, fetch the dealFields and look for `key` values. For more information, see the tutorial for <a href="https://pipedrive.readme.io/docs/creating-a-deal" target="_blank" rel="noopener noreferrer">adding a deal</a>.
+Adds a new deal. All deals created through the Pipedrive API will have a `origin` set to `API`. Note that you can supply additional custom fields along with the request that are not described here. These custom fields are different for each Pipedrive account and can be recognized by long hashes as keys. To determine which custom fields exists, fetch the dealFields and look for `key` values. For more information, see the tutorial for <a href="https://pipedrive.readme.io/docs/creating-a-deal" target="_blank" rel="noopener noreferrer">adding a deal</a>.
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @return ApiAddDealRequest
@@ -1436,6 +1436,9 @@ func (a *DealsAPIService) GetDealActivitiesExecute(r ApiGetDealActivitiesRequest
 
 	if r.start != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "start", r.start, "")
+	} else {
+		var defaultValue int32 = 0
+		r.start = &defaultValue
 	}
 	if r.limit != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "limit", r.limit, "")
@@ -1445,6 +1448,143 @@ func (a *DealsAPIService) GetDealActivitiesExecute(r ApiGetDealActivitiesRequest
 	}
 	if r.exclude != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "exclude", r.exclude, "")
+	}
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.ctx != nil {
+		// API Key Authentication
+		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
+			if apiKey, ok := auth["api_key"]; ok {
+				var key string
+				if apiKey.Prefix != "" {
+					key = apiKey.Prefix + " " + apiKey.Key
+				} else {
+					key = apiKey.Key
+				}
+				localVarQueryParams.Add("api_token", key)
+			}
+		}
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type ApiGetDealChangelogRequest struct {
+	ctx context.Context
+	ApiService *DealsAPIService
+	id int32
+	cursor *string
+	limit *int32
+}
+
+// For pagination, the marker (an opaque string value) representing the first item on the next page
+func (r ApiGetDealChangelogRequest) Cursor(cursor string) ApiGetDealChangelogRequest {
+	r.cursor = &cursor
+	return r
+}
+
+// Items shown per page
+func (r ApiGetDealChangelogRequest) Limit(limit int32) ApiGetDealChangelogRequest {
+	r.limit = &limit
+	return r
+}
+
+func (r ApiGetDealChangelogRequest) Execute() (*GetChangelogResponse200, *http.Response, error) {
+	return r.ApiService.GetDealChangelogExecute(r)
+}
+
+/*
+GetDealChangelog List updates about deal field values
+
+Lists updates about field values of a deal.
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param id The ID of the deal
+ @return ApiGetDealChangelogRequest
+*/
+func (a *DealsAPIService) GetDealChangelog(ctx context.Context, id int32) ApiGetDealChangelogRequest {
+	return ApiGetDealChangelogRequest{
+		ApiService: a,
+		ctx: ctx,
+		id: id,
+	}
+}
+
+// Execute executes the request
+//  @return GetChangelogResponse200
+func (a *DealsAPIService) GetDealChangelogExecute(r ApiGetDealChangelogRequest) (*GetChangelogResponse200, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodGet
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *GetChangelogResponse200
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DealsAPIService.GetDealChangelog")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/deals/{id}/changelog"
+	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", url.PathEscape(parameterValueToString(r.id, "id")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	if r.cursor != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "cursor", r.cursor, "")
+	}
+	if r.limit != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "limit", r.limit, "")
 	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
@@ -1586,6 +1726,9 @@ func (a *DealsAPIService) GetDealFilesExecute(r ApiGetDealFilesRequest) (*GetAss
 
 	if r.start != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "start", r.start, "")
+	} else {
+		var defaultValue int32 = 0
+		r.start = &defaultValue
 	}
 	if r.limit != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "limit", r.limit, "")
@@ -1843,6 +1986,9 @@ func (a *DealsAPIService) GetDealMailMessagesExecute(r ApiGetDealMailMessagesReq
 
 	if r.start != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "start", r.start, "")
+	} else {
+		var defaultValue int32 = 0
+		r.start = &defaultValue
 	}
 	if r.limit != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "limit", r.limit, "")
@@ -1980,9 +2126,149 @@ func (a *DealsAPIService) GetDealParticipantsExecute(r ApiGetDealParticipantsReq
 
 	if r.start != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "start", r.start, "")
+	} else {
+		var defaultValue int32 = 0
+		r.start = &defaultValue
 	}
 	if r.limit != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "limit", r.limit, "")
+	}
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.ctx != nil {
+		// API Key Authentication
+		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
+			if apiKey, ok := auth["api_key"]; ok {
+				var key string
+				if apiKey.Prefix != "" {
+					key = apiKey.Prefix + " " + apiKey.Key
+				} else {
+					key = apiKey.Key
+				}
+				localVarQueryParams.Add("api_token", key)
+			}
+		}
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type ApiGetDealParticipantsChangelogRequest struct {
+	ctx context.Context
+	ApiService *DealsAPIService
+	id int32
+	limit *int32
+	cursor *string
+}
+
+// Items shown per page
+func (r ApiGetDealParticipantsChangelogRequest) Limit(limit int32) ApiGetDealParticipantsChangelogRequest {
+	r.limit = &limit
+	return r
+}
+
+// For pagination, the marker (an opaque string value) representing the first item on the next page
+func (r ApiGetDealParticipantsChangelogRequest) Cursor(cursor string) ApiGetDealParticipantsChangelogRequest {
+	r.cursor = &cursor
+	return r
+}
+
+func (r ApiGetDealParticipantsChangelogRequest) Execute() (*GetParticipantsChangelog200, *http.Response, error) {
+	return r.ApiService.GetDealParticipantsChangelogExecute(r)
+}
+
+/*
+GetDealParticipantsChangelog List updates about participants of a deal
+
+List updates about participants of a deal. This is a cursor-paginated endpoint. For more information, please refer to our documentation on <a href="https://pipedrive.readme.io/docs/core-api-concepts-pagination" target="_blank" rel="noopener noreferrer">pagination</a>.
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param id The ID of the deal
+ @return ApiGetDealParticipantsChangelogRequest
+*/
+func (a *DealsAPIService) GetDealParticipantsChangelog(ctx context.Context, id int32) ApiGetDealParticipantsChangelogRequest {
+	return ApiGetDealParticipantsChangelogRequest{
+		ApiService: a,
+		ctx: ctx,
+		id: id,
+	}
+}
+
+// Execute executes the request
+//  @return GetParticipantsChangelog200
+func (a *DealsAPIService) GetDealParticipantsChangelogExecute(r ApiGetDealParticipantsChangelogRequest) (*GetParticipantsChangelog200, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodGet
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *GetParticipantsChangelog200
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DealsAPIService.GetDealParticipantsChangelog")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/deals/{id}/participantsChangelog"
+	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", url.PathEscape(parameterValueToString(r.id, "id")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	if r.limit != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "limit", r.limit, "")
+	}
+	if r.cursor != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "cursor", r.cursor, "")
 	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
@@ -2117,6 +2403,9 @@ func (a *DealsAPIService) GetDealPersonsExecute(r ApiGetDealPersonsRequest) (*Li
 
 	if r.start != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "start", r.start, "")
+	} else {
+		var defaultValue int32 = 0
+		r.start = &defaultValue
 	}
 	if r.limit != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "limit", r.limit, "")
@@ -2261,6 +2550,9 @@ func (a *DealsAPIService) GetDealProductsExecute(r ApiGetDealProductsRequest) (*
 
 	if r.start != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "start", r.start, "")
+	} else {
+		var defaultValue int32 = 0
+		r.start = &defaultValue
 	}
 	if r.limit != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "limit", r.limit, "")
@@ -2364,7 +2656,7 @@ func (r ApiGetDealUpdatesRequest) AllChanges(allChanges string) ApiGetDealUpdate
 	return r
 }
 
-// A comma-separated string for filtering out item specific updates. (Possible values - call, activity, plannedActivity, change, note, deal, file, dealChange, personChange, organizationChange, follower, dealFollower, personFollower, organizationFollower, participant, comment, mailMessage, mailMessageWithAttachment, invoice, document, marketing_campaign_stat, marketing_status_change)
+// A comma-separated string for filtering out item specific updates. (Possible values - call, activity, plannedActivity, change, note, deal, file, dealChange, personChange, organizationChange, follower, dealFollower, personFollower, organizationFollower, participant, comment, mailMessage, mailMessageWithAttachment, invoice, document, marketing_campaign_stat, marketing_status_change).
 func (r ApiGetDealUpdatesRequest) Items(items string) ApiGetDealUpdatesRequest {
 	r.items = &items
 	return r
@@ -2415,6 +2707,9 @@ func (a *DealsAPIService) GetDealUpdatesExecute(r ApiGetDealUpdatesRequest) (*Ge
 
 	if r.start != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "start", r.start, "")
+	} else {
+		var defaultValue int32 = 0
+		r.start = &defaultValue
 	}
 	if r.limit != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "limit", r.limit, "")
@@ -2722,9 +3017,15 @@ func (a *DealsAPIService) GetDealsExecute(r ApiGetDealsRequest) (*GetDealsRespon
 	}
 	if r.status != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "status", r.status, "")
+	} else {
+		var defaultValue string = "all_not_deleted"
+		r.status = &defaultValue
 	}
 	if r.start != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "start", r.start, "")
+	} else {
+		var defaultValue int32 = 0
+		r.start = &defaultValue
 	}
 	if r.limit != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "limit", r.limit, "")
@@ -3005,7 +3306,7 @@ type ApiGetDealsSummaryRequest struct {
 	stageId *int32
 }
 
-// Only fetch deals with a specific status. open &#x3D; Open, won &#x3D; Won, lost &#x3D; Lost
+// Only fetch deals with a specific status. open &#x3D; Open, won &#x3D; Won, lost &#x3D; Lost.
 func (r ApiGetDealsSummaryRequest) Status(status string) ApiGetDealsSummaryRequest {
 	r.status = &status
 	return r
@@ -3163,7 +3464,7 @@ type ApiGetDealsTimelineRequest struct {
 	totalsConvertCurrency *string
 }
 
-// The date when the first interval starts. Format: YYYY-MM-DD
+// The date when the first interval starts. Format: YYYY-MM-DD.
 func (r ApiGetDealsTimelineRequest) StartDate(startDate string) ApiGetDealsTimelineRequest {
 	r.startDate = &startDate
 	return r
@@ -3613,6 +3914,9 @@ func (a *DealsAPIService) SearchDealsExecute(r ApiSearchDealsRequest) (*SearchDe
 	}
 	if r.start != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "start", r.start, "")
+	} else {
+		var defaultValue int32 = 0
+		r.start = &defaultValue
 	}
 	if r.limit != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "limit", r.limit, "")

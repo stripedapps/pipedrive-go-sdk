@@ -12,6 +12,8 @@ package openapi
 
 import (
 	"encoding/json"
+	"bytes"
+	"fmt"
 )
 
 // checks if the AddOrganizationRelationshipRequest type satisfies the MappedNullable interface at compile time
@@ -28,6 +30,8 @@ type AddOrganizationRelationshipRequest struct {
 	// The linked organization in the relationship. If type is `parent`, then the linked organization is the daughter.
 	RelLinkedOrgId int32 `json:"rel_linked_org_id"`
 }
+
+type _AddOrganizationRelationshipRequest AddOrganizationRelationshipRequest
 
 // NewAddOrganizationRelationshipRequest instantiates a new AddOrganizationRelationshipRequest object
 // This constructor will assign default values to properties that have it defined,
@@ -170,6 +174,45 @@ func (o AddOrganizationRelationshipRequest) ToMap() (map[string]interface{}, err
 	toSerialize["rel_owner_org_id"] = o.RelOwnerOrgId
 	toSerialize["rel_linked_org_id"] = o.RelLinkedOrgId
 	return toSerialize, nil
+}
+
+func (o *AddOrganizationRelationshipRequest) UnmarshalJSON(data []byte) (err error) {
+	// This validates that all required properties are included in the JSON object
+	// by unmarshalling the object into a generic map with string keys and checking
+	// that every required field exists as a key in the generic map.
+	requiredProperties := []string{
+		"type",
+		"rel_owner_org_id",
+		"rel_linked_org_id",
+	}
+
+	allProperties := make(map[string]interface{})
+
+	err = json.Unmarshal(data, &allProperties)
+
+	if err != nil {
+		return err;
+	}
+
+	for _, requiredProperty := range(requiredProperties) {
+		if _, exists := allProperties[requiredProperty]; !exists {
+			return fmt.Errorf("no value given for required property %v", requiredProperty)
+		}
+	}
+
+	varAddOrganizationRelationshipRequest := _AddOrganizationRelationshipRequest{}
+
+	decoder := json.NewDecoder(bytes.NewReader(data))
+	decoder.DisallowUnknownFields()
+	err = decoder.Decode(&varAddOrganizationRelationshipRequest)
+
+	if err != nil {
+		return err
+	}
+
+	*o = AddOrganizationRelationshipRequest(varAddOrganizationRelationshipRequest)
+
+	return err
 }
 
 type NullableAddOrganizationRelationshipRequest struct {

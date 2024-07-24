@@ -19,10 +19,6 @@ var _ MappedNullable = &GetUserSettingsResponse200AllOfData{}
 
 // GetUserSettingsResponse200AllOfData struct for GetUserSettingsResponse200AllOfData
 type GetUserSettingsResponse200AllOfData struct {
-	// If the vendors are allowed to install custom Marketplace apps with functionality and content in the Pipedrive UI or not
-	MarketplaceAllowCustomInstallUrl *bool `json:"marketplace_allow_custom_install_url,omitempty"`
-	// If the vendors are allowed to extend their Marketplace apps with functionality and content in the Pipedrive UI or not
-	MarketplaceAppExtensionsVendor *bool `json:"marketplace_app_extensions_vendor,omitempty"`
 	// If the vendors are allowed to be part of the Marketplace team or not
 	MarketplaceTeam *bool `json:"marketplace_team,omitempty"`
 	// The number of results shown in list by default
@@ -56,70 +52,6 @@ func NewGetUserSettingsResponse200AllOfData() *GetUserSettingsResponse200AllOfDa
 func NewGetUserSettingsResponse200AllOfDataWithDefaults() *GetUserSettingsResponse200AllOfData {
 	this := GetUserSettingsResponse200AllOfData{}
 	return &this
-}
-
-// GetMarketplaceAllowCustomInstallUrl returns the MarketplaceAllowCustomInstallUrl field value if set, zero value otherwise.
-func (o *GetUserSettingsResponse200AllOfData) GetMarketplaceAllowCustomInstallUrl() bool {
-	if o == nil || IsNil(o.MarketplaceAllowCustomInstallUrl) {
-		var ret bool
-		return ret
-	}
-	return *o.MarketplaceAllowCustomInstallUrl
-}
-
-// GetMarketplaceAllowCustomInstallUrlOk returns a tuple with the MarketplaceAllowCustomInstallUrl field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *GetUserSettingsResponse200AllOfData) GetMarketplaceAllowCustomInstallUrlOk() (*bool, bool) {
-	if o == nil || IsNil(o.MarketplaceAllowCustomInstallUrl) {
-		return nil, false
-	}
-	return o.MarketplaceAllowCustomInstallUrl, true
-}
-
-// HasMarketplaceAllowCustomInstallUrl returns a boolean if a field has been set.
-func (o *GetUserSettingsResponse200AllOfData) HasMarketplaceAllowCustomInstallUrl() bool {
-	if o != nil && !IsNil(o.MarketplaceAllowCustomInstallUrl) {
-		return true
-	}
-
-	return false
-}
-
-// SetMarketplaceAllowCustomInstallUrl gets a reference to the given bool and assigns it to the MarketplaceAllowCustomInstallUrl field.
-func (o *GetUserSettingsResponse200AllOfData) SetMarketplaceAllowCustomInstallUrl(v bool) {
-	o.MarketplaceAllowCustomInstallUrl = &v
-}
-
-// GetMarketplaceAppExtensionsVendor returns the MarketplaceAppExtensionsVendor field value if set, zero value otherwise.
-func (o *GetUserSettingsResponse200AllOfData) GetMarketplaceAppExtensionsVendor() bool {
-	if o == nil || IsNil(o.MarketplaceAppExtensionsVendor) {
-		var ret bool
-		return ret
-	}
-	return *o.MarketplaceAppExtensionsVendor
-}
-
-// GetMarketplaceAppExtensionsVendorOk returns a tuple with the MarketplaceAppExtensionsVendor field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *GetUserSettingsResponse200AllOfData) GetMarketplaceAppExtensionsVendorOk() (*bool, bool) {
-	if o == nil || IsNil(o.MarketplaceAppExtensionsVendor) {
-		return nil, false
-	}
-	return o.MarketplaceAppExtensionsVendor, true
-}
-
-// HasMarketplaceAppExtensionsVendor returns a boolean if a field has been set.
-func (o *GetUserSettingsResponse200AllOfData) HasMarketplaceAppExtensionsVendor() bool {
-	if o != nil && !IsNil(o.MarketplaceAppExtensionsVendor) {
-		return true
-	}
-
-	return false
-}
-
-// SetMarketplaceAppExtensionsVendor gets a reference to the given bool and assigns it to the MarketplaceAppExtensionsVendor field.
-func (o *GetUserSettingsResponse200AllOfData) SetMarketplaceAppExtensionsVendor(v bool) {
-	o.MarketplaceAppExtensionsVendor = &v
 }
 
 // GetMarketplaceTeam returns the MarketplaceTeam field value if set, zero value otherwise.
@@ -388,12 +320,6 @@ func (o GetUserSettingsResponse200AllOfData) MarshalJSON() ([]byte, error) {
 
 func (o GetUserSettingsResponse200AllOfData) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	if !IsNil(o.MarketplaceAllowCustomInstallUrl) {
-		toSerialize["marketplace_allow_custom_install_url"] = o.MarketplaceAllowCustomInstallUrl
-	}
-	if !IsNil(o.MarketplaceAppExtensionsVendor) {
-		toSerialize["marketplace_app_extensions_vendor"] = o.MarketplaceAppExtensionsVendor
-	}
 	if !IsNil(o.MarketplaceTeam) {
 		toSerialize["marketplace_team"] = o.MarketplaceTeam
 	}

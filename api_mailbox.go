@@ -147,7 +147,7 @@ type ApiGetMailMessageRequest struct {
 	includeBody *float32
 }
 
-// Whether to include the full message body or not. &#x60;0&#x60; &#x3D; Don&#39;t include, &#x60;1&#x60; &#x3D; Include
+// Whether to include the full message body or not. &#x60;0&#x60; &#x3D; Don&#39;t include, &#x60;1&#x60; &#x3D; Include.
 func (r ApiGetMailMessageRequest) IncludeBody(includeBody float32) ApiGetMailMessageRequest {
 	r.includeBody = &includeBody
 	return r
@@ -198,6 +198,9 @@ func (a *MailboxAPIService) GetMailMessageExecute(r ApiGetMailMessageRequest) (*
 
 	if r.includeBody != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "include_body", r.includeBody, "")
+	} else {
+		var defaultValue float32 = 0
+		r.includeBody = &defaultValue
 	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
@@ -573,6 +576,9 @@ func (a *MailboxAPIService) GetMailThreadsExecute(r ApiGetMailThreadsRequest) (*
 	parameterAddToHeaderOrQuery(localVarQueryParams, "folder", r.folder, "")
 	if r.start != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "start", r.start, "")
+	} else {
+		var defaultValue int32 = 0
+		r.start = &defaultValue
 	}
 	if r.limit != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "limit", r.limit, "")

@@ -13,6 +13,8 @@ package openapi
 import (
 	"encoding/json"
 	"time"
+	"bytes"
+	"fmt"
 )
 
 // checks if the ResponseCallLogObject type satisfies the MappedNullable interface at compile time
@@ -42,8 +44,10 @@ type ResponseCallLogObject struct {
 	PersonId *int32 `json:"person_id,omitempty"`
 	// The ID of the organization this call is associated with
 	OrgId *int32 `json:"org_id,omitempty"`
-	// The ID of the deal this call is associated with
+	// The ID of the deal this call is associated with. A call log can be associated with either a deal or a lead, but not both at once.
 	DealId *int32 `json:"deal_id,omitempty"`
+	// The ID of the lead in the UUID format this call is associated with. A call log can be associated with either a deal or a lead, but not both at once.
+	LeadId *string `json:"lead_id,omitempty"`
 	// The note for the call log in HTML format
 	Note *string `json:"note,omitempty"`
 	// The call log ID, generated when the call log was created
@@ -53,6 +57,8 @@ type ResponseCallLogObject struct {
 	// The company ID of the owner of the call log
 	CompanyId *int32 `json:"company_id,omitempty"`
 }
+
+type _ResponseCallLogObject ResponseCallLogObject
 
 // NewResponseCallLogObject instantiates a new ResponseCallLogObject object
 // This constructor will assign default values to properties that have it defined,
@@ -427,6 +433,38 @@ func (o *ResponseCallLogObject) SetDealId(v int32) {
 	o.DealId = &v
 }
 
+// GetLeadId returns the LeadId field value if set, zero value otherwise.
+func (o *ResponseCallLogObject) GetLeadId() string {
+	if o == nil || IsNil(o.LeadId) {
+		var ret string
+		return ret
+	}
+	return *o.LeadId
+}
+
+// GetLeadIdOk returns a tuple with the LeadId field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *ResponseCallLogObject) GetLeadIdOk() (*string, bool) {
+	if o == nil || IsNil(o.LeadId) {
+		return nil, false
+	}
+	return o.LeadId, true
+}
+
+// HasLeadId returns a boolean if a field has been set.
+func (o *ResponseCallLogObject) HasLeadId() bool {
+	if o != nil && !IsNil(o.LeadId) {
+		return true
+	}
+
+	return false
+}
+
+// SetLeadId gets a reference to the given string and assigns it to the LeadId field.
+func (o *ResponseCallLogObject) SetLeadId(v string) {
+	o.LeadId = &v
+}
+
 // GetNote returns the Note field value if set, zero value otherwise.
 func (o *ResponseCallLogObject) GetNote() string {
 	if o == nil || IsNil(o.Note) {
@@ -593,6 +631,9 @@ func (o ResponseCallLogObject) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.DealId) {
 		toSerialize["deal_id"] = o.DealId
 	}
+	if !IsNil(o.LeadId) {
+		toSerialize["lead_id"] = o.LeadId
+	}
 	if !IsNil(o.Note) {
 		toSerialize["note"] = o.Note
 	}
@@ -606,6 +647,46 @@ func (o ResponseCallLogObject) ToMap() (map[string]interface{}, error) {
 		toSerialize["company_id"] = o.CompanyId
 	}
 	return toSerialize, nil
+}
+
+func (o *ResponseCallLogObject) UnmarshalJSON(data []byte) (err error) {
+	// This validates that all required properties are included in the JSON object
+	// by unmarshalling the object into a generic map with string keys and checking
+	// that every required field exists as a key in the generic map.
+	requiredProperties := []string{
+		"outcome",
+		"to_phone_number",
+		"start_time",
+		"end_time",
+	}
+
+	allProperties := make(map[string]interface{})
+
+	err = json.Unmarshal(data, &allProperties)
+
+	if err != nil {
+		return err;
+	}
+
+	for _, requiredProperty := range(requiredProperties) {
+		if _, exists := allProperties[requiredProperty]; !exists {
+			return fmt.Errorf("no value given for required property %v", requiredProperty)
+		}
+	}
+
+	varResponseCallLogObject := _ResponseCallLogObject{}
+
+	decoder := json.NewDecoder(bytes.NewReader(data))
+	decoder.DisallowUnknownFields()
+	err = decoder.Decode(&varResponseCallLogObject)
+
+	if err != nil {
+		return err
+	}
+
+	*o = ResponseCallLogObject(varResponseCallLogObject)
+
+	return err
 }
 
 type NullableResponseCallLogObject struct {

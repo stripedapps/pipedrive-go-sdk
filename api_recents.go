@@ -31,7 +31,7 @@ type ApiGetRecentsRequest struct {
 	limit *int32
 }
 
-// The timestamp in UTC. Format: YYYY-MM-DD HH:MM:SS
+// The timestamp in UTC. Format: YYYY-MM-DD HH:MM:SS.
 func (r ApiGetRecentsRequest) SinceTimestamp(sinceTimestamp string) ApiGetRecentsRequest {
 	r.sinceTimestamp = &sinceTimestamp
 	return r
@@ -104,6 +104,9 @@ func (a *RecentsAPIService) GetRecentsExecute(r ApiGetRecentsRequest) (*GetRecen
 	}
 	if r.start != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "start", r.start, "")
+	} else {
+		var defaultValue int32 = 0
+		r.start = &defaultValue
 	}
 	if r.limit != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "limit", r.limit, "")

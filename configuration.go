@@ -31,6 +31,9 @@ var (
 	// ContextOAuth2 takes an oauth2.TokenSource as authentication for the request.
 	ContextOAuth2 = contextKey("token")
 
+	// ContextBasicAuth takes BasicAuth as authentication for the request.
+	ContextBasicAuth = contextKey("basic")
+
 	// ContextAPIKeys takes a string apikey as authentication for the request
 	ContextAPIKeys = contextKey("apiKeys")
 
@@ -101,6 +104,24 @@ func NewConfiguration() *Configuration {
 			},
 		},
 		OperationServers: map[string]ServerConfigurations{
+			"OauthAPIService.Authorize": {
+				{
+					URL: "https://oauth.pipedrive.com",
+					Description: "No description provided",
+				},
+			},
+			"OauthAPIService.GetTokens": {
+				{
+					URL: "https://oauth.pipedrive.com",
+					Description: "No description provided",
+				},
+			},
+			"OauthAPIService.RefreshTokens": {
+				{
+					URL: "https://oauth.pipedrive.com",
+					Description: "No description provided",
+				},
+			},
 		},
 	}
 	return cfg

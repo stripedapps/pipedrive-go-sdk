@@ -56,6 +56,8 @@ type GetCurrentUserResponse200AllOfData struct {
 	IconUrl NullableString `json:"icon_url,omitempty"`
 	// Boolean that indicates if the requested user is the same which is logged in (in this case, always true)
 	IsYou *bool `json:"is_you,omitempty"`
+	// Boolean that indicates whether the user is deleted from the company
+	IsDeleted *bool `json:"is_deleted,omitempty"`
 	// The user company ID
 	CompanyId *int32 `json:"company_id,omitempty"`
 	// The user company name
@@ -724,6 +726,38 @@ func (o *GetCurrentUserResponse200AllOfData) SetIsYou(v bool) {
 	o.IsYou = &v
 }
 
+// GetIsDeleted returns the IsDeleted field value if set, zero value otherwise.
+func (o *GetCurrentUserResponse200AllOfData) GetIsDeleted() bool {
+	if o == nil || IsNil(o.IsDeleted) {
+		var ret bool
+		return ret
+	}
+	return *o.IsDeleted
+}
+
+// GetIsDeletedOk returns a tuple with the IsDeleted field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *GetCurrentUserResponse200AllOfData) GetIsDeletedOk() (*bool, bool) {
+	if o == nil || IsNil(o.IsDeleted) {
+		return nil, false
+	}
+	return o.IsDeleted, true
+}
+
+// HasIsDeleted returns a boolean if a field has been set.
+func (o *GetCurrentUserResponse200AllOfData) HasIsDeleted() bool {
+	if o != nil && !IsNil(o.IsDeleted) {
+		return true
+	}
+
+	return false
+}
+
+// SetIsDeleted gets a reference to the given bool and assigns it to the IsDeleted field.
+func (o *GetCurrentUserResponse200AllOfData) SetIsDeleted(v bool) {
+	o.IsDeleted = &v
+}
+
 // GetCompanyId returns the CompanyId field value if set, zero value otherwise.
 func (o *GetCurrentUserResponse200AllOfData) GetCompanyId() int32 {
 	if o == nil || IsNil(o.CompanyId) {
@@ -982,6 +1016,9 @@ func (o GetCurrentUserResponse200AllOfData) ToMap() (map[string]interface{}, err
 	}
 	if !IsNil(o.IsYou) {
 		toSerialize["is_you"] = o.IsYou
+	}
+	if !IsNil(o.IsDeleted) {
+		toSerialize["is_deleted"] = o.IsDeleted
 	}
 	if !IsNil(o.CompanyId) {
 		toSerialize["company_id"] = o.CompanyId

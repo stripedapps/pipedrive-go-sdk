@@ -95,7 +95,7 @@ func (o *SearchItemByFieldResponse200AllOfDataInner) GetFieldKeyOk() (*interface
 
 // HasFieldKey returns a boolean if a field has been set.
 func (o *SearchItemByFieldResponse200AllOfDataInner) HasFieldKey() bool {
-	if o != nil && IsNil(o.FieldKey) {
+	if o != nil && !IsNil(o.FieldKey) {
 		return true
 	}
 

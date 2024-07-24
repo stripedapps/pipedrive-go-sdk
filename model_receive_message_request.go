@@ -13,6 +13,8 @@ package openapi
 import (
 	"encoding/json"
 	"time"
+	"bytes"
+	"fmt"
 )
 
 // checks if the ReceiveMessageRequest type satisfies the MappedNullable interface at compile time
@@ -41,6 +43,8 @@ type ReceiveMessageRequest struct {
 	// The list of attachments available in the message
 	Attachments []ReceiveMessageRequestAttachmentsInner `json:"attachments,omitempty"`
 }
+
+type _ReceiveMessageRequest ReceiveMessageRequest
 
 // NewReceiveMessageRequest instantiates a new ReceiveMessageRequest object
 // This constructor will assign default values to properties that have it defined,
@@ -357,6 +361,49 @@ func (o ReceiveMessageRequest) ToMap() (map[string]interface{}, error) {
 		toSerialize["attachments"] = o.Attachments
 	}
 	return toSerialize, nil
+}
+
+func (o *ReceiveMessageRequest) UnmarshalJSON(data []byte) (err error) {
+	// This validates that all required properties are included in the JSON object
+	// by unmarshalling the object into a generic map with string keys and checking
+	// that every required field exists as a key in the generic map.
+	requiredProperties := []string{
+		"id",
+		"channel_id",
+		"sender_id",
+		"conversation_id",
+		"message",
+		"status",
+		"created_at",
+	}
+
+	allProperties := make(map[string]interface{})
+
+	err = json.Unmarshal(data, &allProperties)
+
+	if err != nil {
+		return err;
+	}
+
+	for _, requiredProperty := range(requiredProperties) {
+		if _, exists := allProperties[requiredProperty]; !exists {
+			return fmt.Errorf("no value given for required property %v", requiredProperty)
+		}
+	}
+
+	varReceiveMessageRequest := _ReceiveMessageRequest{}
+
+	decoder := json.NewDecoder(bytes.NewReader(data))
+	decoder.DisallowUnknownFields()
+	err = decoder.Decode(&varReceiveMessageRequest)
+
+	if err != nil {
+		return err
+	}
+
+	*o = ReceiveMessageRequest(varReceiveMessageRequest)
+
+	return err
 }
 
 type NullableReceiveMessageRequest struct {

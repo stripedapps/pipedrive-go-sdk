@@ -516,6 +516,9 @@ func (a *LegacyTeamsAPIService) GetTeamExecute(r ApiGetTeamRequest) (*TeamRespon
 
 	if r.skipUsers != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "skip_users", r.skipUsers, "")
+	} else {
+		var defaultValue float32 = 0
+		r.skipUsers = &defaultValue
 	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
@@ -789,9 +792,15 @@ func (a *LegacyTeamsAPIService) GetTeamsExecute(r ApiGetTeamsRequest) (*TeamsRes
 
 	if r.orderBy != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "order_by", r.orderBy, "")
+	} else {
+		var defaultValue string = "id"
+		r.orderBy = &defaultValue
 	}
 	if r.skipUsers != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "skip_users", r.skipUsers, "")
+	} else {
+		var defaultValue float32 = 0
+		r.skipUsers = &defaultValue
 	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
@@ -929,9 +938,15 @@ func (a *LegacyTeamsAPIService) GetUserTeamsExecute(r ApiGetUserTeamsRequest) (*
 
 	if r.orderBy != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "order_by", r.orderBy, "")
+	} else {
+		var defaultValue string = "id"
+		r.orderBy = &defaultValue
 	}
 	if r.skipUsers != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "skip_users", r.skipUsers, "")
+	} else {
+		var defaultValue float32 = 0
+		r.skipUsers = &defaultValue
 	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}

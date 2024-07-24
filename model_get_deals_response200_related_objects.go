@@ -19,9 +19,9 @@ var _ MappedNullable = &GetDealsResponse200RelatedObjects{}
 
 // GetDealsResponse200RelatedObjects struct for GetDealsResponse200RelatedObjects
 type GetDealsResponse200RelatedObjects struct {
-	User *GetDealsResponse200RelatedObjectsUser `json:"user,omitempty"`
-	Organization *GetDealsResponse200RelatedObjectsOrganization `json:"organization,omitempty"`
-	Person *GetDealsResponse200RelatedObjectsPerson `json:"person,omitempty"`
+	User *GetActivitiesResponse200RelatedObjectsUser `json:"user,omitempty"`
+	Organization *AddActivityResponse200RelatedObjectsOrganization `json:"organization,omitempty"`
+	Person *AddActivityResponse200RelatedObjectsPerson `json:"person,omitempty"`
 }
 
 // NewGetDealsResponse200RelatedObjects instantiates a new GetDealsResponse200RelatedObjects object
@@ -42,9 +42,9 @@ func NewGetDealsResponse200RelatedObjectsWithDefaults() *GetDealsResponse200Rela
 }
 
 // GetUser returns the User field value if set, zero value otherwise.
-func (o *GetDealsResponse200RelatedObjects) GetUser() GetDealsResponse200RelatedObjectsUser {
+func (o *GetDealsResponse200RelatedObjects) GetUser() GetActivitiesResponse200RelatedObjectsUser {
 	if o == nil || IsNil(o.User) {
-		var ret GetDealsResponse200RelatedObjectsUser
+		var ret GetActivitiesResponse200RelatedObjectsUser
 		return ret
 	}
 	return *o.User
@@ -52,7 +52,7 @@ func (o *GetDealsResponse200RelatedObjects) GetUser() GetDealsResponse200Related
 
 // GetUserOk returns a tuple with the User field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *GetDealsResponse200RelatedObjects) GetUserOk() (*GetDealsResponse200RelatedObjectsUser, bool) {
+func (o *GetDealsResponse200RelatedObjects) GetUserOk() (*GetActivitiesResponse200RelatedObjectsUser, bool) {
 	if o == nil || IsNil(o.User) {
 		return nil, false
 	}
@@ -68,15 +68,15 @@ func (o *GetDealsResponse200RelatedObjects) HasUser() bool {
 	return false
 }
 
-// SetUser gets a reference to the given GetDealsResponse200RelatedObjectsUser and assigns it to the User field.
-func (o *GetDealsResponse200RelatedObjects) SetUser(v GetDealsResponse200RelatedObjectsUser) {
+// SetUser gets a reference to the given GetActivitiesResponse200RelatedObjectsUser and assigns it to the User field.
+func (o *GetDealsResponse200RelatedObjects) SetUser(v GetActivitiesResponse200RelatedObjectsUser) {
 	o.User = &v
 }
 
 // GetOrganization returns the Organization field value if set, zero value otherwise.
-func (o *GetDealsResponse200RelatedObjects) GetOrganization() GetDealsResponse200RelatedObjectsOrganization {
+func (o *GetDealsResponse200RelatedObjects) GetOrganization() AddActivityResponse200RelatedObjectsOrganization {
 	if o == nil || IsNil(o.Organization) {
-		var ret GetDealsResponse200RelatedObjectsOrganization
+		var ret AddActivityResponse200RelatedObjectsOrganization
 		return ret
 	}
 	return *o.Organization
@@ -84,7 +84,7 @@ func (o *GetDealsResponse200RelatedObjects) GetOrganization() GetDealsResponse20
 
 // GetOrganizationOk returns a tuple with the Organization field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *GetDealsResponse200RelatedObjects) GetOrganizationOk() (*GetDealsResponse200RelatedObjectsOrganization, bool) {
+func (o *GetDealsResponse200RelatedObjects) GetOrganizationOk() (*AddActivityResponse200RelatedObjectsOrganization, bool) {
 	if o == nil || IsNil(o.Organization) {
 		return nil, false
 	}
@@ -100,15 +100,15 @@ func (o *GetDealsResponse200RelatedObjects) HasOrganization() bool {
 	return false
 }
 
-// SetOrganization gets a reference to the given GetDealsResponse200RelatedObjectsOrganization and assigns it to the Organization field.
-func (o *GetDealsResponse200RelatedObjects) SetOrganization(v GetDealsResponse200RelatedObjectsOrganization) {
+// SetOrganization gets a reference to the given AddActivityResponse200RelatedObjectsOrganization and assigns it to the Organization field.
+func (o *GetDealsResponse200RelatedObjects) SetOrganization(v AddActivityResponse200RelatedObjectsOrganization) {
 	o.Organization = &v
 }
 
 // GetPerson returns the Person field value if set, zero value otherwise.
-func (o *GetDealsResponse200RelatedObjects) GetPerson() GetDealsResponse200RelatedObjectsPerson {
+func (o *GetDealsResponse200RelatedObjects) GetPerson() AddActivityResponse200RelatedObjectsPerson {
 	if o == nil || IsNil(o.Person) {
-		var ret GetDealsResponse200RelatedObjectsPerson
+		var ret AddActivityResponse200RelatedObjectsPerson
 		return ret
 	}
 	return *o.Person
@@ -116,7 +116,7 @@ func (o *GetDealsResponse200RelatedObjects) GetPerson() GetDealsResponse200Relat
 
 // GetPersonOk returns a tuple with the Person field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *GetDealsResponse200RelatedObjects) GetPersonOk() (*GetDealsResponse200RelatedObjectsPerson, bool) {
+func (o *GetDealsResponse200RelatedObjects) GetPersonOk() (*AddActivityResponse200RelatedObjectsPerson, bool) {
 	if o == nil || IsNil(o.Person) {
 		return nil, false
 	}
@@ -132,8 +132,8 @@ func (o *GetDealsResponse200RelatedObjects) HasPerson() bool {
 	return false
 }
 
-// SetPerson gets a reference to the given GetDealsResponse200RelatedObjectsPerson and assigns it to the Person field.
-func (o *GetDealsResponse200RelatedObjects) SetPerson(v GetDealsResponse200RelatedObjectsPerson) {
+// SetPerson gets a reference to the given AddActivityResponse200RelatedObjectsPerson and assigns it to the Person field.
+func (o *GetDealsResponse200RelatedObjects) SetPerson(v AddActivityResponse200RelatedObjectsPerson) {
 	o.Person = &v
 }
 
